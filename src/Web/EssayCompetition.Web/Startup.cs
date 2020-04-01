@@ -9,6 +9,7 @@
     using EssayCompetition.Data.Repositories;
     using EssayCompetition.Data.Seeding;
     using EssayCompetition.Services.Data;
+    using EssayCompetition.Services.Data.CategoryServices;
     using EssayCompetition.Services.Mapping;
     using EssayCompetition.Services.Messaging;
     using EssayCompetition.Web.ViewModels;
@@ -64,6 +65,7 @@
             // Application services
             services.AddTransient<IEmailSender>(x => new SendGridEmailSender(this.configuration["SendGrid:ApiKey"]));
             services.AddTransient<ISettingsService, SettingsService>();
+            services.AddTransient<ICategoryService, CategoryService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
