@@ -8,20 +8,23 @@
 
     public class CategoryController : AdministrationController
     {
+        private const int PageSize = 10;
         private readonly ICategoryService categoryService;
-        private const double PageSize = 10;
 
         public CategoryController(ICategoryService categoryService)
         {
             this.categoryService = categoryService;
         }
 
-        public IActionResult Index()
+        public IActionResult Index(IndexViewModel model)
         {
-            var model = new IndexViewModel();
+
+            model ??= new IndexViewModel();
             model.Pager ??= new PagerViewModel();
             model.Pager.CurrentPage = model.Pager.CurrentPage <= 0 ? 1 : model.Pager.CurrentPage;
-            model.AllCategories = this.categoryService.GetAll<CategoryViewModel>();
+
+            model.AllCategories = this.categoryService.GetAll<CategoryViewModel>(model.Pager.CurrentPage, PageSize);
+
             model.Pager.PagesCount = (int)Math.Ceiling(this.categoryService.GetCount() / (double)PageSize);
             return this.View(model);
         }

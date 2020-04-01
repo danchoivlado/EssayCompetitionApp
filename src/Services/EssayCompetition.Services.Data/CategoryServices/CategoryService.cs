@@ -20,6 +20,12 @@ namespace EssayCompetition.Services.Data.CategoryServices
             return this.deletableEntityRepository.All().To<T>().ToList();
         }
 
+        public IEnumerable<T> GetAll<T>(int currentPage, int pageSize)
+        {
+            return this.deletableEntityRepository.All().Skip((currentPage - 1) * pageSize).Take(pageSize)
+                .To<T>().ToList();
+        }
+
         public int GetCount()
         {
             return this.deletableEntityRepository.All().Count();
