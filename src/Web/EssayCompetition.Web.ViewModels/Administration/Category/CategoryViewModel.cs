@@ -4,9 +4,14 @@
 
     public class CategoryViewModel : IMapFrom<EssayCompetition.Data.Models.Category>
     {
+        public int Id { get; set; }
+
         public string Title { get; set; }
 
         public string Description { get; set; }
+
+        public string ShortDescription => this.Description.Length > 60 ? Description.Substring(0, 60) + "..." : Description;
+
 
         public string ImageUrl { get; set; }
     }

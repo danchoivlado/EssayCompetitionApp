@@ -19,5 +19,10 @@ namespace EssayCompetition.Services.Data.CategoryServices
         {
             return this.deletableEntityRepository.All().To<T>().ToList();
         }
+
+        public int GetCount()
+        {
+            return this.deletableEntityRepository.All().Count();
+        }
     }
 }

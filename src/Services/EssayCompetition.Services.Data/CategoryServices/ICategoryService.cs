@@ -6,5 +6,7 @@
     public interface ICategoryService
     {
         IEnumerable<T> GetAll<T>();
+
+        int GetCount();
     }
 }

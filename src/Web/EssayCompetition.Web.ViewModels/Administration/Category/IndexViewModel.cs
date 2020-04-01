@@ -2,8 +2,12 @@
 {
     using System.Collections.Generic;
 
+    using EssayCompetition.Web.ViewModels.Administration.Category.Shared;
+
     public class IndexViewModel
     {
-       public IEnumerable<CategoryViewModel> AllCategories { get; set; }
+        public PagerViewModel Pager { get; set; }
+
+        public IEnumerable<CategoryViewModel> AllCategories { get; set; }
     }
 }
