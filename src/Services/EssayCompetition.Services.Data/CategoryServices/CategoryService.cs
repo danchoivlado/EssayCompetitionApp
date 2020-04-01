@@ -54,10 +54,21 @@
             return this.deletableEntityRepository.All().Count();
         }
 
+        public T GetWithId<T>(int id)
+        {
+            return this.deletableEntityRepository.All().Where(category => category.Id == id).AsQueryable().To<T>().First();
+        }
+
         public async Task<bool> HasWithIdAsync(int id)
         {
             var result = await this.deletableEntityRepository.All().AnyAsync(category => category.Id == id);
             return result;
+        }
+
+        public async Task UpdateAsync(int id, string title, string description, string imageUrl)
+        {
+            this.deletableEntityRepository.Update(new Category { Id = id, Title = title, Description = description, ImageUrl = imageUrl });
+            await this.deletableEntityRepository.SaveChangesAsync();
         }
     }
 }

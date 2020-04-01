@@ -31,20 +31,20 @@
 
         public IActionResult Create()
         {
-            var model = new CreateViewModel();
+            var viewModel = new CreateViewModel();
 
-            return this.View(model);
+            return this.View(viewModel);
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create(CreateViewModel model)
+        public async Task<IActionResult> Create(CreateViewModel viewModel)
         {
             if (!this.ModelState.IsValid)
             {
-                return this.View(model);
+                return this.View(viewModel);
             }
 
-            await this.categoryService.CreateAsync(model.Title, model.Description, model.ImageUrl);
+            await this.categoryService.CreateAsync(viewModel.Title, viewModel.Description, viewModel.ImageUrl);
 
             return this.RedirectToAction("Index");
         }
@@ -55,6 +55,31 @@
             {
                 await this.categoryService.DeleteAsync(id);
             }
+
+            return this.RedirectToAction("Index");
+        }
+
+        public async Task<IActionResult> Edit(int id)
+        {
+            if (!await this.categoryService.HasWithIdAsync(id))
+            {
+                return this.RedirectToAction("Index");
+            }
+
+            var viewModel = this.categoryService.GetWithId<EditViewModel>(id);
+
+            return this.View(viewModel);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Edit(EditViewModel viewModel)
+        {
+            if (!this.ModelState.IsValid)
+            {
+                return this.View(viewModel);
+            }
+
+            await this.categoryService.UpdateAsync(viewModel.Id, viewModel.Title, viewModel.Description, viewModel.ImageUrl);
 
             return this.RedirectToAction("Index");
         }

@@ -17,5 +17,9 @@
         Task DeleteAsync(int id);
 
         Task<bool> HasWithIdAsync(int id);
+
+        T GetWithId<T>(int id);
+
+        Task UpdateAsync(int id, string title, string description, string imageUrl);
     }
 }
