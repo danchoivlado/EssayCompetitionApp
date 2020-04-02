@@ -28,6 +28,8 @@
                               new RolesSeeder(),
                               new SettingsSeeder(),
                               new CategorySeeder(),
+                              new UserSeeder(),
+                              new AddToRoleSeeder(),
                           };
 
             foreach (var seeder in seeders)
