@@ -4,7 +4,11 @@
 
     public interface IUsersService
     {
+        int GetUsersCount();
+
         IEnumerable<T> GetUsersWithRoles<T>();
+
+        IEnumerable<T> GetUsersWithRoles<T>(int currentPage, int pageSize);
 
         IEnumerable<string> GetUserRolesNames(IEnumerable<string> rolesIds);
     }

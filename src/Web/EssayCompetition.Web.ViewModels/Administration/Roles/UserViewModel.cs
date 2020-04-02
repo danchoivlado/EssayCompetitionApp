@@ -15,6 +15,8 @@
 
         public IEnumerable<string> RolesNames { get; set; }
 
+        public string OneLineRoleNames => string.Join(",", this.RolesNames);
+
         public ICollection<IdentityUserRole<string>> Roles { get; set; }
     }
 }

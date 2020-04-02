@@ -30,9 +30,20 @@
             return roleNamesList;
         }
 
+        public int GetUsersCount()
+        {
+            return this.userRepository.All().Count();
+        }
+
         public IEnumerable<T> GetUsersWithRoles<T>()
         {
             return this.userRepository.All().To<T>().ToList();
+        }
+
+        public IEnumerable<T> GetUsersWithRoles<T>(int currentPage, int pageSize)
+        {
+            return this.userRepository.All().Skip((currentPage - 1) * pageSize).Take(pageSize)
+                .To<T>().ToList();
         }
 
         private string GetRoleName(string roleId)
