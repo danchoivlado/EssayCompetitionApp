@@ -1,0 +1,16 @@
+﻿@using EssayCompetition.Web.ViewModels.Administration.Roles
+@model IndexViewModel
+@{
+    ViewData["Title"] = "Index";
+}
+@foreach (var user in Model.Users)
+{
+    <p>@user.Id</p>
+    <p>@user.UserName</p>
+    foreach (var role in user.RolesNames)
+    {
+        <p>@role</p>
+    }
+}
+<h1>Index</h1>
+
