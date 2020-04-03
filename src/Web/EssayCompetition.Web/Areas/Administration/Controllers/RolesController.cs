@@ -1,8 +1,11 @@
 ﻿namespace EssayCompetition.Web.Areas.Administration.Controllers
 {
     using System;
+    using System.Collections.Generic;
     using System.Linq;
-
+    using System.Threading.Tasks;
+    using EssayCompetition.Common;
+    using EssayCompetition.Services.Data.RolesServices;
     using EssayCompetition.Services.Data.UsersServices;
     using EssayCompetition.Web.ViewModels.Administration.Roles;
     using EssayCompetition.Web.ViewModels.Administration.Roles.Shared;
@@ -12,10 +15,12 @@
     {
         private const int PageSize = 5;
         private readonly IUsersService usersService;
+        private readonly IRolesService rolesService;
 
-        public RolesController(IUsersService usersService)
+        public RolesController(IUsersService usersService, IRolesService rolesService)
         {
             this.usersService = usersService;
+            this.rolesService = rolesService;
         }
 
         public IActionResult Index(IndexViewModel viewModel)
@@ -34,6 +39,25 @@
 
             viewModel.Pager.PagesCount = (int)Math.Ceiling(this.usersService.GetUsersCount() / (double)PageSize);
             return this.View(viewModel);
+        }
+
+        public IActionResult Create()
+        {
+            var viewModel = new CreateViewModel();
+            return this.View(viewModel);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Create(CreateViewModel viewModel)
+        {
+            if (!this.ModelState.IsValid)
+            {
+                return this.View(viewModel);
+            }
+
+            await this.rolesService.CreateRoleAsync(viewModel.ToQueryable());
+
+            return this.RedirectToAction("Index");
         }
     }
 }
