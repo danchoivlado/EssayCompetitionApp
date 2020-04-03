@@ -18,6 +18,11 @@
             this.roleRepository = roleRepository;
         }
 
+        public T GetUserById<T>(string id)
+        {
+            return this.userRepository.All().Where(x => x.Id == id).To<T>().First();
+        }
+
         public IEnumerable<string> GetUserRolesNames(IEnumerable<string> rolesIds)
         {
             var roleNamesList = new List<string>();
@@ -44,6 +49,11 @@
         {
             return this.userRepository.All().Skip((currentPage - 1) * pageSize).Take(pageSize)
                 .To<T>().ToList();
+        }
+
+        public bool HasUserWithId(string id)
+        {
+            return this.userRepository.All().Any(x => x.Id == id);
         }
 
         private string GetRoleName(string roleId)

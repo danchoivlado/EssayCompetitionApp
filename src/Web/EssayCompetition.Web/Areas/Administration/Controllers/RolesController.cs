@@ -1,9 +1,9 @@
 ﻿namespace EssayCompetition.Web.Areas.Administration.Controllers
 {
     using System;
-    using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
+
     using EssayCompetition.Common;
     using EssayCompetition.Services.Data.RolesServices;
     using EssayCompetition.Services.Data.UsersServices;
@@ -58,6 +58,30 @@
             await this.rolesService.CreateRoleAsync(viewModel.ToQueryable());
 
             return this.RedirectToAction("Index");
+        }
+
+        public async Task<IActionResult> Edit(string id)
+        {
+            if (!this.usersService.HasUserWithId(id))
+            {
+                return this.RedirectToAction("Index");
+            }
+
+            //var viewModel = this.categoryService.GetWithId<EditViewModel>(id);
+
+            return this.View(/*viewModel*/);
+        }
+
+        public IActionResult Details(string id)
+        {
+            if (!this.usersService.HasUserWithId(id))
+            {
+                return this.RedirectToAction("Index");
+            }
+
+            var viewModel = this.usersService.GetUserById<DetailsViewModel>(id);
+
+            return this.View(viewModel);
         }
     }
 }
