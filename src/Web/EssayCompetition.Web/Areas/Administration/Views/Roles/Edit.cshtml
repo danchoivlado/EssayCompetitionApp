@@ -2,6 +2,7 @@
 @model EditViewModel
 @{
     ViewData["Title"] = "Edit";
+    var AllRoles = Model.AllAvailableRoles.Select(x => new SelectListItem(x.Name, x.Id));
 }
 <h1>Edit</h1>
 
@@ -9,6 +10,18 @@
 <hr />
 <div class="row">
     <div class="col-md-4">
+        <form asp-action="AddUserToRole" method="post">
+            <div class="form-group">
+                <input type="submit" value="Add" class="btn btn-primary" />
+            </div>
+            <input type="hidden" asp-for="UserName"  />
+            <input type="hidden" asp-for="Email"  />
+            <input type="hidden" asp-for="Id" value="@Model.Id" />
+            <div>
+                <select asp-for="RoleId" asp-items="AllRoles" class="form-control"></select>
+                <span asp-validation-for="RoleId" class="text-danger"></span>
+            </div>
+        </form>
         <form asp-action="Edit" method="post">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="Id" />

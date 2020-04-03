@@ -21,7 +21,7 @@
         private readonly UserManager<ApplicationUser> userManager;
         private readonly RoleManager<ApplicationRole> roleManager;
 
-        public RolesController(IUsersService usersService, IRolesService rolesService, 
+        public RolesController(IUsersService usersService, IRolesService rolesService,
             UserManager<ApplicationUser> userManager, RoleManager<ApplicationRole> roleManager)
         {
             this.usersService = usersService;
@@ -62,6 +62,12 @@
                 return this.View(viewModel);
             }
 
+            if (this.rolesService.HasRoleWithName(viewModel.Name))
+            {
+                this.ModelState.AddModelError("Name", "There is already role with this name.");
+                return this.View(viewModel);
+            }
+
             await this.rolesService.CreateRoleAsync(viewModel.ToQueryable());
 
             return this.RedirectToAction("Index");
@@ -71,12 +77,13 @@
         {
             if (!this.usersService.HasUserWithId(id))
             {
-                return this.RedirectToAction("Index");
+                return this.NotFound();
             }
 
             var viewModel = this.usersService.GetUserById<EditViewModel>(id);
 
             viewModel.RolesNames = this.usersService.GetUserRolesNames(viewModel.Roles.Select(x => x.RoleId));
+            viewModel.AllAvailableRoles = this.rolesService.GetAll<RoleDropDownViewModel>();
 
             return this.View(viewModel);
         }
@@ -85,7 +92,7 @@
         {
             if (!this.usersService.HasUserWithId(id))
             {
-                return this.RedirectToAction("Index");
+                return this.NotFound();
             }
 
             var viewModel = this.usersService.GetUserById<DetailsViewModel>(id);
@@ -100,6 +107,53 @@
             await this.userManager.RemoveFromRoleAsync(user, role.Name);
 
             return this.RedirectToAction("Edit", new { @id = id });
+        }
+
+        public IActionResult AddRoleToUser(string id)
+        {
+            return this.View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> AddUserToRole(EditViewModel editViewModel)
+        {
+            if (!this.ModelState.IsValid)
+            {
+                return this.RedirectToAction("Index");
+            }
+
+            if (!this.usersService.HasUserWithId(editViewModel.Id) && !this.rolesService.HasRoleWithId(editViewModel.RoleId))
+            {
+                return this.NotFound();
+            }
+
+            var role = await this.roleManager.FindByIdAsync(editViewModel.RoleId);
+            var user = await this.userManager.FindByIdAsync(editViewModel.Id);
+            await this.userManager.AddToRoleAsync(user, role.Name);
+            return this.RedirectToAction("Edit", new { @id = editViewModel.Id });
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Edit(EditViewModel editViewModel)
+        {
+            if (!this.ModelState.IsValid)
+            {
+                return this.View(editViewModel);
+            }
+
+            if (!this.usersService.HasUserWithId(editViewModel.Id))
+            {
+                return this.NotFound();
+            }
+
+            await this.usersService.UpdateUserAsync(editViewModel.Id, editViewModel.UserName, editViewModel.Email);
+            return this.RedirectToAction("Index");
+        }
+
+        public async Task<IActionResult> Delete(string id)
+        {
+            await this.usersService.DeleteUserAsync(id);
+            return this.RedirectToAction("Index");
         }
     }
 }

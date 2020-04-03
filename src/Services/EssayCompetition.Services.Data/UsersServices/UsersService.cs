@@ -2,7 +2,7 @@
 {
     using System.Collections.Generic;
     using System.Linq;
-
+    using System.Threading.Tasks;
     using EssayCompetition.Data.Common.Repositories;
     using EssayCompetition.Data.Models;
     using EssayCompetition.Services.Mapping;
@@ -16,6 +16,13 @@
         {
             this.userRepository = userRepository;
             this.roleRepository = roleRepository;
+        }
+
+        public async Task DeleteUserAsync(string userId)
+        {
+            var user = this.userRepository.All().First(x => x.Id == userId);
+            this.userRepository.Delete(user);
+            await this.userRepository.SaveChangesAsync();
         }
 
         public T GetUserById<T>(string id)
@@ -54,6 +61,16 @@
         public bool HasUserWithId(string id)
         {
             return this.userRepository.All().Any(x => x.Id == id);
+        }
+
+        public async Task UpdateUserAsync(string userId, string userName, string email)
+        {
+            var user = this.userRepository.All().First(x => x.Id == userId);
+            user.UserName = userName;
+            user.Email = email;
+
+            this.userRepository.Update(user);
+            await this.userRepository.SaveChangesAsync();
         }
 
         private string GetRoleName(string roleId)

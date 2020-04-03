@@ -9,7 +9,7 @@
 
         public int RoleId { get; set; }
 
-        public IEnumerable<RolesDropDownViewModel> Roles { get; set; }
+        public IEnumerable<RoleViewModel> Roles { get; set; }
 
         public PagerViewModel Pager { get; set; }
     }
