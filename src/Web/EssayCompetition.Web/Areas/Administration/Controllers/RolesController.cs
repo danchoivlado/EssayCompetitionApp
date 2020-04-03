@@ -5,10 +5,12 @@
     using System.Threading.Tasks;
 
     using EssayCompetition.Common;
+    using EssayCompetition.Data.Models;
     using EssayCompetition.Services.Data.RolesServices;
     using EssayCompetition.Services.Data.UsersServices;
     using EssayCompetition.Web.ViewModels.Administration.Roles;
     using EssayCompetition.Web.ViewModels.Administration.Roles.Shared;
+    using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Mvc;
 
     public class RolesController : AdministrationController
@@ -16,11 +18,16 @@
         private const int PageSize = 5;
         private readonly IUsersService usersService;
         private readonly IRolesService rolesService;
+        private readonly UserManager<ApplicationUser> userManager;
+        private readonly RoleManager<ApplicationRole> roleManager;
 
-        public RolesController(IUsersService usersService, IRolesService rolesService)
+        public RolesController(IUsersService usersService, IRolesService rolesService, 
+            UserManager<ApplicationUser> userManager, RoleManager<ApplicationRole> roleManager)
         {
             this.usersService = usersService;
             this.rolesService = rolesService;
+            this.userManager = userManager;
+            this.roleManager = roleManager;
         }
 
         public IActionResult Index(IndexViewModel viewModel)
@@ -67,9 +74,11 @@
                 return this.RedirectToAction("Index");
             }
 
-            //var viewModel = this.categoryService.GetWithId<EditViewModel>(id);
+            var viewModel = this.usersService.GetUserById<EditViewModel>(id);
 
-            return this.View(/*viewModel*/);
+            viewModel.RolesNames = this.usersService.GetUserRolesNames(viewModel.Roles.Select(x => x.RoleId));
+
+            return this.View(viewModel);
         }
 
         public IActionResult Details(string id)
@@ -82,6 +91,15 @@
             var viewModel = this.usersService.GetUserById<DetailsViewModel>(id);
 
             return this.View(viewModel);
+        }
+
+        public async Task<IActionResult> DeleteUserRole(string id, string roleName)
+        {
+            var role = await this.roleManager.FindByNameAsync(roleName);
+            var user = await this.userManager.FindByIdAsync(id);
+            await this.userManager.RemoveFromRoleAsync(user, role.Name);
+
+            return this.RedirectToAction("Edit", new { @id = id });
         }
     }
 }
