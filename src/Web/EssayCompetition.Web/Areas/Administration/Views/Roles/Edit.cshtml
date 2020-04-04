@@ -14,8 +14,8 @@
             <div class="form-group">
                 <input type="submit" value="Add" class="btn btn-primary" />
             </div>
-            <input type="hidden" asp-for="UserName"  />
-            <input type="hidden" asp-for="Email"  />
+            <input type="hidden" asp-for="UserName"  id="hidUserNameId" />
+            <input type="hidden" asp-for="Email"  id="hidUserEmail"/>
             <input type="hidden" asp-for="Id" value="@Model.Id" />
             <div>
                 <select asp-for="RoleId" asp-items="AllRoles" class="form-control"></select>
@@ -27,12 +27,12 @@
             <input type="hidden" asp-for="Id" />
             <div class="form-group">
                 <label asp-for="UserName" class="control-label"></label>
-                <input asp-for="UserName" class="form-control" />
+                <input id="userNameId" asp-for="UserName" class="form-control" />
                 <span asp-validation-for="UserName" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Email" class="control-label"></label>
-                <input asp-for="Email" class="form-control" />
+                <input id="emailId" asp-for="Email" class="form-control" />
                 <span asp-validation-for="Email" class="text-danger"></span>
             </div>
             <table class="table">
@@ -69,3 +69,16 @@
     <a asp-action="Index">Back to List</a>
 </div>
 
+@section scripts{ 
+<script>
+    $('#userNameId').change(function() {
+        $('#hidUserNameId').val($(this).val());
+});
+</script>
+
+<script>
+    $('#emailId').change(function () {
+        $('#hidUserEmail').val($(this).val());
+    });
+</script>
+}

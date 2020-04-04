@@ -1,8 +1,8 @@
-﻿using EssayCompetition.Data.Models;
-using EssayCompetition.Services.Mapping;
-
-namespace EssayCompetition.Web.ViewModels.Administration.Roles
+﻿namespace EssayCompetition.Web.ViewModels.Administration.Roles
 {
+    using EssayCompetition.Data.Models;
+    using EssayCompetition.Services.Mapping;
+
     public class DetailsViewModel : IMapFrom<ApplicationUser>
     {
         public string Id { get; set; }

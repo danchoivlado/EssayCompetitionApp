@@ -73,7 +73,7 @@
             return this.RedirectToAction("Index");
         }
 
-        public async Task<IActionResult> Edit(string id)
+        public IActionResult Edit(string id)
         {
             if (!this.usersService.HasUserWithId(id))
             {
@@ -127,6 +127,7 @@
                 return this.NotFound();
             }
 
+            await this.usersService.UpdateUserAsync(editViewModel.Id, editViewModel.UserName, editViewModel.Email);
             var role = await this.roleManager.FindByIdAsync(editViewModel.RoleId);
             var user = await this.userManager.FindByIdAsync(editViewModel.Id);
             await this.userManager.AddToRoleAsync(user, role.Name);

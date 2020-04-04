@@ -1,7 +1,7 @@
 ﻿namespace EssayCompetition.Web
 {
     using System.Reflection;
-
+    using CloudinaryDotNet;
     using EssayCompetition.Data;
     using EssayCompetition.Data.Common;
     using EssayCompetition.Data.Common.Repositories;
@@ -54,6 +54,13 @@
             {
                 options.Filters.Add(new AutoValidateAntiforgeryTokenAttribute());
             });
+            Account account = new Account(
+                this.configuration["CloudinarySettings:CloudName"],
+                this.configuration["CloudinarySettings:ApiKey"],
+                this.configuration["CloudinarySettings:ApiSecret"]);
+
+            Cloudinary cloudinary = new Cloudinary(account);
+            services.AddSingleton(cloudinary);
 
             services.AddRazorPages();
 
