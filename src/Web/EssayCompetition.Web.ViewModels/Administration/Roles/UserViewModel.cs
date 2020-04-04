@@ -13,6 +13,8 @@
 
         public string UserName { get; set; }
 
+        public string Email { get; set; }
+
         public IEnumerable<string> RolesNames { get; set; }
 
         public string OneLineRoleNames => string.Join(",", this.RolesNames);

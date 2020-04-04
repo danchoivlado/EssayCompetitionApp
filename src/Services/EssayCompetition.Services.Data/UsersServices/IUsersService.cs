@@ -11,6 +11,9 @@
 
         IEnumerable<T> GetUsersWithRoles<T>(int currentPage, int pageSize);
 
+        IEnumerable<T> GetUsersWithRoles<T>(int currentPage, int pageSize, string searchString);
+
+
         IEnumerable<string> GetUserRolesNames(IEnumerable<string> rolesIds);
 
         bool HasUserWithId(string id);

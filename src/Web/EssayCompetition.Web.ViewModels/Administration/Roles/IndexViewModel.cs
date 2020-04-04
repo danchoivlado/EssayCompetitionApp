@@ -1,7 +1,8 @@
 ﻿namespace EssayCompetition.Web.ViewModels.Administration.Roles
 {
-    using EssayCompetition.Web.ViewModels.Administration.Roles.Shared;
     using System.Collections.Generic;
+
+    using EssayCompetition.Web.ViewModels.Administration.Roles.Shared;
 
     public class IndexViewModel
     {

@@ -30,14 +30,14 @@
             this.roleManager = roleManager;
         }
 
-        public IActionResult Index(IndexViewModel viewModel)
+        public IActionResult Index(IndexViewModel viewModel, string searchString)
         {
             viewModel ??= new IndexViewModel();
             viewModel.Pager ??= new PagerViewModel();
             viewModel.Pager.CurrentPage = viewModel.Pager.CurrentPage <= 0 ? 1 : viewModel.Pager.CurrentPage;
 
 
-            viewModel.Users = this.usersService.GetUsersWithRoles<UserViewModel>(viewModel.Pager.CurrentPage, PageSize);
+            viewModel.Users = this.usersService.GetUsersWithRoles<UserViewModel>(viewModel.Pager.CurrentPage, PageSize, searchString);
 
             foreach (var user in viewModel.Users)
             {

@@ -58,6 +58,19 @@
                 .To<T>().ToList();
         }
 
+        public IEnumerable<T> GetUsersWithRoles<T>(int currentPage, int pageSize, string searchString)
+        {
+            var results = this.userRepository.All();
+
+            if (!string.IsNullOrEmpty(searchString))
+            {
+                results = results.Where(x => x.UserName.Contains(searchString));
+            }
+
+            return results.Skip((currentPage - 1) * pageSize).Take(pageSize)
+                .To<T>().ToList();
+        }
+
         public bool HasUserWithId(string id)
         {
             return this.userRepository.All().Any(x => x.Id == id);

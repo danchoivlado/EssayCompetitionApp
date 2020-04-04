@@ -4,12 +4,21 @@
     ViewData["Title"] = "Index";
 }
 <h1>Index</h1>
-<p> <a asp-action="Create">Create New</a> </p>
+<p> <a asp-action="Create">Create Role</a> </p>
+<form asp-action="Index" method="get">
+    <p>
+        Title: <input type="text" name="SearchString">
+        <input type="submit" value="Filter" asp-rou />
+    </p>
+</form>
 <table class="table">
     <thead>
         <tr>
             <th>
                 UserName
+            </th>
+            <th>
+                Email
             </th>
             <th>
                 Roles
@@ -23,6 +32,9 @@
             <tr>
                 <td>
                     @Html.DisplayFor(modelItem => item.UserName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Email)
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.OneLineRoleNames)
