@@ -21,12 +21,12 @@
         <tr>
             <th>
                 <div style=@(Model.SortOrder == "NameSortParm" ? "text-decoration-line:underline" : "")>
-                    <a asp-action="Index" asp-route-SortOrder="NameSortParm">UserName</a>
+                    <a asp-action="Index" asp-route-SearchOnlyDeleted="@Model.SearchOnlyDeleted" asp-route-SortOrder="NameSortParm">UserName</a>
                 </div>
             </th>
             <th>
                 <div style=@(Model.SortOrder == "EmailSortParm" ? "text-decoration-line:underline" : "")>
-                    <a asp-action="Index" asp-route-SortOrder="EmailSortParm">Email</a>
+                    <a asp-action="Index" asp-route-SearchOnlyDeleted="@Model.SearchOnlyDeleted" asp-route-SortOrder="EmailSortParm">Email</a>
                 </div>
             </th>
             <th>
@@ -57,7 +57,7 @@
                     <a asp-action="Details" asp-route-fromDeleted=@Model.SearchOnlyDeleted asp-route-id="@item.Id">Details</a> |
                     @if (Model.SearchOnlyDeleted)
                     {
-                        <a asp-action="UnDelete" asp-route-id="@item.Id">UnDelete</a>
+                        <a asp-action="UnDelete" asp-route-SearchOnlyDeleted=@true asp-route-id="@item.Id">UnDelete</a>
                     }
                     else
                     {

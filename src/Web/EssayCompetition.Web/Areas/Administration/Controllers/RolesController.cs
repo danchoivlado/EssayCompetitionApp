@@ -169,7 +169,7 @@
             }
 
             await this.usersService.UnDeleteUserAsync(id);
-            return this.RedirectToAction("Index");
+            return this.RedirectToAction("Index", new { @SearchOnlyDeleted = true });
         }
     }
 }
