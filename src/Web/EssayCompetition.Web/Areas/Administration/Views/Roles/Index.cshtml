@@ -9,8 +9,9 @@
     <div class="form-actions no-color">
         <p>
             <input type="hidden" asp-for="@Model.SortOrder">
-            Find by name: <input type="text" name="SearchString" value="@Model.SearchString"/>
-            <input type="submit" value="Search" class="btn btn-default"  /> |
+            <input type="hidden" asp-for="@Model.SearchOnlyDeleted">
+            Find by name: <input type="text" name="SearchString" value="@Model.SearchString" />
+            <input type="submit" value="Search" class="btn btn-default" /> |
             <a asp-action="Index">Back to Full List</a>
         </p>
     </div>
@@ -19,17 +20,22 @@
     <thead>
         <tr>
             <th>
-                <div style=@(Model.SortOrder == "NameSortParm" ? "text-decoration-line:underline" : "") >
+                <div style=@(Model.SortOrder == "NameSortParm" ? "text-decoration-line:underline" : "")>
                     <a asp-action="Index" asp-route-SortOrder="NameSortParm">UserName</a>
                 </div>
             </th>
             <th>
                 <div style=@(Model.SortOrder == "EmailSortParm" ? "text-decoration-line:underline" : "")>
                     <a asp-action="Index" asp-route-SortOrder="EmailSortParm">Email</a>
-                    </div>
+                </div>
             </th>
             <th>
                 Roles
+            </th>
+            <th>
+                <div style=@(Model.SearchOnlyDeleted == true ? "text-decoration-line:underline" : "")>
+                    <a asp-action="Index" asp-route-SearchOnlyDeleted=@true>SearchOnlyDeleted</a>
+                </div>
             </th>
             <th></th>
         </tr>
@@ -48,22 +54,30 @@
                     @Html.DisplayFor(modelItem => item.OneLineRoleNames)
                 </td>
                 <td>
-                    <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                    <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                    <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                    <a asp-action="Details" asp-route-fromDeleted=@Model.SearchOnlyDeleted asp-route-id="@item.Id">Details</a> |
+                    @if (Model.SearchOnlyDeleted)
+                    {
+                        <a asp-action="UnDelete" asp-route-id="@item.Id">UnDelete</a>
+                    }
+                    else
+                    {
+                        <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> @Html.Raw("|")
+                        <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+
+                    }
                 </td>
             </tr>
         }
     </tbody>
-    <ul class="pagination">
-        @for (var i = 1; i <= Model.Pager.PagesCount; i++)
-        {
-            <li class="page-item @(i == Model.Pager.CurrentPage ? "active" : "")">
-                <a asp-route-Pager.CurrentPage="@i" class="page-link">@i</a>
-            </li>
-        }
-    </ul>
 </table>
+<ul class="pagination">
+    @for (var i = 1; i <= Model.Pager.PagesCount; i++)
+    {
+        <li class="page-item @(i == Model.Pager.CurrentPage ? "active" : "")">
+            <a asp-route-Pager.CurrentPage="@i" class="page-link">@i</a>
+        </li>
+    }
+</ul>
 
 
 

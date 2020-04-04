@@ -11,7 +11,7 @@
 
         IEnumerable<T> GetUsersWithRoles<T>(int currentPage, int pageSize);
 
-        IEnumerable<T> GetUsersWithRoles<T>(int currentPage, int pageSize, string searchString, string sortOrder);
+        IEnumerable<T> GetUsersWithRoles<T>(int currentPage, int pageSize, string searchString, string sortOrder, bool searchOnlyDeleted);
 
 
         IEnumerable<string> GetUserRolesNames(IEnumerable<string> rolesIds);
@@ -23,5 +23,9 @@
         Task UpdateUserAsync(string userId, string userName, string email);
 
         Task DeleteUserAsync(string userId);
+
+        Task UnDeleteUserAsync(string userId);
+
+        bool HasDeletedUserWithId(string userId);
     }
 }

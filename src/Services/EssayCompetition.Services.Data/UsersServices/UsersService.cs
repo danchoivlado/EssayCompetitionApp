@@ -27,7 +27,7 @@
 
         public T GetUserById<T>(string id)
         {
-            return this.userRepository.All().Where(x => x.Id == id).To<T>().First();
+            return this.userRepository.AllWithDeleted().Where(x => x.Id == id).To<T>().First();
         }
 
         public IEnumerable<string> GetUserRolesNames(IEnumerable<string> rolesIds)
@@ -58,9 +58,13 @@
                 .To<T>().ToList();
         }
 
-        public IEnumerable<T> GetUsersWithRoles<T>(int currentPage, int pageSize, string searchString, string sortOrder)
+        public IEnumerable<T> GetUsersWithRoles<T>(int currentPage, int pageSize, string searchString, string sortOrder, bool searchOnlyDeleted)
         {
             var results = this.userRepository.All();
+            if (searchOnlyDeleted)
+            {
+                results = this.userRepository.AllWithDeleted().Where(x => x.IsDeleted == true);
+            }
 
             switch (sortOrder)
             {
@@ -85,6 +89,9 @@
                     case "EmailSortParm":
                         results = results.Where(x => x.Email.Contains(searchString));
                         break;
+                    default:
+                        results = results.Where(x => x.UserName.Contains(searchString));
+                        break;
                 }
             }
 
@@ -92,9 +99,22 @@
                 .To<T>().ToList();
         }
 
+        public bool HasDeletedUserWithId(string userId)
+        {
+            return this.userRepository.AllWithDeleted().Any(x => x.Id == userId);
+        }
+
         public bool HasUserWithId(string id)
         {
             return this.userRepository.All().Any(x => x.Id == id);
+        }
+
+        public async Task UnDeleteUserAsync(string userId)
+        {
+            var user = this.userRepository.AllWithDeleted().First(x => x.Id == userId);
+            this.userRepository.Undelete(user);
+
+            await this.userRepository.SaveChangesAsync();
         }
 
         public async Task UpdateUserAsync(string userId, string userName, string email)
