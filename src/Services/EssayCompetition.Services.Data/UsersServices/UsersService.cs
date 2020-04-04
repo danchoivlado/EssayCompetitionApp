@@ -58,13 +58,34 @@
                 .To<T>().ToList();
         }
 
-        public IEnumerable<T> GetUsersWithRoles<T>(int currentPage, int pageSize, string searchString)
+        public IEnumerable<T> GetUsersWithRoles<T>(int currentPage, int pageSize, string searchString, string sortOrder)
         {
             var results = this.userRepository.All();
 
+            switch (sortOrder)
+            {
+                case "NameSortParm":
+                    results = results.OrderBy(x => x.UserName);
+                    break;
+                case "EmailSortParm":
+                    results = results.OrderBy(x => x.Email);
+                    break;
+                default:
+                    results = results.OrderBy(x => x.UserName);
+                    break;
+            }
+
             if (!string.IsNullOrEmpty(searchString))
             {
-                results = results.Where(x => x.UserName.Contains(searchString));
+                switch (sortOrder)
+                {
+                    case "NameSortParm":
+                        results = results.Where(x => x.UserName.Contains(searchString));
+                        break;
+                    case "EmailSortParm":
+                        results = results.Where(x => x.Email.Contains(searchString));
+                        break;
+                }
             }
 
             return results.Skip((currentPage - 1) * pageSize).Take(pageSize)

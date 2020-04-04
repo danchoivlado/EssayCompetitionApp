@@ -6,19 +6,27 @@
 <h1>Index</h1>
 <p> <a asp-action="Create">Create Role</a> </p>
 <form asp-action="Index" method="get">
-    <p>
-        Title: <input type="text" name="SearchString">
-        <input type="submit" value="Filter" asp-rou />
-    </p>
+    <div class="form-actions no-color">
+        <p>
+            <input type="hidden" asp-for="@Model.SortOrder">
+            Find by name: <input type="text" name="SearchString" value="@Model.SearchString"/>
+            <input type="submit" value="Search" class="btn btn-default"  /> |
+            <a asp-action="Index">Back to Full List</a>
+        </p>
+    </div>
 </form>
 <table class="table">
     <thead>
         <tr>
             <th>
-                UserName
+                <div style=@(Model.SortOrder == "NameSortParm" ? "text-decoration-line:underline" : "") >
+                    <a asp-action="Index" asp-route-SortOrder="NameSortParm">UserName</a>
+                </div>
             </th>
             <th>
-                Email
+                <div style=@(Model.SortOrder == "EmailSortParm" ? "text-decoration-line:underline" : "")>
+                    <a asp-action="Index" asp-route-SortOrder="EmailSortParm">Email</a>
+                    </div>
             </th>
             <th>
                 Roles
