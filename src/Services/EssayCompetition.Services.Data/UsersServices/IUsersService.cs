@@ -13,7 +13,6 @@
 
         IEnumerable<T> GetUsersWithRoles<T>(int currentPage, int pageSize, string searchString, string sortOrder, bool searchOnlyDeleted);
 
-
         IEnumerable<string> GetUserRolesNames(IEnumerable<string> rolesIds);
 
         bool HasUserWithId(string id);
