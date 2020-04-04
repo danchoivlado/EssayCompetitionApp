@@ -13,5 +13,11 @@
         public IEnumerable<RoleViewModel> Roles { get; set; }
 
         public PagerViewModel Pager { get; set; }
+
+        public string SortOrder { get; set; }
+
+        public string SearchString { get; set; }
+
+        public bool SearchOnlyDeleted { get; set; }
     }
 }

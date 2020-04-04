@@ -15,7 +15,7 @@
 
     public class RolesController : AdministrationController
     {
-        private const int PageSize = 5;
+        private const int PageSize = 10;
         private readonly IUsersService usersService;
         private readonly IRolesService rolesService;
         private readonly UserManager<ApplicationUser> userManager;
@@ -30,14 +30,14 @@
             this.roleManager = roleManager;
         }
 
-        public IActionResult Index(IndexViewModel viewModel, string searchString)
+        public IActionResult Index(IndexViewModel viewModel)
         {
             viewModel ??= new IndexViewModel();
             viewModel.Pager ??= new PagerViewModel();
             viewModel.Pager.CurrentPage = viewModel.Pager.CurrentPage <= 0 ? 1 : viewModel.Pager.CurrentPage;
 
-
-            viewModel.Users = this.usersService.GetUsersWithRoles<UserViewModel>(viewModel.Pager.CurrentPage, PageSize, searchString);
+            viewModel.Users = this.usersService.GetUsersWithRoles<UserViewModel>
+                (viewModel.Pager.CurrentPage, PageSize, viewModel.SearchString, viewModel.SortOrder, viewModel.SearchOnlyDeleted);
 
             foreach (var user in viewModel.Users)
             {
@@ -88,15 +88,15 @@
             return this.View(viewModel);
         }
 
-        public IActionResult Details(string id)
+        public IActionResult Details(string id, bool fromDeleted)
         {
-            if (!this.usersService.HasUserWithId(id))
+            if (!this.usersService.HasUserWithId(id) && !this.usersService.HasDeletedUserWithId(id))
             {
                 return this.NotFound();
             }
 
             var viewModel = this.usersService.GetUserById<DetailsViewModel>(id);
-
+            viewModel.FromDeleted = fromDeleted;
             return this.View(viewModel);
         }
 
@@ -152,8 +152,24 @@
 
         public async Task<IActionResult> Delete(string id)
         {
+            if (!this.usersService.HasUserWithId(id))
+            {
+                return this.NotFound();
+            }
+
             await this.usersService.DeleteUserAsync(id);
             return this.RedirectToAction("Index");
+        }
+
+        public async Task<IActionResult> UnDelete(string id)
+        {
+            if (!this.usersService.HasDeletedUserWithId(id))
+            {
+                return this.NotFound();
+            }
+
+            await this.usersService.UnDeleteUserAsync(id);
+            return this.RedirectToAction("Index", new { @SearchOnlyDeleted = true });
         }
     }
 }

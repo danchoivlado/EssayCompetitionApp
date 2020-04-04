@@ -26,5 +26,7 @@ namespace EssayCompetition.Web.ViewModels.Administration.Roles
         public bool LockoutEnabled { get; set; }
 
         public int AccessFailedCount { get; set; }
+
+        public bool FromDeleted { get; set; }
     }
 }
