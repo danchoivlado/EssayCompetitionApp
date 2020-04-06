@@ -94,6 +94,11 @@
                 return this.View(viewModel);
             }
 
+            if (viewModel.Content != null)
+            {
+                viewModel.ImageUrl = await this.categoryService.UploadImageToCloudinaryAsync(viewModel.Content);
+            }
+
             await this.categoryService.UpdateAsync(viewModel.Id, viewModel.Title, viewModel.Description, viewModel.ImageUrl);
 
             return this.RedirectToAction("Index");
