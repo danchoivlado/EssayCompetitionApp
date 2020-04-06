@@ -13,6 +13,7 @@
         public string Description { get; set; }
 
         [Required]
+        [Display(Name = "URL or file path")]
         public string ImageUrl { get; set; }
 
         public IFormFile Content { get; set; }
