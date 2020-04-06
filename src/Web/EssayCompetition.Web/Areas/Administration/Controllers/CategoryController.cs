@@ -3,6 +3,7 @@
     using System;
     using System.IO;
     using System.Threading.Tasks;
+
     using CloudinaryDotNet;
     using CloudinaryDotNet.Actions;
     using EssayCompetition.Services.Data.CategoryServices;
@@ -53,6 +54,11 @@
                 return this.View(viewModel);
             }
 
+            if (viewModel.Content != null)
+            {
+                viewModel.ImageUrl = await this.categoryService.UploadImageToCloudinaryAsync(viewModel.Content);
+            }
+
             await this.categoryService.CreateAsync(viewModel.Title, viewModel.Description, viewModel.ImageUrl);
 
             return this.RedirectToAction("Index");
@@ -91,32 +97,6 @@
             await this.categoryService.UpdateAsync(viewModel.Id, viewModel.Title, viewModel.Description, viewModel.ImageUrl);
 
             return this.RedirectToAction("Index");
-        }
-
-        public async Task<IActionResult> Upload(CreateViewModel viewModel)
-        {
-            var res = new ImageUploadResult();
-            var file = viewModel.Content;
-            byte[] destinationImage;
-
-            using (var memoryStream = new MemoryStream())
-            {
-                await file.CopyToAsync(memoryStream);
-                destinationImage = memoryStream.ToArray();
-            }
-
-            using (var destinationStream = new MemoryStream(destinationImage))
-            {
-                var uploadParams = new ImageUploadParams()
-                {
-                    File = new FileDescription(file.Name, destinationStream),
-                };
-
-                res = await this.cloudinary.UploadAsync(uploadParams);
-            }
-
-            var url = res.Uri.AbsoluteUri;
-            return this.RedirectToAction("Create", new { @imageUrl = url });
         }
     }
 }

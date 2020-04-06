@@ -1,5 +1,6 @@
 ﻿namespace EssayCompetition.Services.Data.CategoryServices
 {
+    using Microsoft.AspNetCore.Http;
     using System.Collections;
     using System.Collections.Generic;
     using System.Threading.Tasks;
@@ -21,5 +22,7 @@
         T GetWithId<T>(int id);
 
         Task UpdateAsync(int id, string title, string description, string imageUrl);
+
+        Task<string> UploadImageToCloudinaryAsync(IFormFile content);
     }
 }
