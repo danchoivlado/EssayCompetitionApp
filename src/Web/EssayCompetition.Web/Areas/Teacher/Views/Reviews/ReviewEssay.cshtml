@@ -4,13 +4,13 @@
     ViewData["Title"] = "ReviewEssay";
     var allRoles = Model.AllAvailableCategories.Select(x => new SelectListItem(x.Title, x.Id.ToString()));
 }
-<h1>Edit</h1>
+<h1>Grade</h1>
 
-<h4>Category</h4>
+<h4>Essay</h4>
 <hr />
 <div class="row">
     <div class="col-md-12">
-        <form asp-action="Edit" enctype="multipart/form-data" method="post">
+        <form asp-action="Grade" enctype="multipart/form-data" method="post">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="@Model.Id" />
             <div class="form-group row-cols-md-4">
@@ -50,9 +50,19 @@
                 <select asp-for="@Model.CategoryId" asp-items="@allRoles" class="form-control"></select>
                 <span asp-validation-for="@Model.CategoryId" class="text-danger"></span>
             </div>
+            <div class="form-group row-cols-md-3">
+                <label asp-for="@Model.PrivateComments" class="control-label"></label>
+                <textarea asp-for="@Model.PrivateComments" rows="4" class="form-control"> </textarea>
+                <span asp-validation-for="@Model.PrivateComments" class="text-danger"></span>
+            </div>
             <div class="form-group row-cols-md-4">
-                <b>@Html.DisplayNameFor(model => model.UserId)</b> <br />
-                @Html.DisplayFor(model => model.UserId)
+                <label asp-for="@Model.Points" class="control-label"></label>
+                <input asp-for="@Model.Points" class="form-control" />
+                <span asp-validation-for="@Model.Points" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <b><label asp-for="@Model.User.Id" class="control-label">Created by user with id</label></b><br />
+                <label class="control-label">@Model.User.Id</label>
             </div>
             <div class="form-group">
                 <input type="submit" value="Grade" class="btn btn-primary" />

@@ -41,5 +41,11 @@
 
             return this.View(viewModel);
         }
+
+        [HttpPost]
+        public IActionResult Grade(ReviewEssayViewModel viewModel)
+        {
+            return this.View();
+        }
     }
 }

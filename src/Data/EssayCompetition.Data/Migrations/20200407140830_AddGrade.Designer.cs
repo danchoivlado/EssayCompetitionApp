@@ -4,14 +4,16 @@ using EssayCompetition.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace EssayCompetition.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20200407140830_AddGrade")]
+    partial class AddGrade
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -196,6 +198,9 @@ namespace EssayCompetition.Data.Migrations
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("GradeId")
+                        .HasColumnType("int");
+
                     b.Property<string>("ImageUrl")
                         .HasColumnType("nvarchar(max)");
 
@@ -216,6 +221,8 @@ namespace EssayCompetition.Data.Migrations
 
                     b.HasIndex("CategoryId");
 
+                    b.HasIndex("GradeId");
+
                     b.HasIndex("IsDeleted");
 
                     b.HasIndex("UserId");
@@ -233,9 +240,6 @@ namespace EssayCompetition.Data.Migrations
                     b.Property<DateTime>("CreatedOn")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("EssayId")
-                        .HasColumnType("int");
-
                     b.Property<DateTime?>("ModifiedOn")
                         .HasColumnType("datetime2");
 
@@ -246,8 +250,6 @@ namespace EssayCompetition.Data.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("EssayId");
 
                     b.ToTable("Grades");
                 });
@@ -396,18 +398,15 @@ namespace EssayCompetition.Data.Migrations
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
+                    b.HasOne("EssayCompetition.Data.Models.Grade", "Grade")
+                        .WithMany()
+                        .HasForeignKey("GradeId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
                     b.HasOne("EssayCompetition.Data.Models.ApplicationUser", "User")
                         .WithMany("Essays")
                         .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("EssayCompetition.Data.Models.Grade", b =>
-                {
-                    b.HasOne("EssayCompetition.Data.Models.Essay", "Essay")
-                        .WithMany()
-                        .HasForeignKey("EssayId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
                 });
