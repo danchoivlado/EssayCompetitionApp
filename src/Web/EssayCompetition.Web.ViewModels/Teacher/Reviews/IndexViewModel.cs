@@ -1,4 +1,4 @@
-﻿namespace EssayCompetition.Web.ViewModels.Teacher
+﻿namespace EssayCompetition.Web.ViewModels.Teacher.Reviews
 {
     using System.Collections.Generic;
 

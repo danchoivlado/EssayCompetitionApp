@@ -1,14 +1,19 @@
-﻿@using EssayCompetition.Web.ViewModels.Teacher
+﻿@using EssayCompetition.Web.ViewModels.Teacher.Reviews
 @model IndexViewModel
 @{
     ViewData["Title"] = "Index";
 }
-
-@foreach (var esay in Model.Essays)
+<h2>Essays to review</h2>
+<br />
+@foreach (var essay in Model.Essays)
 {
-    <p>@esay.Title</p>
-    <p>@esay.Description</p>
-    <p>@esay.Content</p>
-    <p>@esay.ImageUrl</p>
+    <h3>
+        <a asp-action="ReviewEssay" asp-route-id="@essay.Id">
+            @essay.Title <br />
+            @essay.Description
+        </a>
+    </h3>
+    <hr />
+    <br />
 }
 

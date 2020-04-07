@@ -2,7 +2,7 @@
 {
     using EssayCompetition.Data.Models;
     using EssayCompetition.Services.Data.TeacherServices;
-    using EssayCompetition.Web.ViewModels.Teacher;
+    using EssayCompetition.Web.ViewModels.Teacher.Reviews;
     using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Mvc;
 
@@ -23,6 +23,18 @@
 
             var user = this.userManager.GetUserId(this.User);
             viewModel.Essays = this.teacherService.GetTeacherEssays<EssayViewModel>(user);
+
+            return this.View(viewModel);
+        }
+
+        public IActionResult ReviewEssay(int id)
+        {
+            if (!this.teacherService.HasEssayWithId(id))
+            {
+                return this.NotFound();
+            }
+
+            var viewModel = this.teacherService.GetEssayInfo<ReviewEssayViewModel>(id);
 
             return this.View(viewModel);
         }

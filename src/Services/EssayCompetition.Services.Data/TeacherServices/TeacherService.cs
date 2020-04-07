@@ -24,9 +24,19 @@
             this.roleRepository = roleRepository;
         }
 
+        public T GetEssayInfo<T>(int essayId)
+        {
+            return this.essaysRepository.All().Where(x => x.Id == essayId).AsQueryable().To<T>().First();
+        }
+
         public IEnumerable<T> GetTeacherEssays<T>(string userId)
         {
             return this.essaysRepository.All().Where(x => x.UserId == userId).AsQueryable().To<T>();
+        }
+
+        public bool HasEssayWithId(int essayId)
+        {
+            return this.essaysRepository.All().Any(x => x.Id == essayId);
         }
     }
 }
