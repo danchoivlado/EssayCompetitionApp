@@ -11,17 +11,17 @@
     public class TeacherService : ITeacherService
     {
         private readonly IDeletableEntityRepository<Essay> essaysRepository;
-        private readonly IDeletableEntityRepository<ApplicationUser> userRepository;
-        private readonly IDeletableEntityRepository<ApplicationRole> roleRepository;
+        private readonly IDeletableEntityRepository<Category> categoryRepository;
 
-        public TeacherService(
-            IDeletableEntityRepository<Essay> essaysRepository,
-            IDeletableEntityRepository<ApplicationUser> userRepository,
-            IDeletableEntityRepository<ApplicationRole> roleRepository)
+        public TeacherService(IDeletableEntityRepository<Essay> essaysRepository, IDeletableEntityRepository<Category> categoryRepository)
         {
             this.essaysRepository = essaysRepository;
-            this.userRepository = userRepository;
-            this.roleRepository = roleRepository;
+            this.categoryRepository = categoryRepository;
+        }
+
+        public IEnumerable<T> GetAllAvilableCategories<T>()
+        {
+            return this.categoryRepository.All().To<T>();
         }
 
         public T GetEssayInfo<T>(int essayId)

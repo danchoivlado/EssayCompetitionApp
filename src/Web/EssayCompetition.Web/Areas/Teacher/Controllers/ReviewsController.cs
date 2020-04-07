@@ -29,12 +29,15 @@
 
         public IActionResult ReviewEssay(int id)
         {
+            var viewModel = new ReviewEssayViewModel();
+
             if (!this.teacherService.HasEssayWithId(id))
             {
                 return this.NotFound();
             }
 
-            var viewModel = this.teacherService.GetEssayInfo<ReviewEssayViewModel>(id);
+            viewModel = this.teacherService.GetEssayInfo<ReviewEssayViewModel>(id);
+            viewModel.AllAvailableCategories = this.teacherService.GetAllAvilableCategories<CategoryDropDownViewModel>();
 
             return this.View(viewModel);
         }

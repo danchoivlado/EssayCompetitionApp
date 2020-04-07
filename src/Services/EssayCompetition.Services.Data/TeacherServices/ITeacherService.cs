@@ -9,5 +9,7 @@
         IEnumerable<T> GetTeacherEssays<T>(string userId);
 
         T GetEssayInfo<T>(int essayId);
+
+        IEnumerable<T> GetAllAvilableCategories<T>();
     }
 }
