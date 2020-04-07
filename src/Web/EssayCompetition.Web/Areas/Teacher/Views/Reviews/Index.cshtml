@@ -1,0 +1,14 @@
+﻿@using EssayCompetition.Web.ViewModels.Teacher
+@model IndexViewModel
+@{
+    ViewData["Title"] = "Index";
+}
+
+@foreach (var esay in Model.Essays)
+{
+    <p>@esay.Title</p>
+    <p>@esay.Description</p>
+    <p>@esay.Content</p>
+    <p>@esay.ImageUrl</p>
+}
+
