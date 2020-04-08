@@ -1,0 +1,18 @@
+﻿@using EssayCompetition.Web.ViewModels.Teacher.Reviewed
+@model IndexViewModel
+@{
+    ViewData["Title"] = "Index";
+}
+<h2>Reviewed essays</h2>
+<br />
+@foreach (var essay in Model.Essays)
+{
+    <h3>
+        <a asp-action="ReviewedEssay" asp-route-id="@essay.Id">
+            @essay.Title <br />
+            @essay.Description
+        </a>
+    </h3>
+    <hr />
+    <br />
+}

@@ -16,6 +16,11 @@
 
         public int CategoryId { get; set; }
 
+        [Required]
+        public string TeacherId { get; set; }
+
+        public virtual ApplicationUser Teacher { get; set; }
+
         public bool Graded { get; set; }
 
         public virtual Category Category { get; set; }

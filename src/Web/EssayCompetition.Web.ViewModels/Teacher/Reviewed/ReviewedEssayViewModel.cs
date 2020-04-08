@@ -1,13 +1,15 @@
-﻿namespace EssayCompetition.Web.ViewModels.Teacher.Reviews
+﻿namespace EssayCompetition.Web.ViewModels.Teacher.Reviewed
 {
+    using System;
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
 
     using EssayCompetition.Data.Models;
     using EssayCompetition.Services.Mapping;
+    using EssayCompetition.Web.ViewModels.Teacher.Reviews;
     using Microsoft.AspNetCore.Http;
 
-    public class ReviewEssayViewModel : IMapFrom<Essay>
+    public class ReviewedEssayViewModel : IMapFrom<Essay>
     {
         public int Id { get; set; }
 
@@ -21,12 +23,7 @@
         [Required]
         public string Content { get; set; }
 
-        [Required]
-        public string PrivateComments { get; set; }
-
-        [Range(0, 100)]
-        [Required]
-        public int Points { get; set; }
+        public GradeViewModel Grade { get; set; }
 
         [Required]
         public string ImageUrl { get; set; }

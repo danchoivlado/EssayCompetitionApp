@@ -1,5 +1,5 @@
-﻿@using EssayCompetition.Web.ViewModels.Teacher.Reviews;
-@model ReviewEssayViewModel
+﻿@using EssayCompetition.Web.ViewModels.Teacher.Reviewed;
+@model ReviewedEssayViewModel
 @{
     ViewData["Title"] = "ReviewEssay";
     var allRoles = Model.AllAvailableCategories.Select(x => new SelectListItem(x.Title, x.Id.ToString()));
@@ -10,7 +10,7 @@
 <hr />
 <div class="row">
     <div class="col-md-12">
-        <form asp-action="ReviewEssay" enctype="multipart/form-data" method="post">
+        <form asp-action="ReviewedEssay" enctype="multipart/form-data" method="post">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="@Model.Id" />
             <input type="hidden" asp-for="@Model.UserId" />
@@ -54,14 +54,14 @@
                 <span asp-validation-for="@Model.CategoryId" class="text-danger"></span>
             </div>
             <div class="form-group row-cols-md-3">
-                <label asp-for="@Model.PrivateComments" class="control-label"></label>
-                <textarea asp-for="@Model.PrivateComments" rows="4" class="form-control"> </textarea>
-                <span asp-validation-for="@Model.PrivateComments" class="text-danger"></span>
+                <label asp-for="@Model.Grade.PrivateComments" class="control-label"></label>
+                <textarea asp-for="@Model.Grade.PrivateComments" rows="4" class="form-control"> </textarea>
+                <span asp-validation-for="@Model.Grade.PrivateComments" class="text-danger"></span>
             </div>
             <div class="form-group row-cols-md-4">
-                <label asp-for="@Model.Points" class="control-label"></label>
-                <input asp-for="@Model.Points" class="form-control" />
-                <span asp-validation-for="@Model.Points" class="text-danger"></span>
+                <label asp-for="@Model.Grade.Points" class="control-label"></label>
+                <input asp-for="@Model.Grade.Points" class="form-control" />
+                <span asp-validation-for="@Model.Grade.Points" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <b>@Html.DisplayNameFor(model => model.UserId)</b>
@@ -69,7 +69,7 @@
                 @Html.DisplayFor(model => model.UserId)
             </div>
             <div class="form-group">
-                <input type="submit" value="Grade" class="btn btn-primary" />
+                <input type="submit" value="Save" class="btn btn-primary" />
             </div>
         </form>
     </div>

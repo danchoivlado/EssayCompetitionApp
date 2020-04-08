@@ -2,6 +2,7 @@
 {
     using EssayCompetition.Common;
     using EssayCompetition.Data.Models;
+    using EssayCompetition.Services.Data.ImageServices;
     using EssayCompetition.Services.Data.TeacherServices;
     using EssayCompetition.Web.ViewModels.Teacher.Reviews;
     using Microsoft.AspNetCore.Identity;
@@ -12,11 +13,13 @@
     {
         private readonly ITeacherService teacherService;
         private readonly UserManager<ApplicationUser> userManager;
+        private readonly IImageService imageService;
 
-        public ReviewsController(ITeacherService teacherService, UserManager<ApplicationUser> userManager)
+        public ReviewsController(ITeacherService teacherService, UserManager<ApplicationUser> userManager, IImageService imageService)
         {
             this.teacherService = teacherService;
             this.userManager = userManager;
+            this.imageService = imageService;
         }
 
         public IActionResult Index()
@@ -53,6 +56,11 @@
                 return this.View(viewModel);
             }
 
+            if (viewModel.ImageContent != null)
+            {
+                viewModel.ImageUrl = await this.imageService.UploadImageToCloudinaryAsync(viewModel.ImageContent);
+            }
+
             var result = await this.teacherService.UpdateEssayAync(this.GenerateUpdateEssayModel(viewModel));
             if (!result)
             {
@@ -75,6 +83,7 @@
                 Description = viewModel.Description,
                 Title = viewModel.Title,
                 UserId = viewModel.UserId,
+                TeacherId = viewModel.TeacherId,
             };
 
             return updateEssayModel;
