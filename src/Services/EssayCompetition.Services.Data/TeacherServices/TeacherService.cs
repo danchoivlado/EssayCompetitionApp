@@ -33,9 +33,9 @@
             return this.essaysRepository.All().Where(x => x.Id == essayId).AsQueryable().To<T>().First();
         }
 
-        public IEnumerable<T> GetTeacherEssays<T>(string userId)
+        public IEnumerable<T> GetTeacherNotReviewedEssays<T>(string userId)
         {
-            return this.essaysRepository.All().Where(x => x.UserId == userId).AsQueryable().To<T>();
+            return this.essaysRepository.All().Where(x => x.UserId == userId && x.Graded == false).AsQueryable().To<T>();
         }
 
         public async Task GradeEssayAsync(string privateComment, int points, int essayId)
@@ -83,6 +83,7 @@
                 Title = updateEssayModel.Title,
                 Description = updateEssayModel.Description,
                 Content = updateEssayModel.Content,
+                Graded = true,
             };
             return essay;
         }

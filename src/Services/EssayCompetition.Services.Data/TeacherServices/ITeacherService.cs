@@ -8,7 +8,7 @@
     {
         bool HasEssayWithId(int essayId);
 
-        IEnumerable<T> GetTeacherEssays<T>(string userId);
+        IEnumerable<T> GetTeacherNotReviewedEssays<T>(string userId);
 
         T GetEssayInfo<T>(int essayId);
 

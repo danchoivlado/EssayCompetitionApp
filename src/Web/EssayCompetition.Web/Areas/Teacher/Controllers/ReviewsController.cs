@@ -24,7 +24,7 @@
             var viewModel = new IndexViewModel();
 
             var user = this.userManager.GetUserId(this.User);
-            viewModel.Essays = this.teacherService.GetTeacherEssays<EssayViewModel>(user);
+            viewModel.Essays = this.teacherService.GetTeacherNotReviewedEssays<EssayViewModel>(user);
 
             return this.View(viewModel);
         }

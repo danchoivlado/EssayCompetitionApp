@@ -16,6 +16,8 @@
 
         public int CategoryId { get; set; }
 
+        public bool Graded { get; set; }
+
         public virtual Category Category { get; set; }
 
         [Required]
