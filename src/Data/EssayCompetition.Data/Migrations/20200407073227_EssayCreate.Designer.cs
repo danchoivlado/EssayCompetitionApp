@@ -4,14 +4,16 @@ using EssayCompetition.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace EssayCompetition.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20200407073227_EssayCreate")]
+    partial class EssayCreate
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -226,35 +228,6 @@ namespace EssayCompetition.Data.Migrations
                     b.ToTable("Essays");
                 });
 
-            modelBuilder.Entity("EssayCompetition.Data.Models.Grade", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<DateTime>("CreatedOn")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int>("EssayId")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime?>("ModifiedOn")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int>("Points")
-                        .HasColumnType("int");
-
-                    b.Property<string>("PrivateComments")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("EssayId");
-
-                    b.ToTable("Grades");
-                });
-
             modelBuilder.Entity("EssayCompetition.Data.Models.Setting", b =>
                 {
                     b.Property<int>("Id")
@@ -400,17 +373,8 @@ namespace EssayCompetition.Data.Migrations
                         .IsRequired();
 
                     b.HasOne("EssayCompetition.Data.Models.ApplicationUser", "User")
-                        .WithMany("Essays")
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("EssayCompetition.Data.Models.Grade", b =>
-                {
-                    b.HasOne("EssayCompetition.Data.Models.Essay", "Essay")
                         .WithMany()
-                        .HasForeignKey("EssayId")
+                        .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
                 });

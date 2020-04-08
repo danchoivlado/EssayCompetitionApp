@@ -28,6 +28,10 @@
 
         public DbSet<Category> Categories { get; set; }
 
+        public DbSet<Essay> Essays { get; set; }
+
+        public DbSet<Grade> Grades { get; set; }
+
         public override int SaveChanges() => this.SaveChanges(true);
 
         public override int SaveChanges(bool acceptAllChangesOnSuccess)

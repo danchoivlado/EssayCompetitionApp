@@ -7,6 +7,7 @@
     using CloudinaryDotNet;
     using CloudinaryDotNet.Actions;
     using EssayCompetition.Services.Data.CategoryServices;
+    using EssayCompetition.Services.Data.ImageServices;
     using EssayCompetition.Web.ViewModels.Administration.Category;
     using EssayCompetition.Web.ViewModels.Administration.Category.Shared;
     using Microsoft.AspNetCore.Mvc;
@@ -15,12 +16,12 @@
     {
         private const int PageSize = 10;
         private readonly ICategoryService categoryService;
-        private readonly Cloudinary cloudinary;
+        private readonly IImageService imageService;
 
-        public CategoryController(ICategoryService categoryService, Cloudinary cloudinary)
+        public CategoryController(ICategoryService categoryService, IImageService imageService)
         {
             this.categoryService = categoryService;
-            this.cloudinary = cloudinary;
+            this.imageService = imageService;
         }
 
         public IActionResult Index(IndexViewModel model)
@@ -56,7 +57,7 @@
 
             if (viewModel.Content != null)
             {
-                viewModel.ImageUrl = await this.categoryService.UploadImageToCloudinaryAsync(viewModel.Content);
+                viewModel.ImageUrl = await this.imageService.UploadImageToCloudinaryAsync(viewModel.Content);
             }
 
             await this.categoryService.CreateAsync(viewModel.Title, viewModel.Description, viewModel.ImageUrl);
@@ -96,7 +97,7 @@
 
             if (viewModel.Content != null)
             {
-                viewModel.ImageUrl = await this.categoryService.UploadImageToCloudinaryAsync(viewModel.Content);
+                viewModel.ImageUrl = await this.imageService.UploadImageToCloudinaryAsync(viewModel.Content);
             }
 
             await this.categoryService.UpdateAsync(viewModel.Id, viewModel.Title, viewModel.Description, viewModel.ImageUrl);
