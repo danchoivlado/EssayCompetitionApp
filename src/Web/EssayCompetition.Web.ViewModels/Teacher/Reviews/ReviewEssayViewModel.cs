@@ -40,6 +40,7 @@
 
         public IEnumerable<CategoryDropDownViewModel> AllAvailableCategories { get; set; }
 
-        public ApplicationUser User { get; set; }
+        [Display(Name = "Made by user with id")]
+        public string UserId { get; set; }
     }
 }

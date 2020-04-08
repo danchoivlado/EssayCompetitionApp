@@ -10,6 +10,7 @@
     using EssayCompetition.Data.Seeding;
     using EssayCompetition.Services.Data;
     using EssayCompetition.Services.Data.CategoryServices;
+    using EssayCompetition.Services.Data.ImageServices;
     using EssayCompetition.Services.Data.RolesServices;
     using EssayCompetition.Services.Data.TeacherServices;
     using EssayCompetition.Services.Data.UsersServices;
@@ -79,6 +80,7 @@
             services.AddTransient<IUsersService, UsersService>();
             services.AddTransient<IRolesService, RolesService>();
             services.AddTransient<ITeacherService, TeacherService>();
+            services.AddTransient<IImageService, ImageService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

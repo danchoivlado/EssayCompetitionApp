@@ -1,10 +1,12 @@
 ﻿namespace EssayCompetition.Web.Areas.Teacher.Controllers
 {
+    using EssayCompetition.Common;
     using EssayCompetition.Data.Models;
     using EssayCompetition.Services.Data.TeacherServices;
     using EssayCompetition.Web.ViewModels.Teacher.Reviews;
     using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Mvc;
+    using System.Threading.Tasks;
 
     public class ReviewsController : TeacherController
     {
@@ -43,9 +45,39 @@
         }
 
         [HttpPost]
-        public IActionResult Grade(ReviewEssayViewModel viewModel)
+        public async Task<IActionResult> ReviewEssay(ReviewEssayViewModel viewModel)
         {
-            return this.View();
+            if (!this.ModelState.IsValid)
+            {
+                viewModel.AllAvailableCategories = this.teacherService.GetAllAvilableCategories<CategoryDropDownViewModel>();
+                return this.View(viewModel);
+            }
+
+            var result = await this.teacherService.UpdateEssayAync(this.GenerateUpdateEssayModel(viewModel));
+            if (!result)
+            {
+                return this.NotFound();
+            }
+
+            await this.teacherService.GradeEssayAsync(viewModel.PrivateComments, viewModel.Points, viewModel.Id);
+
+            return this.RedirectToAction("Index");
+        }
+
+        private UpdateEssayModel GenerateUpdateEssayModel(ReviewEssayViewModel viewModel)
+        {
+            UpdateEssayModel updateEssayModel = new UpdateEssayModel()
+            {
+                Id = viewModel.Id,
+                ImageUrl = viewModel.ImageUrl,
+                CategoryId = viewModel.CategoryId,
+                Content = viewModel.Content,
+                Description = viewModel.Description,
+                Title = viewModel.Title,
+                UserId = viewModel.UserId,
+            };
+
+            return updateEssayModel;
         }
     }
 }

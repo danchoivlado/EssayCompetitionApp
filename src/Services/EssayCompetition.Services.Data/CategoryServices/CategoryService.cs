@@ -4,6 +4,7 @@
     using System.IO;
     using System.Linq;
     using System.Threading.Tasks;
+
     using CloudinaryDotNet;
     using CloudinaryDotNet.Actions;
     using EssayCompetition.Data.Common.Repositories;
@@ -74,31 +75,6 @@
         {
             this.deletableEntityRepository.Update(new Category { Id = id, Title = title, Description = description, ImageUrl = imageUrl });
             await this.deletableEntityRepository.SaveChangesAsync();
-        }
-
-        public async Task<string> UploadImageToCloudinaryAsync(IFormFile content)
-        {
-            var res = new ImageUploadResult();
-            var file = content;
-            byte[] destinationImage;
-
-            using (var memoryStream = new MemoryStream())
-            {
-                await file.CopyToAsync(memoryStream);
-                destinationImage = memoryStream.ToArray();
-            }
-
-            using (var destinationStream = new MemoryStream(destinationImage))
-            {
-                var uploadParams = new ImageUploadParams()
-                {
-                    File = new FileDescription(file.Name, destinationStream),
-                };
-
-                res = await this.cloudinary.UploadAsync(uploadParams);
-            }
-
-            return res.Uri.AbsoluteUri;
         }
     }
 }
