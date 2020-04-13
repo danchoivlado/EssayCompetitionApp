@@ -14,20 +14,15 @@
 
         public string ImageUrl { get; set; }
 
-        public int CategoryId { get; set; }
-
-        [Required]
-        public string TeacherId { get; set; }
-
-        public virtual ApplicationUser Teacher { get; set; }
-
         public bool Graded { get; set; }
-
-        public virtual Category Category { get; set; }
 
         [Required]
         public string UserId { get; set; }
 
         public virtual ApplicationUser User { get; set; }
+
+        public int ContestId { get; set; }
+
+        public virtual Contest Contest { get; set; }
     }
 }

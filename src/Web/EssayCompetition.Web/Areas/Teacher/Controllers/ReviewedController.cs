@@ -46,7 +46,7 @@
 
             viewModel = this.teacherReviewedService.GetEssayInfo<ReviewedEssayViewModel>(id);
             viewModel.Grade = this.teacherReviewedService.GetGradeViewModel<GradeViewModel>(id);
-            viewModel.AllAvailableCategories = this.teacherReviewedService.GetAllAvilableCategories<CategoryDropDownViewModel>();
+            //viewModel.AllAvailableCategories = this.teacherReviewedService.GetAllAvilableCategories<CategoryDropDownViewModel>();
 
             return this.View(viewModel);
         }
@@ -56,7 +56,7 @@
         {
             if (!this.ModelState.IsValid)
             {
-                viewModel.AllAvailableCategories = this.teacherReviewedService.GetAllAvilableCategories<CategoryDropDownViewModel>();
+                //viewModel.AllAvailableCategories = this.teacherReviewedService.GetAllAvilableCategories<CategoryDropDownViewModel>();
                 return this.View(viewModel);
             }
 
@@ -82,12 +82,11 @@
             {
                 Id = viewModel.Id,
                 ImageUrl = viewModel.ImageUrl,
-                CategoryId = viewModel.CategoryId,
                 Content = viewModel.Content,
                 Description = viewModel.Description,
                 Title = viewModel.Title,
                 UserId = viewModel.UserId,
-                TeacherId = viewModel.TeacherId,
+                ContestId = viewModel.ContestId
             };
 
             return updateEssayModel;

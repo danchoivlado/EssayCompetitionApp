@@ -32,6 +32,10 @@
 
         public DbSet<Grade> Grades { get; set; }
 
+        public DbSet<Contest> Contests { get; set; }
+
+        public DbSet<EssayTeacher> EssayTeacher { get; set; }
+
         public override int SaveChanges() => this.SaveChanges(true);
 
         public override int SaveChanges(bool acceptAllChangesOnSuccess)

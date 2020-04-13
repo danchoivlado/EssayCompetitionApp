@@ -1,5 +1,6 @@
 ﻿namespace EssayCompetition.Services.Data.TeacherReviewedServices
 {
+    using System;
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
@@ -13,18 +14,33 @@
         private readonly IDeletableEntityRepository<Essay> essaysRepository;
         private readonly IDeletableEntityRepository<Category> categoryRepository;
         private readonly IRepository<Grade> gradeRepository;
+        private readonly IDeletableEntityRepository<EssayTeacher> essayTeacherRepository;
 
         public TeacherReviewedService(IDeletableEntityRepository<Essay> essaysRepository, IDeletableEntityRepository<Category> categoryRepository,
-            IRepository<Grade> gradeRepository)
+            IRepository<Grade> gradeRepository,IDeletableEntityRepository<EssayTeacher> essayTeacherRepository)
         {
             this.essaysRepository = essaysRepository;
             this.categoryRepository = categoryRepository;
             this.gradeRepository = gradeRepository;
+            this.essayTeacherRepository = essayTeacherRepository;
         }
 
         public IEnumerable<T> GetAllReviewedEssayFromTecher<T>(string teacherId)
         {
-            return this.essaysRepository.All().Where(x => x.Graded && x.TeacherId == teacherId).AsQueryable().To<T>();
+            //return this.essaysRepository.All().Where(x => x.Graded && x.TeacherId == teacherId).AsQueryable().To<T>();
+            var allEssaysIds = this.essayTeacherRepository.All().Where(x => x.TeacherId == teacherId).Select(x => x.EssayId);
+            var allEssays = this.essaysRepository.All().Where(x => x.Graded == true);
+            var filtredEssays = new List<Essay>();
+
+            foreach (var essayId in allEssaysIds)
+            {
+                foreach (var essay in allEssays.Where(x => x.Id == essayId))
+                {
+                    filtredEssays.Add(essay);
+                }
+            }
+
+            return filtredEssays.AsQueryable().To<T>();
         }
 
         public T GetEssayInfo<T>(int essayId)
@@ -70,11 +86,12 @@
                 Id = updateEssayModel.Id,
                 ImageUrl = updateEssayModel.ImageUrl,
                 UserId = updateEssayModel.UserId,
-                CategoryId = updateEssayModel.CategoryId,
+                //CategoryId = updateEssayModel.CategoryId,
                 Title = updateEssayModel.Title,
                 Description = updateEssayModel.Description,
                 Content = updateEssayModel.Content,
-                TeacherId = updateEssayModel.TeacherId,
+                //TeacherId = updateEssayModel.TeacherId,
+                ContestId = updateEssayModel.ContestId,
                 Graded = true,
             };
             return essay;

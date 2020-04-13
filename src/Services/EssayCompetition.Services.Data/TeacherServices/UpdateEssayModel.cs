@@ -15,10 +15,8 @@
 
         public string ImageUrl { get; set; }
 
-        public int CategoryId { get; set; }
-
         public string UserId { get; set; }
 
-        public string TeacherId { get; set; }
+        public int ContestId { get; set; }
     }
 }

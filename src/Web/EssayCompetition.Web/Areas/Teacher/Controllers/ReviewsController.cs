@@ -42,7 +42,7 @@
             }
 
             viewModel = this.teacherService.GetEssayInfo<ReviewEssayViewModel>(id);
-            viewModel.AllAvailableCategories = this.teacherService.GetAllAvilableCategories<CategoryDropDownViewModel>();
+            //viewModel.AllAvailableCategories = this.teacherService.GetAllAvilableCategories<CategoryDropDownViewModel>();
 
             return this.View(viewModel);
         }
@@ -52,7 +52,7 @@
         {
             if (!this.ModelState.IsValid)
             {
-                viewModel.AllAvailableCategories = this.teacherService.GetAllAvilableCategories<CategoryDropDownViewModel>();
+                //viewModel.AllAvailableCategories = this.teacherService.GetAllAvilableCategories<CategoryDropDownViewModel>();
                 return this.View(viewModel);
             }
 
@@ -78,12 +78,11 @@
             {
                 Id = viewModel.Id,
                 ImageUrl = viewModel.ImageUrl,
-                CategoryId = viewModel.CategoryId,
                 Content = viewModel.Content,
                 Description = viewModel.Description,
                 Title = viewModel.Title,
                 UserId = viewModel.UserId,
-                TeacherId = viewModel.TeacherId,
+                ContestId = viewModel.ContestId,
             };
 
             return updateEssayModel;
