@@ -1,5 +1,6 @@
 ﻿namespace EssayCompetition.Web
 {
+    using System;
     using System.Reflection;
     using CloudinaryDotNet;
     using EssayCompetition.Data;
@@ -45,6 +46,13 @@
 
             services.AddDefaultIdentity<ApplicationUser>(IdentityOptionsProvider.GetIdentityOptions)
                 .AddRoles<ApplicationRole>().AddEntityFrameworkStores<ApplicationDbContext>();
+
+            services.AddDistributedMemoryCache();
+            services.AddSession(options => {
+                options.IdleTimeout = TimeSpan.FromMinutes(2);
+                options.Cookie.HttpOnly = true;
+                options.Cookie.IsEssential = true;
+            });
 
             services.Configure<CookiePolicyOptions>(
                 options =>
@@ -117,6 +125,7 @@
             app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseCookiePolicy();
+            app.UseSession();
 
             app.UseRouting();
 
