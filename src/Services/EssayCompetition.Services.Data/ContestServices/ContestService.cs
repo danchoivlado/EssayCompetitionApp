@@ -1,7 +1,10 @@
 ﻿namespace EssayCompetition.Services.Data.ContestServices
 {
+    using System;
     using System.Collections.Generic;
     using System.Linq;
+    using System.Threading.Tasks;
+
     using EssayCompetition.Data.Common.Repositories;
     using EssayCompetition.Data.Models;
     using EssayCompetition.Services.Mapping;
@@ -33,6 +36,27 @@
         public int GetContestsCount()
         {
             return this.contestRepository.All().Count();
+        }
+
+        public bool HasContestWithId(int id)
+        {
+            return this.contestRepository.All().Any(x => x.Id == id);
+        }
+
+        public async Task UpdateContestAsync(DateTime start, DateTime end, string name, string description, int categoryId, int id)
+        {
+            var contest = new Contest()
+            {
+                Id = id,
+                StartTime = start,
+                EndTime = end,
+                Name = name,
+                Description = description,
+                CategoryId = categoryId,
+            };
+
+            this.contestRepository.Update(contest);
+            await this.contestRepository.SaveChangesAsync();
         }
     }
 }

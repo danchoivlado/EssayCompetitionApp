@@ -1,10 +1,10 @@
-﻿using EssayCompetition.Data.Common.Models;
-using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace EssayCompetition.Data.Models
+﻿namespace EssayCompetition.Data.Models
 {
+    using System;
+    using System.Collections.Generic;
+
+    using EssayCompetition.Data.Common.Models;
+
     public class Contest : BaseDeletableModel<int>
     {
         public Contest()

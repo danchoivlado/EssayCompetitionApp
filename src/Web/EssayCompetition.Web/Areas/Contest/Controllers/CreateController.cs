@@ -6,7 +6,7 @@
 
     public class CreateController : ContestController
     {
-        private const string Content = "_EssayContent";
+        private const string ContentName = "_EssayContent";
         private const string Title = "_EssayTitle";
         private const string Description = "_EssayDescription";
 
@@ -15,7 +15,7 @@
             var viewModel = new IndexViewModel();
             var title = this.HttpContext.Session.GetString(Title);
             var description = this.HttpContext.Session.GetString(Description);
-            var content = this.HttpContext.Session.GetString(Content);
+            var content = this.HttpContext.Session.GetString(ContentName);
 
             viewModel.Title = title;
             viewModel.Description = description;
@@ -51,7 +51,7 @@
 
             if (viewModel.Content != null)
             {
-                this.HttpContext.Session.SetString(Content, viewModel.Content);
+                this.HttpContext.Session.SetString(ContentName, viewModel.Content);
             }
         }
     }

@@ -21,8 +21,11 @@
         private readonly UserManager<ApplicationUser> userManager;
         private readonly RoleManager<ApplicationRole> roleManager;
 
-        public RolesController(IUsersService usersService, IRolesService rolesService,
-            UserManager<ApplicationUser> userManager, RoleManager<ApplicationRole> roleManager)
+        public RolesController(
+            IUsersService usersService,
+            IRolesService rolesService,
+            UserManager<ApplicationUser> userManager,
+            RoleManager<ApplicationRole> roleManager)
         {
             this.usersService = usersService;
             this.rolesService = rolesService;
@@ -36,8 +39,12 @@
             viewModel.Pager ??= new PagerViewModel();
             viewModel.Pager.CurrentPage = viewModel.Pager.CurrentPage <= 0 ? 1 : viewModel.Pager.CurrentPage;
 
-            viewModel.Users = this.usersService.GetUsersWithRoles<UserViewModel>
-                (viewModel.Pager.CurrentPage, PageSize, viewModel.SearchString, viewModel.SortOrder, viewModel.SearchOnlyDeleted);
+            viewModel.Users = this.usersService.GetUsersWithRoles<UserViewModel>(
+                viewModel.Pager.CurrentPage,
+                PageSize,
+                viewModel.SearchString,
+                viewModel.SortOrder,
+                viewModel.SearchOnlyDeleted);
 
             foreach (var user in viewModel.Users)
             {

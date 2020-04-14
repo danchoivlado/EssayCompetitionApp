@@ -4,14 +4,15 @@
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
+
+    using EssayCompetition.Common;
     using EssayCompetition.Data.Models;
+    using EssayCompetition.Services.Data.ImageServices;
     using EssayCompetition.Services.Data.TeacherReviewedServices;
+    using EssayCompetition.Services.Data.TeacherServices;
     using EssayCompetition.Web.ViewModels.Teacher.Reviewed;
     using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Mvc;
-    using EssayCompetition.Common;
-    using EssayCompetition.Services.Data.TeacherServices;
-    using EssayCompetition.Services.Data.ImageServices;
 
     public class ReviewedController : TeacherController
     {
@@ -46,7 +47,6 @@
 
             viewModel = this.teacherReviewedService.GetEssayInfo<ReviewedEssayViewModel>(id);
             viewModel.Grade = this.teacherReviewedService.GetGradeViewModel<GradeViewModel>(id);
-            //viewModel.AllAvailableCategories = this.teacherReviewedService.GetAllAvilableCategories<CategoryDropDownViewModel>();
 
             return this.View(viewModel);
         }
@@ -56,7 +56,6 @@
         {
             if (!this.ModelState.IsValid)
             {
-                //viewModel.AllAvailableCategories = this.teacherReviewedService.GetAllAvilableCategories<CategoryDropDownViewModel>();
                 return this.View(viewModel);
             }
 
@@ -86,7 +85,7 @@
                 Description = viewModel.Description,
                 Title = viewModel.Title,
                 UserId = viewModel.UserId,
-                ContestId = viewModel.ContestId
+                ContestId = viewModel.ContestId,
             };
 
             return updateEssayModel;

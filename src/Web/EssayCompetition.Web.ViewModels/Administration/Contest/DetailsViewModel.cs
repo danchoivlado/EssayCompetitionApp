@@ -1,11 +1,11 @@
-﻿using EssayCompetition.Data.Models;
-using EssayCompetition.Services.Mapping;
-using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace EssayCompetition.Web.ViewModels.Administration.Contest
+﻿namespace EssayCompetition.Web.ViewModels.Administration.Contest
 {
+    using System;
+    using System.Collections.Generic;
+
+    using EssayCompetition.Data.Models;
+    using EssayCompetition.Services.Mapping;
+
     public class DetailsViewModel : IMapFrom<EssayCompetition.Data.Models.Contest>
     {
         public DateTime StartTime { get; set; }

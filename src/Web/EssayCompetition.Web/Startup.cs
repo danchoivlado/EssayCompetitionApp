@@ -2,6 +2,7 @@
 {
     using System;
     using System.Reflection;
+
     using CloudinaryDotNet;
     using EssayCompetition.Data;
     using EssayCompetition.Data.Common;
@@ -49,7 +50,8 @@
                 .AddRoles<ApplicationRole>().AddEntityFrameworkStores<ApplicationDbContext>();
 
             services.AddDistributedMemoryCache();
-            services.AddSession(options => {
+            services.AddSession(options =>
+            {
                 options.IdleTimeout = TimeSpan.FromMinutes(2);
                 options.Cookie.HttpOnly = true;
                 options.Cookie.IsEssential = true;
