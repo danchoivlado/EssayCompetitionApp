@@ -1,0 +1,61 @@
+﻿@using EssayCompetition.Web.ViewModels.Administration.Contest
+@model IndexViewModel
+@{
+    this.ViewData["Title"] = "Index contest";
+
+}
+<h1>@this.ViewData["Title"]</h1>
+<p> <a asp-action="Create">Create contest</a> </p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Title
+            </th>
+            <th>
+                Description
+            </th>
+            <th>
+                Start
+            </th>
+            <th>
+                End
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.Contests)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ShortenDesc)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.StartTime)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.EndTime)
+                </td>
+                <td>
+                    <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                    <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> @Html.Raw("|")
+                    <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+<ul class="pagination">
+    @for (var i = 1; i <= Model.Pager.PagesCount; i++)
+    {
+        <li class="page-item @(i == Model.Pager.CurrentPage ? "active" : "")">
+            <a asp-route-Pager.CurrentPage="@i" class="page-link">@i</a>
+        </li>
+    }
+</ul>
+
+
