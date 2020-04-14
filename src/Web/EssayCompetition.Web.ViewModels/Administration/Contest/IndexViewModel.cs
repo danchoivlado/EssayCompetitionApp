@@ -1,7 +1,8 @@
 ﻿namespace EssayCompetition.Web.ViewModels.Administration.Contest
 {
-    using EssayCompetition.Web.ViewModels.Administration.Contest.Shared;
     using System.Collections.Generic;
+
+    using EssayCompetition.Web.ViewModels.Administration.Contest.Shared;
 
     public class IndexViewModel
     {

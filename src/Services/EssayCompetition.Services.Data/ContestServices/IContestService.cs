@@ -9,5 +9,7 @@
         IEnumerable<T> GetAllContestsRange<T>(int currentPage, int pageSize);
 
         int GetContestsCount();
+
+        T GetContestDetails<T>(int id);
     }
 }
