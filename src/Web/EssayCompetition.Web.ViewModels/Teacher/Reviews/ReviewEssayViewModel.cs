@@ -31,18 +31,23 @@
         [Required]
         public string ImageUrl { get; set; }
 
-        public Category Category { get; set; }
+        //public Category Category { get; set; }
 
         public IFormFile ImageContent { get; set; }
 
-        [Required]
-        public int CategoryId { get; set; }
+        //[Required]
+        //public int CategoryId { get; set; }
 
-        public IEnumerable<CategoryDropDownViewModel> AllAvailableCategories { get; set; }
+        //public IEnumerable<CategoryDropDownViewModel> AllAvailableCategories { get; set; }
 
         [Display(Name = "Made by user with id")]
         public string UserId { get; set; }
 
         public string TeacherId { get; set; }
+
+        public int ContestId { get; set; }
+
+        [Display(Name = "From contest")]
+        public string ContestName { get; set; }
     }
 }

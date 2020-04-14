@@ -1,5 +1,7 @@
 ﻿namespace EssayCompetition.Web.Areas.Teacher.Controllers
 {
+    using System.Threading.Tasks;
+
     using EssayCompetition.Common;
     using EssayCompetition.Data.Models;
     using EssayCompetition.Services.Data.ImageServices;
@@ -7,7 +9,6 @@
     using EssayCompetition.Web.ViewModels.Teacher.Reviews;
     using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Mvc;
-    using System.Threading.Tasks;
 
     public class ReviewsController : TeacherController
     {
@@ -42,7 +43,6 @@
             }
 
             viewModel = this.teacherService.GetEssayInfo<ReviewEssayViewModel>(id);
-            viewModel.AllAvailableCategories = this.teacherService.GetAllAvilableCategories<CategoryDropDownViewModel>();
 
             return this.View(viewModel);
         }
@@ -52,7 +52,6 @@
         {
             if (!this.ModelState.IsValid)
             {
-                viewModel.AllAvailableCategories = this.teacherService.GetAllAvilableCategories<CategoryDropDownViewModel>();
                 return this.View(viewModel);
             }
 
@@ -78,12 +77,11 @@
             {
                 Id = viewModel.Id,
                 ImageUrl = viewModel.ImageUrl,
-                CategoryId = viewModel.CategoryId,
                 Content = viewModel.Content,
                 Description = viewModel.Description,
                 Title = viewModel.Title,
                 UserId = viewModel.UserId,
-                TeacherId = viewModel.TeacherId,
+                ContestId = viewModel.ContestId,
             };
 
             return updateEssayModel;

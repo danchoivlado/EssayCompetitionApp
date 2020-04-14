@@ -1,8 +1,8 @@
-﻿namespace EssayCompetition.Web.Areas.Teacher.Controllers
+﻿namespace EssayCompetition.Web.Areas.Contest.Controllers
 {
     using Microsoft.AspNetCore.Mvc;
 
-    public class DashboardController : TeacherController
+    public class DashboardController : ContestController
     {
         public IActionResult Index()
         {

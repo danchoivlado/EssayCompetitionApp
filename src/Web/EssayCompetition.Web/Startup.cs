@@ -1,6 +1,8 @@
 ﻿namespace EssayCompetition.Web
 {
+    using System;
     using System.Reflection;
+
     using CloudinaryDotNet;
     using EssayCompetition.Data;
     using EssayCompetition.Data.Common;
@@ -10,6 +12,7 @@
     using EssayCompetition.Data.Seeding;
     using EssayCompetition.Services.Data;
     using EssayCompetition.Services.Data.CategoryServices;
+    using EssayCompetition.Services.Data.ContestServices;
     using EssayCompetition.Services.Data.ImageServices;
     using EssayCompetition.Services.Data.RolesServices;
     using EssayCompetition.Services.Data.TeacherReviewedServices;
@@ -45,6 +48,14 @@
 
             services.AddDefaultIdentity<ApplicationUser>(IdentityOptionsProvider.GetIdentityOptions)
                 .AddRoles<ApplicationRole>().AddEntityFrameworkStores<ApplicationDbContext>();
+
+            services.AddDistributedMemoryCache();
+            services.AddSession(options =>
+            {
+                options.IdleTimeout = TimeSpan.FromMinutes(2);
+                options.Cookie.HttpOnly = true;
+                options.Cookie.IsEssential = true;
+            });
 
             services.Configure<CookiePolicyOptions>(
                 options =>
@@ -83,6 +94,7 @@
             services.AddTransient<ITeacherService, TeacherService>();
             services.AddTransient<IImageService, ImageService>();
             services.AddTransient<ITeacherReviewedService, TeacherReviewedService>();
+            services.AddTransient<IContestService, ContestService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -117,6 +129,7 @@
             app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseCookiePolicy();
+            app.UseSession();
 
             app.UseRouting();
 

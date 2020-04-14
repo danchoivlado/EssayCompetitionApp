@@ -1,8 +1,10 @@
 ﻿namespace EssayCompetition.Services.Data.TeacherReviewedServices
 {
+    using System;
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
+
     using EssayCompetition.Data.Common.Repositories;
     using EssayCompetition.Data.Models;
     using EssayCompetition.Services.Data.TeacherServices;
@@ -13,18 +15,35 @@
         private readonly IDeletableEntityRepository<Essay> essaysRepository;
         private readonly IDeletableEntityRepository<Category> categoryRepository;
         private readonly IRepository<Grade> gradeRepository;
+        private readonly IDeletableEntityRepository<EssayTeacher> essayTeacherRepository;
 
-        public TeacherReviewedService(IDeletableEntityRepository<Essay> essaysRepository, IDeletableEntityRepository<Category> categoryRepository,
-            IRepository<Grade> gradeRepository)
+        public TeacherReviewedService(
+            IDeletableEntityRepository<Essay> essaysRepository,
+            IDeletableEntityRepository<Category> categoryRepository,
+            IRepository<Grade> gradeRepository,
+            IDeletableEntityRepository<EssayTeacher> essayTeacherRepository)
         {
             this.essaysRepository = essaysRepository;
             this.categoryRepository = categoryRepository;
             this.gradeRepository = gradeRepository;
+            this.essayTeacherRepository = essayTeacherRepository;
         }
 
         public IEnumerable<T> GetAllReviewedEssayFromTecher<T>(string teacherId)
         {
-            return this.essaysRepository.All().Where(x => x.Graded && x.TeacherId == teacherId).AsQueryable().To<T>();
+            var allEssaysIds = this.essayTeacherRepository.All().Where(x => x.TeacherId == teacherId).Select(x => x.EssayId);
+            var allEssays = this.essaysRepository.All().Where(x => x.Graded == true);
+            var filtredEssays = new List<Essay>();
+
+            foreach (var essayId in allEssaysIds)
+            {
+                foreach (var essay in allEssays.Where(x => x.Id == essayId))
+                {
+                    filtredEssays.Add(essay);
+                }
+            }
+
+            return filtredEssays.AsQueryable().To<T>();
         }
 
         public T GetEssayInfo<T>(int essayId)
@@ -53,7 +72,7 @@
             {
                 this.essaysRepository.Update(this.GenerateEssay(updateEssayModel));
             }
-            catch (System.Exception ex)
+            catch (System.Exception)
             {
                 return false;
             }
@@ -63,23 +82,6 @@
             return true;
         }
 
-        private Essay GenerateEssay(UpdateEssayModel updateEssayModel)
-        {
-            Essay essay = new Essay()
-            {
-                Id = updateEssayModel.Id,
-                ImageUrl = updateEssayModel.ImageUrl,
-                UserId = updateEssayModel.UserId,
-                CategoryId = updateEssayModel.CategoryId,
-                Title = updateEssayModel.Title,
-                Description = updateEssayModel.Description,
-                Content = updateEssayModel.Content,
-                TeacherId = updateEssayModel.TeacherId,
-                Graded = true,
-            };
-            return essay;
-        }
-
         public async Task GradeEssayAsync(string privateComment, int points, int essayId)
         {
             var essay = this.gradeRepository.All().Where(x => x.EssayId == essayId).First();
@@ -87,6 +89,22 @@
             essay.Points = points;
 
             await this.gradeRepository.SaveChangesAsync();
+        }
+
+        private Essay GenerateEssay(UpdateEssayModel updateEssayModel)
+        {
+            Essay essay = new Essay()
+            {
+                Id = updateEssayModel.Id,
+                ImageUrl = updateEssayModel.ImageUrl,
+                UserId = updateEssayModel.UserId,
+                Title = updateEssayModel.Title,
+                Description = updateEssayModel.Description,
+                Content = updateEssayModel.Content,
+                ContestId = updateEssayModel.ContestId,
+                Graded = true,
+            };
+            return essay;
         }
     }
 }

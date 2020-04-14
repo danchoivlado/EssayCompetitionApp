@@ -11,5 +11,7 @@
         public const string AdministratorUserEmail = "test@abv.bg";
 
         public const string AdministratorUserPassword = "asdasd";
+
+        public const string ContestRoleName = "Contestant";
     }
 }
