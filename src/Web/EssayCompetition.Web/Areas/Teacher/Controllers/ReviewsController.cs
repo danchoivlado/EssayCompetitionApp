@@ -1,17 +1,19 @@
 ﻿namespace EssayCompetition.Web.Areas.Teacher.Controllers
 {
+    using System;
     using System.Threading.Tasks;
 
-    using EssayCompetition.Common;
     using EssayCompetition.Data.Models;
     using EssayCompetition.Services.Data.ImageServices;
     using EssayCompetition.Services.Data.TeacherServices;
     using EssayCompetition.Web.ViewModels.Teacher.Reviews;
+    using EssayCompetition.Web.ViewModels.Teacher.Reviews.Shared;
     using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Mvc;
 
     public class ReviewsController : TeacherController
     {
+        private const int PageSize = 5;
         private readonly ITeacherService teacherService;
         private readonly UserManager<ApplicationUser> userManager;
         private readonly IImageService imageService;
@@ -23,12 +25,15 @@
             this.imageService = imageService;
         }
 
-        public IActionResult Index()
+        public IActionResult Index(IndexViewModel viewModel)
         {
-            var viewModel = new IndexViewModel();
+            viewModel ??= new IndexViewModel();
+            viewModel.Pager ??= new PagerViewModel();
+            viewModel.Pager.CurrentPage = viewModel.Pager.CurrentPage <= 0 ? 1 : viewModel.Pager.CurrentPage;
 
-            var user = this.userManager.GetUserId(this.User);
-            viewModel.Essays = this.teacherService.GetTeacherNotReviewedEssays<EssayViewModel>(user);
+            var userId = this.userManager.GetUserId(this.User);
+            viewModel.Essays = this.teacherService.GetTeacherNotReviewedEssays<EssayViewModel>(userId);
+            viewModel.Pager.PagesCount = (int)Math.Ceiling((double)this.teacherService.GetTeacherNotReviewedEssaysCount(userId) / PageSize);
 
             return this.View(viewModel);
         }

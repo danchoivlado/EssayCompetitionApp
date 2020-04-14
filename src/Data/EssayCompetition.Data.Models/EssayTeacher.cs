@@ -1,7 +1,7 @@
-﻿using EssayCompetition.Data.Common.Models;
-
-namespace EssayCompetition.Data.Models
+﻿namespace EssayCompetition.Data.Models
 {
+    using EssayCompetition.Data.Common.Models;
+
     public class EssayTeacher : BaseDeletableModel<int>
     {
         public int EssayId { get; set; }

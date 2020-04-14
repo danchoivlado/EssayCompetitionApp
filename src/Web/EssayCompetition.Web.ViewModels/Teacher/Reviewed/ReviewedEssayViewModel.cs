@@ -28,14 +28,7 @@
         [Required]
         public string ImageUrl { get; set; }
 
-        //public Category Category { get; set; }
-
         public IFormFile ImageContent { get; set; }
-
-        //[Required]
-        //public int CategoryId { get; set; }
-
-        //public IEnumerable<CategoryDropDownViewModel> AllAvailableCategories { get; set; }
 
         [Display(Name = "Made by user with id")]
         public string UserId { get; set; }
@@ -44,7 +37,5 @@
         public string ContestName { get; set; }
 
         public int ContestId { get; set; }
-
-        //public string TeacherId { get; set; }
     }
 }

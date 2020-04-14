@@ -1,7 +1,7 @@
-﻿using Microsoft.EntityFrameworkCore.Migrations;
-
-namespace EssayCompetition.Data.Migrations
+﻿namespace EssayCompetition.Data.Migrations
 {
+    using Microsoft.EntityFrameworkCore.Migrations;
+
     public partial class GradedField : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)

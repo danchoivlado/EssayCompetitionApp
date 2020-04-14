@@ -3,6 +3,7 @@
     using System;
     using System.Linq;
     using System.Threading.Tasks;
+
     using EssayCompetition.Common;
     using EssayCompetition.Data.Models;
     using Microsoft.AspNetCore.Identity;

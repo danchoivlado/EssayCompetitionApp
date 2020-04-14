@@ -2,6 +2,7 @@
 {
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
+
     using EssayCompetition.Data.Models;
     using EssayCompetition.Services.Mapping;
     using Microsoft.AspNetCore.Identity;

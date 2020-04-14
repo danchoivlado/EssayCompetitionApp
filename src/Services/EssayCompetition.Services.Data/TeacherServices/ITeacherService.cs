@@ -10,6 +10,10 @@
 
         IEnumerable<T> GetTeacherNotReviewedEssays<T>(string userId);
 
+        int GetTeacherNotReviewedEssaysCount(string userId);
+
+        IEnumerable<T> GetTeacherNotReviewedEssaysInRange<T>(string userId, int currentPage, int pageSize);
+
         T GetEssayInfo<T>(int essayId);
 
         IEnumerable<T> GetAllAvilableCategories<T>();

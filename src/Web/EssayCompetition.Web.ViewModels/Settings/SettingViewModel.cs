@@ -1,9 +1,8 @@
 ﻿namespace EssayCompetition.Web.ViewModels.Settings
 {
+    using AutoMapper;
     using EssayCompetition.Data.Models;
     using EssayCompetition.Services.Mapping;
-
-    using AutoMapper;
 
     public class SettingViewModel : IMapFrom<Setting>, IHaveCustomMappings
     {

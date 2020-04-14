@@ -1,8 +1,9 @@
-﻿using System;
-using Microsoft.EntityFrameworkCore.Migrations;
-
-namespace EssayCompetition.Data.Migrations
+﻿namespace EssayCompetition.Data.Migrations
 {
+    using System;
+
+    using Microsoft.EntityFrameworkCore.Migrations;
+
     public partial class AddGrade : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -26,7 +27,7 @@ namespace EssayCompetition.Data.Migrations
                     CreatedOn = table.Column<DateTime>(nullable: false),
                     ModifiedOn = table.Column<DateTime>(nullable: true),
                     Points = table.Column<int>(nullable: false),
-                    PrivateComments = table.Column<string>(nullable: true)
+                    PrivateComments = table.Column<string>(nullable: true),
                 },
                 constraints: table =>
                 {

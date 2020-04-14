@@ -16,9 +16,11 @@
         private readonly IRepository<Grade> gradeRepository;
         private readonly IDeletableEntityRepository<EssayTeacher> essayTeacherRepository;
 
-        public TeacherService(IDeletableEntityRepository<Essay> essaysRepository,
+        public TeacherService(
+            IDeletableEntityRepository<Essay> essaysRepository,
             IDeletableEntityRepository<Category> categoryRepository,
-            IRepository<Grade> gradeRepository, IDeletableEntityRepository<EssayTeacher> essayTeacherRepository) 
+            IRepository<Grade> gradeRepository,
+            IDeletableEntityRepository<EssayTeacher> essayTeacherRepository)
         {
             this.essaysRepository = essaysRepository;
             this.categoryRepository = categoryRepository;
@@ -38,7 +40,6 @@
 
         public IEnumerable<T> GetTeacherNotReviewedEssays<T>(string userId)
         {
-            //  return this.essaysRepository.All().Where(x => x.TeacherId == userId && x.Graded == false).AsQueryable().To<T>();
             var allEssaysIds = this.essayTeacherRepository.All().Where(x => x.TeacherId == userId).Select(x => x.EssayId);
             var allEssays = this.essaysRepository.All().Where(x => x.Graded != true);
             var filtredEssays = new List<Essay>();
@@ -52,6 +53,28 @@
             }
 
             return filtredEssays.AsQueryable().To<T>();
+        }
+
+        public int GetTeacherNotReviewedEssaysCount(string userId)
+        {
+            return this.essayTeacherRepository.All().Where(x => x.TeacherId == userId).Select(x => x.EssayId).Count();
+        }
+
+        public IEnumerable<T> GetTeacherNotReviewedEssaysInRange<T>(string userId, int currentPage, int pageSize)
+        {
+            var allEssaysIds = this.essayTeacherRepository.All().Where(x => x.TeacherId == userId).Select(x => x.EssayId);
+            var allEssays = this.essaysRepository.All().Where(x => x.Graded != true);
+            var filtredEssays = new List<Essay>();
+
+            foreach (var essayId in allEssaysIds)
+            {
+                foreach (var essay in allEssays.Where(x => x.Id == essayId))
+                {
+                    filtredEssays.Add(essay);
+                }
+            }
+
+            return filtredEssays.Skip((currentPage - 1) * pageSize).Take(pageSize).AsQueryable().To<T>();
         }
 
         public async Task GradeEssayAsync(string privateComment, int points, int essayId)
@@ -74,12 +97,11 @@
 
         public async Task<bool> UpdateEssayAync(UpdateEssayModel updateEssayModel)
         {
-            //var es = updateEssayModel.To<Essay>(); 
             try
             {
                 this.essaysRepository.Update(this.GenerateEssay(updateEssayModel));
             }
-            catch (System.Exception ex)
+            catch (System.Exception)
             {
                 return false;
             }

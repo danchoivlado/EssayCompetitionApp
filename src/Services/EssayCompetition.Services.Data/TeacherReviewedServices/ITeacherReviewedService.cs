@@ -1,9 +1,10 @@
 ﻿namespace EssayCompetition.Services.Data.TeacherReviewedServices
 {
-    using EssayCompetition.Services.Data.TeacherServices;
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
+
+    using EssayCompetition.Services.Data.TeacherServices;
 
     public interface ITeacherReviewedService
     {

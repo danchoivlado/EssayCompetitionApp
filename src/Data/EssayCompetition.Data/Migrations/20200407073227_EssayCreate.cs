@@ -1,8 +1,9 @@
-﻿using System;
-using Microsoft.EntityFrameworkCore.Migrations;
-
-namespace EssayCompetition.Data.Migrations
+﻿namespace EssayCompetition.Data.Migrations
 {
+    using System;
+
+    using Microsoft.EntityFrameworkCore.Migrations;
+
     public partial class EssayCreate : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -23,7 +24,7 @@ namespace EssayCompetition.Data.Migrations
                     ImageUrl = table.Column<string>(nullable: true),
                     CategoryId = table.Column<int>(nullable: false),
                     UserId = table.Column<string>(nullable: false),
-                    Graded = table.Column<bool>(nullable: false)
+                    Graded = table.Column<bool>(nullable: false),
                 },
                 constraints: table =>
                 {

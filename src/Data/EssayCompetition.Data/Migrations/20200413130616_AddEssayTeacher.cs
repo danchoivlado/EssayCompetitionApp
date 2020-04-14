@@ -1,8 +1,9 @@
-﻿using System;
-using Microsoft.EntityFrameworkCore.Migrations;
-
-namespace EssayCompetition.Data.Migrations
+﻿namespace EssayCompetition.Data.Migrations
 {
+    using System;
+
+    using Microsoft.EntityFrameworkCore.Migrations;
+
     public partial class AddEssayTeacher : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -19,7 +20,7 @@ namespace EssayCompetition.Data.Migrations
                     DeletedOn = table.Column<DateTime>(nullable: true),
                     EssayId = table.Column<int>(nullable: false),
                     TeacherId = table.Column<int>(nullable: false),
-                    TeacherId1 = table.Column<string>(nullable: true)
+                    TeacherId1 = table.Column<string>(nullable: true),
                 },
                 constraints: table =>
                 {

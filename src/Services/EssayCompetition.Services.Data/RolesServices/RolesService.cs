@@ -1,5 +1,4 @@
-﻿
-namespace EssayCompetition.Services.Data.RolesServices
+﻿namespace EssayCompetition.Services.Data.RolesServices
 {
     using System.Collections.Generic;
     using System.Linq;

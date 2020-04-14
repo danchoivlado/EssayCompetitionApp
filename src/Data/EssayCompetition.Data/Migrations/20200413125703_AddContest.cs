@@ -1,8 +1,9 @@
-﻿using System;
-using Microsoft.EntityFrameworkCore.Migrations;
-
-namespace EssayCompetition.Data.Migrations
+﻿namespace EssayCompetition.Data.Migrations
 {
+    using System;
+
+    using Microsoft.EntityFrameworkCore.Migrations;
+
     public partial class AddContest : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -38,7 +39,7 @@ namespace EssayCompetition.Data.Migrations
                     Name = table.Column<string>(nullable: true),
                     Description = table.Column<string>(nullable: true),
                     CategoryId = table.Column<int>(nullable: false),
-                    Duration = table.Column<TimeSpan>(nullable: false)
+                    Duration = table.Column<TimeSpan>(nullable: false),
                 },
                 constraints: table =>
                 {
