@@ -91,6 +91,41 @@
             await this.gradeRepository.SaveChangesAsync();
         }
 
+        public IEnumerable<T> GetAllReviewedEssayFromTecherInRange<T>(string teacherId, int currentPage, int pageSize)
+        {
+            var allEssaysIds = this.essayTeacherRepository.All().Where(x => x.TeacherId == teacherId).Select(x => x.EssayId);
+            var allEssays = this.essaysRepository.All().Where(x => x.Graded == true);
+            var filtredEssays = new List<T>();
+
+            foreach (var essayId in allEssaysIds)
+            {
+                foreach (var essay in allEssays.Where(x => x.Id == essayId).To<T>())
+                {
+                    filtredEssays.Add(essay);
+                }
+            }
+
+            //var a = filtredEssays.Skip((currentPage - 1) * pageSize).Take(pageSize).AsQueryable().To<T>();
+            return filtredEssays.Skip((currentPage - 1) * pageSize).Take(pageSize);
+        }
+
+        public int GetAllReviewedEssayFromTecherCount(string teacherId)
+        {
+            var allEssaysIds = this.essayTeacherRepository.All().Where(x => x.TeacherId == teacherId).Select(x => x.EssayId);
+            var allEssays = this.essaysRepository.All().Where(x => x.Graded == true);
+            int counter = 0;
+
+            foreach (var essayId in allEssaysIds)
+            {
+                foreach (var essay in allEssays.Where(x => x.Id == essayId))
+                {
+                    counter++;
+                }
+            }
+
+            return counter; 
+        }
+
         private Essay GenerateEssay(UpdateEssayModel updateEssayModel)
         {
             Essay essay = new Essay()

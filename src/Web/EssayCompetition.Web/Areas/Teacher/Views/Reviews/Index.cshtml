@@ -4,18 +4,41 @@
     ViewData["Title"] = "Index";
 }
 <h2>Essays to review</h2>
-<br />
-@foreach (var essay in Model.Essays)
-{
-    <h3>
-        <a asp-action="ReviewEssay" asp-route-id="@essay.Id">
-            @essay.Title <br />
-            @essay.Description
-        </a>
-    </h3>
-    <hr />
-    <br />
-}
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Title
+            </th>
+            <th>
+                Description
+            </th>
+            <th>
+                Contest
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.Essays)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Title)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ShortDescription)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ContestName)
+                </td>
+                <td>
+                    <a asp-action="ReviewEssay" asp-route-id="@item.Id">Review</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
 <ul class="pagination">
     @for (var i = 1; i <= Model.Pager.PagesCount; i++)
     {

@@ -10,6 +10,10 @@
     {
         IEnumerable<T> GetAllReviewedEssayFromTecher<T>(string teacherId);
 
+        int GetAllReviewedEssayFromTecherCount(string teacherId);
+
+        IEnumerable<T> GetAllReviewedEssayFromTecherInRange<T>(string teacherId, int currentPage, int pageSize);
+
         T GetEssayInfo<T>(int essayId);
 
         bool HasEssayWithId(int id);

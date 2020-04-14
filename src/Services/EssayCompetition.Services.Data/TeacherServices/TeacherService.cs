@@ -57,24 +57,36 @@
 
         public int GetTeacherNotReviewedEssaysCount(string userId)
         {
-            return this.essayTeacherRepository.All().Where(x => x.TeacherId == userId).Select(x => x.EssayId).Count();
+            var allEssaysIds = this.essayTeacherRepository.All().Where(x => x.TeacherId == userId).Select(x => x.EssayId);
+            var allEssays = this.essaysRepository.All().Where(x => x.Graded != true);
+            int counter = 0;
+
+            foreach (var essayId in allEssaysIds)
+            {
+                foreach (var essay in allEssays.Where(x => x.Id == essayId))
+                {
+                    counter++;
+                }
+            }
+
+            return counter;
         }
 
         public IEnumerable<T> GetTeacherNotReviewedEssaysInRange<T>(string userId, int currentPage, int pageSize)
         {
             var allEssaysIds = this.essayTeacherRepository.All().Where(x => x.TeacherId == userId).Select(x => x.EssayId);
             var allEssays = this.essaysRepository.All().Where(x => x.Graded != true);
-            var filtredEssays = new List<Essay>();
+            var filtredEssays = new List<T>();
 
             foreach (var essayId in allEssaysIds)
             {
-                foreach (var essay in allEssays.Where(x => x.Id == essayId))
+                foreach (var essay in allEssays.Where(x => x.Id == essayId).AsQueryable().To<T>())
                 {
                     filtredEssays.Add(essay);
                 }
             }
 
-            return filtredEssays.Skip((currentPage - 1) * pageSize).Take(pageSize).AsQueryable().To<T>();
+            return filtredEssays.Skip((currentPage - 1) * pageSize).Take(pageSize);
         }
 
         public async Task GradeEssayAsync(string privateComment, int points, int essayId)

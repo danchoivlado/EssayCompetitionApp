@@ -13,7 +13,7 @@
 
     public class ReviewsController : TeacherController
     {
-        private const int PageSize = 5;
+        private const int PageSize = 1;
         private readonly ITeacherService teacherService;
         private readonly UserManager<ApplicationUser> userManager;
         private readonly IImageService imageService;
@@ -32,7 +32,10 @@
             viewModel.Pager.CurrentPage = viewModel.Pager.CurrentPage <= 0 ? 1 : viewModel.Pager.CurrentPage;
 
             var userId = this.userManager.GetUserId(this.User);
-            viewModel.Essays = this.teacherService.GetTeacherNotReviewedEssays<EssayViewModel>(userId);
+            viewModel.Essays = this.teacherService.GetTeacherNotReviewedEssaysInRange<EssayViewModel>(
+                userId,
+                viewModel.Pager.CurrentPage,
+                PageSize);
             viewModel.Pager.PagesCount = (int)Math.Ceiling((double)this.teacherService.GetTeacherNotReviewedEssaysCount(userId) / PageSize);
 
             return this.View(viewModel);
