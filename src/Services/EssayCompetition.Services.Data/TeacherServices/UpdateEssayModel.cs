@@ -18,7 +18,5 @@
         public string UserId { get; set; }
 
         public int ContestId { get; set; }
-
-        public string SanitizedContent => HtmlSanitizer
     }
 }
