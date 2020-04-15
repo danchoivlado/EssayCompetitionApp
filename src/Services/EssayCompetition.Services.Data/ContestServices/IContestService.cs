@@ -2,6 +2,7 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Linq;
     using System.Threading.Tasks;
 
     public interface IContestService
@@ -17,5 +18,7 @@
         bool HasContestWithId(int id);
 
         Task UpdateContestAsync(DateTime start, DateTime end, string name, string description, int categoryId, int id);
+
+        Task AddContestAsync<T>(DateTime start, DateTime end, string name, string description, int categoryId);
     }
 }

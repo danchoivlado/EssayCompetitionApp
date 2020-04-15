@@ -8,6 +8,9 @@
     using EssayCompetition.Web.ViewModels.Administration.Contest;
     using EssayCompetition.Web.ViewModels.Administration.Contest.Shared;
     using Microsoft.AspNetCore.Mvc;
+    using EssayCompetition.Common;
+    using System.Collections.Generic;
+    using System.Linq;
 
     public class ContestController : AdministrationController
     {
@@ -24,7 +27,7 @@
         public IActionResult Index(IndexViewModel viewModel)
         {
             viewModel ??= new IndexViewModel();
-            viewModel.Pager = new PagerViewModel();
+            viewModel.Pager ??= new PagerViewModel();
             viewModel.Pager.CurrentPage = viewModel.Pager.CurrentPage <= 0 ? 1 : viewModel.Pager.CurrentPage;
 
             viewModel.Contests = this.contestService.GetAllContestsRange<ContestViewModel>(viewModel.Pager.CurrentPage, PageSize);
@@ -47,8 +50,36 @@
             }
 
             var viewModel = this.contestService.GetContestDetails<EditViewModel>(id);
+            viewModel.StartTime = viewModel.StartTime.ToLocalTime();
+            viewModel.EndTime = viewModel.EndTime.ToLocalTime();
             viewModel.AllAvilableCategory = this.teacherService.GetAllAvilableCategories<CategoryDropDownViewModel>();
             return this.View(viewModel);
+        }
+
+        public IActionResult Create()
+        {
+            var viewModel = new CreateViewModel();
+            viewModel.AllAvilableCategory = this.teacherService.GetAllAvilableCategories<CategoryDropDownViewModel>();
+            return this.View(viewModel);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Create(CreateViewModel viewModel)
+        {
+            if (!this.ModelState.IsValid)
+            {
+                viewModel.AllAvilableCategory = this.teacherService.GetAllAvilableCategories<CategoryDropDownViewModel>();
+                return this.View(viewModel);
+            }
+
+            await this.contestService.AddContestAsync<CreateViewModel>(
+                viewModel.StartTime,
+                viewModel.EndTime,
+                viewModel.Name,
+                viewModel.Description,
+                viewModel.CategoryId);
+
+            return this.RedirectToAction("Index");
         }
 
         [HttpPost]

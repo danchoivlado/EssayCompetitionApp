@@ -5,15 +5,10 @@
     using System.ComponentModel.DataAnnotations;
 
     using EssayCompetition.Common;
-    using EssayCompetition.Services.Mapping;
     using EssayCompetition.Web.ViewModels.Administration.Contest.Shared;
 
-    public class EditViewModel : IMapFrom<EssayCompetition.Data.Models.Contest>, IValidatableObject
+    public class CreateViewModel : IValidatableObject
     {
-
-        [Required]
-        public int Id { get; set; }
-
         [Required]
         public DateTime StartTime { get; set; }
 

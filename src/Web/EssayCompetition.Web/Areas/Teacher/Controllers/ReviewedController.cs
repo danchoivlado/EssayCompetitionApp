@@ -15,7 +15,7 @@
 
     public class ReviewedController : TeacherController
     {
-        private const int PageSize = 1;
+        private const int PageSize = 5;
         private readonly ITeacherReviewedService teacherReviewedService;
         private readonly UserManager<ApplicationUser> userManager;
         private readonly IImageService imageService;

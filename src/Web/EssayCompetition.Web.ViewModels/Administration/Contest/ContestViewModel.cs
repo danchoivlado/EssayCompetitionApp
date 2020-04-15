@@ -16,6 +16,10 @@
 
         public DateTime EndTime { get; set; }
 
+        public DateTime CurrentStartTime => this.StartTime.ToLocalTime();
+
+        public DateTime CurrentEndTime => this.EndTime.ToLocalTime();
+
         public string ShortenDesc =>
             this.Description.Length > 60 ? this.Description.Substring(0, 60) + "..." : this.Description;
     }

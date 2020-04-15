@@ -35,10 +35,10 @@
                     @Html.DisplayFor(modelItem => item.ShortenDesc)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.StartTime)
+                    @Html.DisplayFor(modelItem => item.CurrentStartTime)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.EndTime)
+                    @Html.DisplayFor(modelItem => item.CurrentEndTime)
                 </td>
                 <td>
                     <a asp-action="Details" asp-route-id="@item.Id">Details</a> |

@@ -10,9 +10,13 @@
     {
         public DateTime StartTime { get; set; }
 
+        public DateTime CurrentSartTime => this.StartTime.ToLocalTime();
+
         public DateTime EndTime { get; set; }
 
-        public TimeSpan Duration => (this.StartTime - this.EndTime).Duration();
+        public DateTime CurrentEndTime => this.EndTime.ToLocalTime();
+
+        public TimeSpan Duration => this.EndTime - this.StartTime;
 
         public string Name { get; set; }
 

@@ -13,7 +13,7 @@
 
     public class ReviewsController : TeacherController
     {
-        private const int PageSize = 1;
+        private const int PageSize = 5;
         private readonly ITeacherService teacherService;
         private readonly UserManager<ApplicationUser> userManager;
         private readonly IImageService imageService;

@@ -22,6 +22,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\Data\EssayCompetition.Data.Models\EssayCompetition.Data.Models.csproj" />
+    <ProjectReference Include="..\..\EssayCompetition.Common\EssayCompetition.Common.csproj" />
     <ProjectReference Include="..\..\Services\EssayCompetition.Services.Mapping\EssayCompetition.Services.Mapping.csproj" />
   </ItemGroup>
 

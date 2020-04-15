@@ -18,6 +18,21 @@
             this.contestRepository = contestRepository;
         }
 
+        public async Task AddContestAsync<T>(DateTime start, DateTime end, string name, string description, int categoryId)
+        {
+            Contest contest = new Contest()
+            {
+                StartTime = start.ToUniversalTime(),
+                EndTime = end.ToUniversalTime(),
+                Name = name,
+                Description = description,
+                CategoryId = categoryId,
+            };
+
+            await this.contestRepository.AddAsync(contest);
+            await this.contestRepository.SaveChangesAsync();
+        }
+
         public IEnumerable<T> GetAllContests<T>()
         {
             return this.contestRepository.All().To<T>();
@@ -48,8 +63,8 @@
             var contest = new Contest()
             {
                 Id = id,
-                StartTime = start,
-                EndTime = end,
+                StartTime = start.ToUniversalTime(),
+                EndTime = end.ToUniversalTime(),
                 Name = name,
                 Description = description,
                 CategoryId = categoryId,
