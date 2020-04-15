@@ -9,7 +9,7 @@
     using EssayCompetition.Services.Data.TeacherServices;
     using EssayCompetition.Web.ViewModels.Teacher.Reviewed;
     using EssayCompetition.Web.ViewModels.Teacher.Reviewed.Shared;
-
+    using Ganss.XSS;
     using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Mvc;
 
@@ -19,12 +19,14 @@
         private readonly ITeacherReviewedService teacherReviewedService;
         private readonly UserManager<ApplicationUser> userManager;
         private readonly IImageService imageService;
+        private readonly HtmlSanitizer htmlSanitizer;
 
         public ReviewedController(ITeacherReviewedService teacherReviewedService, UserManager<ApplicationUser> userManager, IImageService imageService)
         {
             this.teacherReviewedService = teacherReviewedService;
             this.userManager = userManager;
             this.imageService = imageService;
+            this.htmlSanitizer = new HtmlSanitizer();
         }
 
         public IActionResult Index(IndexViewModel viewModel)
@@ -88,7 +90,7 @@
             {
                 Id = viewModel.Id,
                 ImageUrl = viewModel.ImageUrl,
-                Content = viewModel.Content,
+                Content = this.htmlSanitizer.Sanitize(viewModel.Content),
                 Description = viewModel.Description,
                 Title = viewModel.Title,
                 UserId = viewModel.UserId,
