@@ -13,6 +13,11 @@
             return this.View();
         }
 
+        public IActionResult Calendar()
+        {
+            return this.View();
+        }
+
         public IActionResult Privacy()
         {
             return this.View();
