@@ -2,6 +2,7 @@
 {
     using EssayCompetition.Data.Models;
     using EssayCompetition.Services.Mapping;
+    using System;
 
     public class IndexViewModel : IMapTo<Essay>
     {
