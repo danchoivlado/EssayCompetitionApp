@@ -21,12 +21,16 @@
         private readonly IImageService imageService;
         private readonly HtmlSanitizer htmlSanitizer;
 
-        public ReviewedController(ITeacherReviewedService teacherReviewedService, UserManager<ApplicationUser> userManager, IImageService imageService)
+        public ReviewedController(
+            ITeacherReviewedService teacherReviewedService,
+            UserManager<ApplicationUser> userManager,
+            IImageService imageService,
+            HtmlSanitizer htmlSanitizer)
         {
             this.teacherReviewedService = teacherReviewedService;
             this.userManager = userManager;
             this.imageService = imageService;
-            this.htmlSanitizer = new HtmlSanitizer();
+            this.htmlSanitizer = htmlSanitizer;
         }
 
         public IActionResult Index(IndexViewModel viewModel)

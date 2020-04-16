@@ -1,16 +1,12 @@
-﻿using EssayCompetition.Services.Data.ContestServices;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Filters;
-using Microsoft.Extensions.DependencyInjection;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Threading.Tasks;
-
-namespace EssayCompetition.Web.ValidationAttributes
+﻿namespace EssayCompetition.Web.ValidationAttributes
 {
+    using System;
+
+    using EssayCompetition.Services.Data.ContestServices;
+    using Microsoft.AspNetCore.Authorization;
+    using Microsoft.AspNetCore.Mvc;
+    using Microsoft.AspNetCore.Mvc.Filters;
+
     public class HasContest : AuthorizeAttribute, IAuthorizationFilter
     {
         public void OnAuthorization(AuthorizationFilterContext context)

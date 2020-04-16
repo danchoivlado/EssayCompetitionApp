@@ -20,12 +20,16 @@
         private readonly IImageService imageService;
         private readonly HtmlSanitizer htmlSanitizer;
 
-        public ReviewsController(ITeacherService teacherService, UserManager<ApplicationUser> userManager, IImageService imageService)
+        public ReviewsController(
+            ITeacherService teacherService,
+            UserManager<ApplicationUser> userManager,
+            IImageService imageService,
+            HtmlSanitizer htmlSanitizer)
         {
             this.teacherService = teacherService;
             this.userManager = userManager;
             this.imageService = imageService;
-            this.htmlSanitizer = new HtmlSanitizer();
+            this.htmlSanitizer = htmlSanitizer;
         }
 
         public IActionResult Index(IndexViewModel viewModel)

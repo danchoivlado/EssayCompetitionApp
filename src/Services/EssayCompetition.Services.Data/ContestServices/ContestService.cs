@@ -12,10 +12,17 @@
     public class ContestService : IContestService
     {
         private readonly IDeletableEntityRepository<Contest> contestRepository;
+        private readonly IDeletableEntityRepository<Essay> essayRepository;
+        private readonly IDeletableEntityRepository<EssayTeacher> teacherEssayRepository;
 
-        public ContestService(IDeletableEntityRepository<Contest> contestRepository)
+        public ContestService(
+            IDeletableEntityRepository<Contest> contestRepository,
+            IDeletableEntityRepository<Essay> essayRepository,
+            IDeletableEntityRepository<EssayTeacher> teacherEssayRepository)
         {
             this.contestRepository = contestRepository;
+            this.essayRepository = essayRepository;
+            this.teacherEssayRepository = teacherEssayRepository;
         }
 
         public async Task AddContestAsync<T>(DateTime start, DateTime end, string name, string description, int categoryId)
@@ -68,10 +75,35 @@
                 {
                     return true;
                 }
+
                 return false;
             }
 
             return false;
+        }
+
+        public async Task SendContestEssayAsync(string title, string description, string content, string userId, IEnumerable<string> teachersIds)
+        {
+            var contestId = this.GetContestNowId(DateTime.Now);
+
+            if (contestId == -1)
+            {
+                throw new KeyNotFoundException();
+            }
+
+            Essay essay = new Essay()
+            {
+                Title = title,
+                Description = description,
+                Content = content,
+                ContestId = contestId,
+                UserId = userId,
+                Graded = false,
+            };
+
+            await this.essayRepository.AddAsync(essay);
+            await this.essayRepository.SaveChangesAsync();
+            await this.AddEssayTeacher(teachersIds, essay.Id);
         }
 
         public async Task UpdateContestAsync(DateTime start, DateTime end, string name, string description, int categoryId, int id)
@@ -88,6 +120,61 @@
 
             this.contestRepository.Update(contest);
             await this.contestRepository.SaveChangesAsync();
+        }
+
+        public bool IsUserAlreadySubmitedEssay(string userId)
+        {
+            var contestId = this.GetContestNowId(DateTime.Now);
+            if(contestId == -1)
+            {
+                return false;
+            }
+
+            return this.essayRepository.All().Any(x => x.UserId == userId && x.ContestId == contestId);
+        }
+
+        private async Task AddEssayTeacher(IEnumerable<string> teachersIds, int essayId)
+        {
+            var dic = new Dictionary<string, int>();
+            var teachersAssigned = this.teacherEssayRepository.All().Select(x => x.TeacherId);
+
+            foreach (var teacherId in teachersIds)
+            {
+                int workCounter = 0;
+                foreach (var teacherAssgned in teachersAssigned.Where(x => x == teacherId))
+                {
+                    workCounter++;
+                }
+
+                dic.Add(teacherId, workCounter);
+            }
+
+            var teacherWithMinimalWorkId = dic.OrderBy(x => x.Value).First().Key;
+            var essayTeacher = new EssayTeacher()
+            {
+                EssayId = essayId,
+                TeacherId = teacherWithMinimalWorkId,
+            };
+
+            await this.teacherEssayRepository.AddAsync(essayTeacher);
+            await this.teacherEssayRepository.SaveChangesAsync();
+        }
+
+        private int GetContestNowId(DateTime date)
+        {
+            date = date.ToUniversalTime();
+            var contest = this.contestRepository.All().FirstOrDefault(x => x.StartTime.Date == date.Date);
+            if (contest != null)
+            {
+                if (date.TimeOfDay >= contest.StartTime.TimeOfDay && date.TimeOfDay <= contest.EndTime.TimeOfDay)
+                {
+                    return contest.Id;
+                }
+
+                return -1;
+            }
+
+            return -1;
         }
     }
 }

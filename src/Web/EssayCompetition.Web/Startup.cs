@@ -22,7 +22,7 @@
     using EssayCompetition.Services.Mapping;
     using EssayCompetition.Services.Messaging;
     using EssayCompetition.Web.ViewModels;
-
+    using Ganss.XSS;
     using Microsoft.AspNetCore.Builder;
     using Microsoft.AspNetCore.Hosting;
     using Microsoft.AspNetCore.Http;
@@ -75,7 +75,9 @@
                 this.configuration["CloudinarySettings:ApiSecret"]);
 
             Cloudinary cloudinary = new Cloudinary(account);
+            HtmlSanitizer htmlSanitizer = new HtmlSanitizer();
             services.AddSingleton(cloudinary);
+            services.AddSingleton(htmlSanitizer);
 
             services.AddRazorPages();
 
