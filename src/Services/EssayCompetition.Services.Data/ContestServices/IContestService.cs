@@ -20,5 +20,7 @@
         Task UpdateContestAsync(DateTime start, DateTime end, string name, string description, int categoryId, int id);
 
         Task AddContestAsync<T>(DateTime start, DateTime end, string name, string description, int categoryId);
+
+        bool HasContextNow(DateTime date);
     }
 }

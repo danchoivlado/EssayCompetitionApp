@@ -58,6 +58,22 @@
             return this.contestRepository.All().Any(x => x.Id == id);
         }
 
+        public bool HasContextNow(DateTime date)
+        {
+            date = date.ToUniversalTime();
+            var contest = this.contestRepository.All().FirstOrDefault(x => x.StartTime.Date == date.Date);
+            if (contest != null)
+            {
+                if (date.TimeOfDay >= contest.StartTime.TimeOfDay && date.TimeOfDay <= contest.EndTime.TimeOfDay)
+                {
+                    return true;
+                }
+                return false;
+            }
+
+            return false;
+        }
+
         public async Task UpdateContestAsync(DateTime start, DateTime end, string name, string description, int categoryId, int id)
         {
             var contest = new Contest()
