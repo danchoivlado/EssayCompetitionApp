@@ -21,9 +21,10 @@
             return this.View();
         }
 
-        public IActionResult Calendar()
+        public IActionResult Calendar(int curentYear, int currentMonth, bool isPlus)
         {
-            var dayNow = DateTime.Now;
+
+            var dayNow = this.calendarService.GetDate(currentMonth, curentYear, isPlus);
             var viewModel = this.calendarService.GetCalendarInfo(dayNow.Month, dayNow.Year);
             return this.View(viewModel);
         }
