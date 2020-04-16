@@ -4,7 +4,7 @@
     using System.Collections.Generic;
     using System.Linq;
     using System.Xml.Linq;
-
+    using EssayCompetition.Web.ViewModels.Calendars;
     using Microsoft.AspNetCore.Razor.TagHelpers;
 
     [HtmlTargetElement("calendar", TagStructure = TagStructure.NormalOrSelfClosing)]
@@ -14,7 +14,7 @@
 
         public int Year { get; set; }
 
-        public List<CalendarEvent> Events { get; set; }
+        public IEnumerable<CalendarEventViewModel> Events { get; set; }
 
         public override void Process(TagHelperContext context, TagHelperOutput output)
         {

@@ -1,8 +1,8 @@
-﻿namespace EssayCompetition.Web.TagHelpers
-{
-    using System;
+﻿using System;
 
-    public class CalendarEvent
+namespace EssayCompetition.Web.ViewModels.Calendars
+{
+    public class CalendarEventViewModel
     {
         public string Title { get; set; }
 

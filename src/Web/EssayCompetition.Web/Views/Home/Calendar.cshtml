@@ -1,23 +1,14 @@
-﻿@using EssayCompetition.Web.TagHelpers
+﻿@using EssayCompetition.Web.ViewModels.Calendars
+@model CalendarViewModel
 @{
     this.ViewData["Title"] = "Home Page";
     this.ViewData["ImagePath"] = "img/about-bg.jpg";
     this.Layout = "_CustomLayout";
-
-    var events = new List<CalendarEvent>()
-{
-        new CalendarEvent()
-    {
-            Date = new DateTime(2020,4,15),
-            Title = "Test",
-            Type = "info",
-    }
-};
 }
 <div class="container">
     <div class="row">
         <div class="col-lg-12 col-md-12 mx-auto">
-            <calendar month="04" year="2020" events="@events" />
+            <calendar month="@Model.Month" year="@Model.Year" events="@Model.Events" />
         </div>
     </div>
 </div>
