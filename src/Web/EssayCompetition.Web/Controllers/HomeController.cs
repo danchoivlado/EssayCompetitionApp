@@ -11,9 +11,11 @@
     using SendGrid;
     using SendGrid.Helpers.Mail;
     using Microsoft.Extensions.Configuration;
+    using PaulMiami.AspNetCore.Mvc.Recaptcha;
 
     public class HomeController : BaseController
     {
+        private const string FormResult = "You succesfully send email.";
         private readonly ICalendarService calendarService;
         private readonly IEmailSender emailSender;
         private readonly IConfiguration configuration;
@@ -49,11 +51,14 @@
 
         public IActionResult Contact()
         {
-            return this.View();
+            var viewModel = new EmailViewModel();
+
+            return this.View(viewModel);
         }
 
+        [ValidateRecaptcha]
         [HttpPost]
-        public async Task<IActionResult> SendEmail(EmailViewModel viewModel)
+        public async Task<IActionResult> Contact(EmailViewModel viewModel)
         {
             if (!this.ModelState.IsValid)
             {
@@ -61,7 +66,8 @@
             }
 
             await this.emailSender.SendEmailAsync("essaycompetitionsender@abv.bg", viewModel.Email, "essaycompetitionsender@abv.bg", viewModel.Subject, viewModel.Message);
-            return this.View(viewModel);
+            this.TempData["FormResult"] = FormResult;
+            return this.RedirectToAction("Contact");
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

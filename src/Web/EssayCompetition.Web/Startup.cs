@@ -31,6 +31,7 @@
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.DependencyInjection;
     using Microsoft.Extensions.Hosting;
+    using PaulMiami.AspNetCore.Mvc.Recaptcha;
 
     public class Startup
     {
@@ -73,6 +74,13 @@
                 this.configuration["CloudinarySettings:CloudName"],
                 this.configuration["CloudinarySettings:ApiKey"],
                 this.configuration["CloudinarySettings:ApiSecret"]);
+
+            services.AddRecaptcha(new RecaptchaOptions
+            {
+                SiteKey = this.configuration["Recaptcha:SiteKey"],
+                SecretKey = this.configuration["Recaptcha:SecretKey"],
+                ValidationMessage = "Are you a robot?",
+            });
 
             Cloudinary cloudinary = new Cloudinary(account);
             HtmlSanitizer htmlSanitizer = new HtmlSanitizer();
