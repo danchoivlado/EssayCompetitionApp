@@ -136,7 +136,8 @@
 
         public T NextContext<T>()
         {
-            var nexContext = this.contestRepository.All().FirstOrDefault(x => x.EndTime >= DateTime.Now);
+            var time = DateTime.Now.ToUniversalTime();
+            var nexContext = this.contestRepository.All().FirstOrDefault(x => x.EndTime >= time);
             if (nexContext == null)
             {
                 return default(T);

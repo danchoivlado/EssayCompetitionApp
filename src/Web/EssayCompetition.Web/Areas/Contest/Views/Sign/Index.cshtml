@@ -1,0 +1,39 @@
+﻿@using EssayCompetition.Web.ViewModels.Contest.Sign
+@model IndexViewModel
+@{
+    this.ViewData["Title"] = "Sign in Page";
+    this.ViewData["ImagePath"] = "img/home-bg.jpg";
+    this.Layout = "_CustomLayout";
+    this.ViewData["ImageH1Text"] = "Sign in";
+    this.ViewData["ImageSpanText"] = "For the next contest essay";
+}
+
+<div class="container">
+    <div class="row">
+        <div class="col-lg-8 col-md-10 mx-auto">
+            @if (TempData["FormResult"] != null)
+            {
+                <div class="alert alert-info fade show" role="alert">
+                    @TempData["FormResult"]
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+            }
+            <h4>Sign</h4>
+            <text>By pressing pressing the send button we will send you email. When you confirmed it you will be registered.</text>
+            <form asp-action="Index" asp-area="Contest" method="post">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="form-group row-cols-md-4">
+                    <label asp-for="@Model.Email" class="control-label"></label>
+                    <input asp-for="@Model.Email" type="text" readonly class="form-control" />
+                    <span asp-validation-for="@Model.Email" class="text-danger"></span>
+                    <a asp-area="Identity" asp-page="/Account/Manage/Email">Use other email?</a>
+                </div>
+                <div class="form-group">
+                    <input type="submit" name="button" value="Sign" class="btn btn-primary" />
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
