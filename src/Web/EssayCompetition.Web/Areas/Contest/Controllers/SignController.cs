@@ -4,6 +4,7 @@
     using System.Threading.Tasks;
 
     using EssayCompetition.Data.Models;
+    using EssayCompetition.Services.Data.ContestServices;
     using EssayCompetition.Services.Data.SignServices;
     using EssayCompetition.Services.Messaging;
     using EssayCompetition.Web.ViewModels.Contest.Sign;
@@ -18,17 +19,20 @@
         private readonly ISignService signService;
         private readonly IEmailSender emailSender;
         private readonly IConfiguration configuration;
+        private readonly IContestService contestService;
 
         public SignController(
             UserManager<ApplicationUser> userManager,
             ISignService signService,
             IEmailSender emailSender,
-            IConfiguration configuration)
+            IConfiguration configuration,
+            IContestService contestService)
         {
             this.userManager = userManager;
             this.signService = signService;
             this.emailSender = emailSender;
             this.configuration = configuration;
+            this.contestService = contestService;
         }
 
         public async Task<IActionResult> Index()
@@ -85,6 +89,11 @@
         [HttpGet]
         public async Task<IActionResult> ConfirmEmail(string userId, string code, int contestId)
         {
+            if (!this.contestService.HasContestWithId(contestId))
+            {
+                return this.View("Error");
+            }
+
             var user = await this.userManager.FindByIdAsync(userId);
             if (user == null)
             {

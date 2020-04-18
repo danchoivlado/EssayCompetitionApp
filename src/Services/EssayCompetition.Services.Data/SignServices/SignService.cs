@@ -1,11 +1,12 @@
-﻿using EssayCompetition.Data.Common.Repositories;
-using EssayCompetition.Data.Models;
-using System;
-using System.Linq;
-using System.Threading.Tasks;
-
-namespace EssayCompetition.Services.Data.SignServices
+﻿namespace EssayCompetition.Services.Data.SignServices
 {
+    using System;
+    using System.Linq;
+    using System.Threading.Tasks;
+
+    using EssayCompetition.Data.Common.Repositories;
+    using EssayCompetition.Data.Models;
+
     public class SignService : ISignService
     {
         private readonly IDeletableEntityRepository<ContestantContest> contestantContestRepository;
