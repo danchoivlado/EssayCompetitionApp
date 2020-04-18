@@ -30,6 +30,7 @@
                     <span asp-validation-for="@Model.Email" class="text-danger"></span>
                     <a asp-area="Identity" asp-page="/Account/Manage/Email">Use other email?</a>
                 </div>
+                <recaptcha />
                 <div class="form-group">
                     <input type="submit" name="button" value="Sign" class="btn btn-primary" />
                 </div>
@@ -37,3 +38,7 @@
         </div>
     </div>
 </div>
+<hr />
+@section Scripts {
+    <recaptcha-script validation-message-element-id="recaptchaErrorMessage" />
+}

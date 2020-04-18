@@ -1,16 +1,17 @@
-﻿using EssayCompetition.Data.Models;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Mvc;
-using EssayCompetition.Web.ViewModels.Contest.Sign;
-using System.Threading.Tasks;
-using EssayCompetition.Services.Data.ContestServices;
-using EssayCompetition.Services.Data.SignServices;
-using EssayCompetition.Services.Messaging;
-using Microsoft.Extensions.Configuration;
-using System.Text.Encodings.Web;
-
-namespace EssayCompetition.Web.Areas.Contest.Controllers
+﻿namespace EssayCompetition.Web.Areas.Contest.Controllers
 {
+    using System.Text.Encodings.Web;
+    using System.Threading.Tasks;
+
+    using EssayCompetition.Data.Models;
+    using EssayCompetition.Services.Data.SignServices;
+    using EssayCompetition.Services.Messaging;
+    using EssayCompetition.Web.ViewModels.Contest.Sign;
+    using Microsoft.AspNetCore.Identity;
+    using Microsoft.AspNetCore.Mvc;
+    using Microsoft.Extensions.Configuration;
+    using PaulMiami.AspNetCore.Mvc.Recaptcha;
+
     public class SignController : ContestController
     {
         private readonly UserManager<ApplicationUser> userManager;
@@ -39,6 +40,7 @@ namespace EssayCompetition.Web.Areas.Contest.Controllers
             return this.View(viewModel);
         }
 
+        [ValidateRecaptcha]
         [HttpPost]
         public async Task<IActionResult> Index(IndexViewModel viewModel)
         {
@@ -58,14 +60,15 @@ namespace EssayCompetition.Web.Areas.Contest.Controllers
             if (this.signService.UserAlreadyRegisteredForCompetition(user.Id, contestId))
             {
                 this.TempData["FormResult"] = "You are already registered";
+                return this.View(viewModel);
             }
 
             var code = await this.userManager.GenerateEmailConfirmationTokenAsync(user);
-            var callbackUrl = Url.Page(
-                    "/Sign/ConfirmEmail",
-                    pageHandler: null,
-                    values: new { userId = user.Id, code = code },
-                    protocol: Request.Scheme);
+            var callbackUrl = this.Url.Action(
+                    "ConfirmEmail",
+                    "Sign",
+                    values: new { userId = user.Id, code = code, contestId = contestId },
+                    protocol: this.Request.Scheme);
 
             await this.emailSender.SendEmailAsync(
                 this.configuration["SendGrid:Email"],
@@ -79,24 +82,25 @@ namespace EssayCompetition.Web.Areas.Contest.Controllers
             return this.RedirectToAction("Index", "Dashboard");
         }
 
-        [HttpPost]
-        public IActionResult ConfirmEmail()
+        [HttpGet]
+        public async Task<IActionResult> ConfirmEmail(string userId, string code, int contestId)
         {
-            return this.View();
+            var user = await this.userManager.FindByIdAsync(userId);
+            if (user == null)
+            {
+                return this.View("Error");
+            }
+
+            var result = await this.userManager.ConfirmEmailAsync(user, code);
+            if (!result.Succeeded)
+            {
+                return this.View("Error");
+            }
+
+            await this.signService.RegisterForContestAsync(userId, contestId);
+            this.TempData["FormResult"] = "Succesfully registered for contest";
+            return this.RedirectToAction("Index");
         }
     }
 }
-/*
- * var code = await _userManager.GenerateChangeEmailTokenAsync(user, Input.NewEmail);
-                var callbackUrl = Url.Page(
-                    "/Account/ConfirmEmailChange",
-                    pageHandler: null,
-                    values: new { userId = userId, email = Input.NewEmail, code = code },
-                    protocol: Request.Scheme);
-                await _emailSender.SendEmailAsync(
-                    this.configuration["SendGrid:Email"],
-                    "EssayCompetition",
-                    Input.NewEmail,
-                    "Confirm your email",
-                    $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
- */
+
