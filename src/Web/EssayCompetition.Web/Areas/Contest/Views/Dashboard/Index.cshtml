@@ -24,9 +24,10 @@
         <div class="d-flex justify-content-between">
             <div>
                 @if (Model.HasContextNow && Model.UserRegistredForContext)
-                {
-                    <a asp-area="Contest" asp-controller="Create"><i class="fa fa-book-reader">Create essay</i></a>
-                }
+                 {
+                    <a asp-area="Contest" asp-controller="Create"><i class="fa fa-book-reader">Create essay</i></a><br />
+                 }
+                <a asp-area="Contest" asp-controller="Sign" class="fa fa-sign-in-alt">Sign for next contest</a>
 
             </div>
         </div>

@@ -6,7 +6,7 @@
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
 
-    [Authorize(Roles = GlobalConstants.ContestRoleName)]
+    [Authorize]
     [Area("Contest")]
     public class ContestController : BaseController
     {
