@@ -5,6 +5,7 @@
     using System.Linq;
     using System.Threading.Tasks;
 
+    using EssayCompetition.Common;
     using EssayCompetition.Data.Common.Repositories;
     using EssayCompetition.Data.Models;
     using EssayCompetition.Services.Mapping;
@@ -125,12 +126,23 @@
         public bool IsUserAlreadySubmitedEssay(string userId)
         {
             var contestId = this.GetContestNowId(DateTime.Now);
-            if(contestId == -1)
+            if (contestId == -1)
             {
                 return false;
             }
 
             return this.essayRepository.All().Any(x => x.UserId == userId && x.ContestId == contestId);
+        }
+
+        public T NextContext<T>()
+        {
+            var nexContext = this.contestRepository.All().FirstOrDefault(x => x.EndTime >= DateTime.Now);
+            if (nexContext == null)
+            {
+                return default(T);
+            }
+
+            return nexContext.ToQueryable().To<T>().First();
         }
 
         private async Task AddEssayTeacher(IEnumerable<string> teachersIds, int essayId)

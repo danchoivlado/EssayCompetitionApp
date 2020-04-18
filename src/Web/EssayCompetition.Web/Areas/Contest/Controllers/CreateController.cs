@@ -8,12 +8,14 @@
     using EssayCompetition.Common;
     using EssayCompetition.Data.Models;
     using EssayCompetition.Services.Data.ContestServices;
+    using EssayCompetition.Web.ValidationAttributes;
     using EssayCompetition.Web.ViewModels.Contest.Create;
     using Ganss.XSS;
     using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Mvc;
 
+    [HasContest]
     public class CreateController : ContestController
     {
         private const string ContentName = "_EssayContent";
