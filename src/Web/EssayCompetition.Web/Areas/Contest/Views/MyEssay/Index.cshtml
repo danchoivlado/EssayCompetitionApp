@@ -41,7 +41,7 @@
                                 @Html.DisplayFor(modelItem => item.GradedNormalized)
                             </td>
                             <td>
-                                <a asp-action="Details" asp-route-id="@item.Id">Details</a> 
+                                <a asp-action="Details" asp-route-id="@item.Id">Details</a>
                             </td>
                         </tr>
                     }
@@ -55,7 +55,7 @@
                     </li>
                 }
             </ul>
-
+            <a asp-area="Contest" asp-controller="Dashboard" asp-action="Index">Back to dahsboard</a>
         </div>
     </div>
 </div>

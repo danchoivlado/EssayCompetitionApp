@@ -16,6 +16,11 @@
             this.essayRepository = essayRepository;
         }
 
+        public T GetEssayDetails<T>(int essayId)
+        {
+            return this.essayRepository.All().Where(x => x.Id == essayId).To<T>().First();
+        }
+
         public IEnumerable<T> GetEssaysFromUserWithIdInRange<T>(string userId, int currentPage, int pageSize)
         {
             return this.essayRepository.All().Skip((currentPage - 1) * pageSize).Take(pageSize).Where(x => x.UserId == userId).To<T>();
