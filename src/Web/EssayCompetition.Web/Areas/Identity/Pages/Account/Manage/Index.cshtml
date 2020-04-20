@@ -22,10 +22,10 @@
             </div>
             <h4 class="text-danger">Public info</h4>
             <div class="form-group">
-                <label asp-for="Input.ImageUrl" class="control-label"></label>
-                <a href="Input.ImageUrl" target="_blank">Preview current image</a>
-                <input asp-for="Input.ImageUrl" id="userIamgeUrl" class="form-control" />
-                <span asp-validation-for="Input.ImageUrl" class="text-danger"></span>
+                <label asp-for="Input.AdditionalInfo.ImageUrl" class="control-label"></label>
+                <a href="@Model.Input.AdditionalInfo.PreviewImage" target="_blank">Preview current image</a>
+                <input asp-for="Input.AdditionalInfo.ImageUrl" id="userIamgeUrl" class="form-control" />
+                <span asp-validation-for="Input.AdditionalInfo.ImageUrl" class="text-danger"></span>
             </div>
             <p>or</p>
             <div class="input-group">
@@ -39,34 +39,34 @@
                 </div>
             </div>
             <div class="form-group">
-                <label asp-for="Input.FullName"></label>
-                <input asp-for="Input.FullName" class="form-control" />
-                <span asp-validation-for="Input.FullName" class="text-danger"></span>
+                <label asp-for="Input.AdditionalInfo.FullName"></label>
+                <input asp-for="Input.AdditionalInfo.FullName" class="form-control" />
+                <span asp-validation-for="Input.AdditionalInfo.FullName" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Input.Country"></label>
-                <input asp-for="Input.Country" class="form-control" />
-                <span asp-validation-for="Input.Country" class="text-danger"></span>
+                <label asp-for="Input.AdditionalInfo.Country"></label>
+                <input asp-for="Input.AdditionalInfo.Country" class="form-control" />
+                <span asp-validation-for="Input.AdditionalInfo.Country" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Input.City"></label>
-                <input asp-for="Input.City" class="form-control" />
-                <span asp-validation-for="Input.City" class="text-danger"></span>
+                <label asp-for="Input.AdditionalInfo.City"></label>
+                <input asp-for="Input.AdditionalInfo.City" class="form-control" />
+                <span asp-validation-for="Input.AdditionalInfo.City" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Input.ContactEmail"></label>
-                <input asp-for="Input.ContactEmail" class="form-control" />
-                <span asp-validation-for="Input.ContactEmail" class="text-danger"></span>
+                <label asp-for="Input.AdditionalInfo.ContactEmail"></label>
+                <input asp-for="Input.AdditionalInfo.ContactEmail" class="form-control" />
+                <span asp-validation-for="Input.AdditionalInfo.ContactEmail" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Input.ConntactPhone"></label>
-                <input asp-for="Input.ConntactPhone" class="form-control" />
-                <span asp-validation-for="Input.ConntactPhone" class="text-danger"></span>
+                <label asp-for="Input.AdditionalInfo.ConntactPhone"></label>
+                <input asp-for="Input.AdditionalInfo.ConntactPhone" class="form-control" />
+                <span asp-validation-for="Input.AdditionalInfo.ConntactPhone" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Input.Social"></label>
-                <textarea asp-for="Input.Social" placeholder="Facebook - someone @(Environment.NewLine)Instagram - someone" class="form-control" rows="4"> </textarea>
-                <span asp-validation-for="Input.Social" class="text-danger"></span>
+                <label asp-for="Input.AdditionalInfo.Social"></label>
+                <textarea asp-for="Input.AdditionalInfo.Social" placeholder="Facebook - someone @(Environment.NewLine)Instagram - someone" class="form-control" rows="4"> </textarea>
+                <span asp-validation-for="Input.AdditionalInfo.Social" class="text-danger"></span>
             </div>
             <button id="update-profile-button" type="submit" class="btn btn-primary">Save</button>
         </form>
