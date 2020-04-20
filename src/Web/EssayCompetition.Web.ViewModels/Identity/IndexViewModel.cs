@@ -1,8 +1,11 @@
 ﻿namespace EssayCompetition.Web.ViewModels.Identity
 {
+    using System;
+    using System.ComponentModel.DataAnnotations;
+    using System.Linq;
+
     using EssayCompetition.Data.Models;
     using EssayCompetition.Services.Mapping;
-    using System.ComponentModel.DataAnnotations;
 
     public class IndexViewModel : IMapFrom<UserAdditionalInfo>
     {
@@ -22,6 +25,10 @@
 
         public string Social { get; set; }
 
+        public int UserEssaysCount { get; set; }
+
         public string PreviewImage => string.IsNullOrEmpty(this.ImageUrl) ? string.Empty : this.ImageUrl;
+
+        public string FirstName => string.IsNullOrEmpty(this.FullName) ? this.FullName : this.FullName.Split().First();
     }
 }
