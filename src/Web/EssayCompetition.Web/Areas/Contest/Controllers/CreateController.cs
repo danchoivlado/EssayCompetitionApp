@@ -8,6 +8,7 @@
     using EssayCompetition.Common;
     using EssayCompetition.Data.Models;
     using EssayCompetition.Services.Data.ContestServices;
+    using EssayCompetition.Services.Data.SignServices;
     using EssayCompetition.Web.ValidationAttributes;
     using EssayCompetition.Web.ViewModels.Contest.Create;
     using Ganss.XSS;
@@ -25,25 +26,35 @@
         private readonly HtmlSanitizer htmlSanitizer;
         private readonly UserManager<ApplicationUser> userManager;
         private readonly RoleManager<ApplicationRole> roleManager;
+        private readonly ISignService signService;
 
         public CreateController(
             IContestService contestService,
             HtmlSanitizer htmlSanitizer,
             UserManager<ApplicationUser> userManager,
-            RoleManager<ApplicationRole> roleManager)
+            RoleManager<ApplicationRole> roleManager,
+            ISignService signService)
         {
             this.contestService = contestService;
             this.htmlSanitizer = htmlSanitizer;
             this.userManager = userManager;
             this.roleManager = roleManager;
+            this.signService = signService;
         }
 
         public IActionResult Index()
         {
             var userId = this.userManager.GetUserId(this.User);
+            var contestId = this.signService.GetNextContestId();
             if (this.contestService.IsUserAlreadySubmitedEssay(userId))
             {
                 this.TempData["FormResult"] = "You already submitted your essay.";
+                return this.RedirectToAction("Index", "Dashboard");
+            }
+
+            if (!this.signService.UserAlreadyRegisteredForCompetition(userId, contestId))
+            {
+                this.TempData["FormResult"] = "You are not registered for this essay";
                 return this.RedirectToAction("Index", "Dashboard");
             }
 

@@ -8,9 +8,6 @@
     using EssayCompetition.Web.ViewModels.Administration.Contest;
     using EssayCompetition.Web.ViewModels.Administration.Contest.Shared;
     using Microsoft.AspNetCore.Mvc;
-    using EssayCompetition.Common;
-    using System.Collections.Generic;
-    using System.Linq;
 
     public class ContestController : AdministrationController
     {

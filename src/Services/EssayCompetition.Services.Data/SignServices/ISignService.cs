@@ -1,7 +1,7 @@
-﻿using System.Threading.Tasks;
-
-namespace EssayCompetition.Services.Data.SignServices
+﻿namespace EssayCompetition.Services.Data.SignServices
 {
+    using System.Threading.Tasks;
+
     public interface ISignService
     {
         bool UserAlreadyRegisteredForCompetition(string userId, int contestId);

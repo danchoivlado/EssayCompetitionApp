@@ -2,17 +2,27 @@
 {
     using System;
 
+    using EssayCompetition.Data.Models;
     using EssayCompetition.Services.Data.ContestServices;
+    using EssayCompetition.Services.Data.SignServices;
     using EssayCompetition.Web.ViewModels.Contest.Dashboard;
+    using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Mvc;
 
     public class DashboardController : ContestController
     {
         private readonly IContestService contestService;
+        private readonly ISignService signService;
+        private readonly UserManager<ApplicationUser> userManager;
 
-        public DashboardController(IContestService contestService)
+        public DashboardController(
+            IContestService contestService,
+            ISignService signService,
+            UserManager<ApplicationUser> userManager)
         {
             this.contestService = contestService;
+            this.signService = signService;
+            this.userManager = userManager;
         }
 
         public IActionResult Index()
@@ -26,7 +36,14 @@
             if (viewModel.HasContextNow = this.contestService.HasContextNow(DateTime.Now))
             {
                 viewModel.HasContextNow = true;
-                viewModel.UserRegistredForContext = true; //TODO
+                var contestId = this.signService.GetNextContestId();
+                var userId = this.userManager.GetUserId(this.User);
+
+                if (this.signService.UserAlreadyRegisteredForCompetition(userId, contestId))
+                {
+                    viewModel.UserRegistredForContext = true;
+                }
+
                 if (this.TempData["FormResult"] == null)
                 {
                     this.TempData["FormResult"] = $"Contest has begun and will end at {viewModel.EndTime.ToLocalTime().ToShortTimeString()}";

@@ -1,0 +1,61 @@
+﻿@using EssayCompetition.Web.ViewModels.Contest.MyEssay
+@model IndexViewModel
+@{
+    this.ViewData["Title"] = "My Essays";
+    this.ViewData["ImagePath"] = "img/home-bg.jpg";
+    this.Layout = "_CustomLayout";
+    this.ViewData["ImageH1Text"] = "My Essays";
+    this.ViewData["ImageSpanText"] = "All essays from competitions";
+}
+
+<div class="container">
+    <div class="row">
+        <div class="col-lg-10 col-md-10 mx-auto">
+            <h1>@this.ViewData["Title"]</h1>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>
+                            Essay title
+                        </th>
+                        <th>
+                            From contest
+                        </th>
+                        <th>
+                            Graded
+                        </th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model.Essays)
+                    {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Title)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.ContestName)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.GradedNormalized)
+                            </td>
+                            <td>
+                                <a asp-action="Details" asp-route-id="@item.Id">Details</a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+            <ul class="pagination">
+                @for (var i = 1; i <= Model.Pager.PagesCount; i++)
+                {
+                    <li class="page-item @(i == Model.Pager.CurrentPage ? "active" : "")">
+                        <a asp-route-Pager.CurrentPage="@i" class="page-link">@i</a>
+                    </li>
+                }
+            </ul>
+            <a asp-area="Contest" asp-controller="Dashboard" asp-action="Index">Back to dahsboard</a>
+        </div>
+    </div>
+</div>
