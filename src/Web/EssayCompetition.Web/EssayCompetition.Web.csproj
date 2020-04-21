@@ -47,8 +47,4 @@
     <ProjectReference Include="..\EssayCompetition.Web.Infrastructure\EssayCompetition.Web.Infrastructure.csproj" />
     <ProjectReference Include="..\EssayCompetition.Web.ViewModels\EssayCompetition.Web.ViewModels.csproj" />
   </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Views\Essay\" />
-  </ItemGroup>
 </Project>

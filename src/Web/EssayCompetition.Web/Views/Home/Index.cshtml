@@ -15,7 +15,7 @@
             @foreach (var essay in this.Model.Essays)
             {
                 <div class="post-preview">
-                    <a href="post.html">
+                    <a asp-action="ById" asp-controller="Essay" asp-area="" asp-route-id="@essay.Id">
                         <h2 class="post-title">
                             @essay.Title
                         </h2>

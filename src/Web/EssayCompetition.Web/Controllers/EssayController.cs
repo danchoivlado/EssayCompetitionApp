@@ -32,5 +32,12 @@
 
             return this.View(viewModel);
         }
+
+        public IActionResult ById(int id)
+        {
+            var viewModel = this.essayService.GetEssayDetails<EssayViewModel>(id);
+            return this.View(viewModel);
+
+        }
     }
 }
