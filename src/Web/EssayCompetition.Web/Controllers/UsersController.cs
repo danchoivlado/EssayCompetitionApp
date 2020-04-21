@@ -18,12 +18,18 @@
 
         public IActionResult ById(string id)
         {
+            var viewModel = new IndexViewModel();
+
             if (!this.usersService.HasUserWithId(id))
             {
                 return this.NotFound();
             }
 
-            var viewModel = this.userAdditionalInfoService.GetUserWithIdAdditionalInfo<IndexViewModel>(id);
+            if (this.userAdditionalInfoService.HasUserAdditionalInfoWithId(id))
+            {
+                viewModel = this.userAdditionalInfoService.GetUserWithIdAdditionalInfo<IndexViewModel>(id);
+            }
+
             return this.View(viewModel);
         }
     }

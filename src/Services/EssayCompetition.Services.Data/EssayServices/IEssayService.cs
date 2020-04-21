@@ -10,5 +10,7 @@
         int GetUserEssaysCount(string userId);
 
         T GetEssayDetails<T>(int essayId);
+
+        IEnumerable<T> GetBestEssaysFromLastContest<T>(int contestId, IEnumerable<int> essaysIdsOrderedByPoints);
     }
 }

@@ -2,16 +2,20 @@
 {
     using System.Diagnostics;
     using System.Threading.Tasks;
-    using EssayCompetition.Web.ViewModels.Contact;
 
     using EssayCompetition.Services.Data.CalendarServices;
-    using EssayCompetition.Web.ViewModels;
-    using Microsoft.AspNetCore.Mvc;
+    using EssayCompetition.Services.Data.ContestServices;
+    using EssayCompetition.Services.Data.EssayServices;
+    using EssayCompetition.Services.Data.GradeServices;
     using EssayCompetition.Services.Messaging;
-    using SendGrid;
-    using SendGrid.Helpers.Mail;
+    using EssayCompetition.Web.ViewModels;
+    using EssayCompetition.Web.ViewModels.Contact;
+    using EssayCompetition.Web.ViewModels.Users;
+    using Microsoft.AspNetCore.Mvc;
     using Microsoft.Extensions.Configuration;
     using PaulMiami.AspNetCore.Mvc.Recaptcha;
+    using SendGrid;
+    using SendGrid.Helpers.Mail;
 
     public class HomeController : BaseController
     {
@@ -19,17 +23,35 @@
         private readonly ICalendarService calendarService;
         private readonly IEmailSender emailSender;
         private readonly IConfiguration configuration;
+        private readonly IGradeService gradeService;
+        private readonly IContestService contestService;
+        private readonly IEssayService essayService;
 
-        public HomeController(ICalendarService calendarService, IEmailSender emailSender, IConfiguration configuration)
+        public HomeController(
+            ICalendarService calendarService,
+            IEmailSender emailSender,
+            IConfiguration configuration,
+            IGradeService gradeService,
+            IContestService contestService,
+            IEssayService essayService)
         {
             this.calendarService = calendarService;
             this.emailSender = emailSender;
             this.configuration = configuration;
+            this.gradeService = gradeService;
+            this.contestService = contestService;
+            this.essayService = essayService;
         }
 
         public IActionResult Index()
         {
-            return this.View();
+            var viewModel = new IndexViewModel();
+
+            var lastcontestId = this.contestService.GetLastContestId();
+            var essaysIdsOrderedByPoints = this.gradeService.GetEssaysIdsOrderedByPoints();
+            viewModel.Essays = this.essayService.GetBestEssaysFromLastContest<EssayViewModel>(lastcontestId, essaysIdsOrderedByPoints);
+
+            return this.View(viewModel);
         }
 
         public IActionResult Calendar(int curentYear, int currentMonth, bool isPlus)

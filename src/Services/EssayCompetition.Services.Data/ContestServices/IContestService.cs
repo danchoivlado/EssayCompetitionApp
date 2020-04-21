@@ -27,5 +27,7 @@
         T NextContext<T>();
 
         Task SendContestEssayAsync(string title, string description, string content, string userId, IEnumerable<string> teachersIds);
+
+        int GetLastContestId();
     }
 }

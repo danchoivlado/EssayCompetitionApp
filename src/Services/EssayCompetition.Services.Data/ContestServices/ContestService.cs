@@ -146,6 +146,11 @@
             return nexContext.ToQueryable().To<T>().First();
         }
 
+        public int GetLastContestId()
+        {
+            return this.contestRepository.All().OrderByDescending(x => x.EndTime.Date).First().Id;
+        }
+
         private async Task AddEssayTeacher(IEnumerable<string> teachersIds, int essayId)
         {
             var dic = new Dictionary<string, int>();

@@ -3,6 +3,7 @@
     using System.Collections.Generic;
     using System.Linq;
 
+    using EssayCompetition.Common;
     using EssayCompetition.Data.Common.Repositories;
     using EssayCompetition.Data.Models;
     using EssayCompetition.Services.Mapping;
@@ -14,6 +15,29 @@
         public EssayService(IDeletableEntityRepository<Essay> essayRepository)
         {
             this.essayRepository = essayRepository;
+        }
+
+        public IEnumerable<T> GetBestEssaysFromLastContest<T>(int contestId, IEnumerable<int> essaysIdsOrderedByPoints)
+        {
+            var selectedEssays = this.essayRepository.All().Where(x => x.Graded && x.ContestId == contestId);
+            var bestEssays = new List<T>();
+
+            foreach (var essayId in essaysIdsOrderedByPoints)
+            {
+                var curEssay = selectedEssays.Where(x => x.Id == essayId);
+                if (curEssay.Count() != 0)
+                {
+                    var a = curEssay.To<T>();
+                    bestEssays.Add(curEssay.To<T>().First());
+
+                    if (bestEssays.Count >= GlobalConstants.BestEssaysCount)
+                    {
+                        break;
+                    }
+                }
+            }
+
+            return bestEssays;
         }
 
         public T GetEssayDetails<T>(int essayId)
