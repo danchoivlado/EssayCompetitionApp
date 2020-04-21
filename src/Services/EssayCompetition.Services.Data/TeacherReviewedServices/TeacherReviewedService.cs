@@ -123,11 +123,12 @@
                 }
             }
 
-            return counter; 
+            return counter;
         }
 
         private Essay GenerateEssay(UpdateEssayModel updateEssayModel)
         {
+            var createdOn = this.essaysRepository.AllAsNoTracking().First(x => x.Id == updateEssayModel.Id).CreatedOn;
             Essay essay = new Essay()
             {
                 Id = updateEssayModel.Id,
@@ -138,6 +139,7 @@
                 Content = updateEssayModel.Content,
                 ContestId = updateEssayModel.ContestId,
                 Graded = true,
+                CreatedOn = createdOn,
             };
             return essay;
         }

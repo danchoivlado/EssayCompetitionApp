@@ -48,6 +48,8 @@
             [Display(Name = "Phone number")]
             public string PhoneNumber { get; set; }
 
+            public string UserId { get; set; }
+
             public IndexViewModel AdditionalInfo { get; set; }
 
             public IFormFile ImageContent { get; set; }
@@ -63,6 +65,7 @@
 
             this.Input = new InputModel
             {
+                UserId = userId,
                 PhoneNumber = phoneNumber
             };
 

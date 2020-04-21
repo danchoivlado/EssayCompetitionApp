@@ -9,6 +9,8 @@
 
         IEnumerable<T> GetUsersWithRoles<T>();
 
+        IEnumerable<T> GetUsersWithIds<T>(IEnumerable<string> userIds);
+
         IEnumerable<T> GetUsersWithRoles<T>(int currentPage, int pageSize);
 
         IEnumerable<T> GetUsersWithRoles<T>(int currentPage, int pageSize, string searchString, string sortOrder, bool searchOnlyDeleted);

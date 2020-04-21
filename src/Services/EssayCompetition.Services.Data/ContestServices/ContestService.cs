@@ -15,15 +15,19 @@
         private readonly IDeletableEntityRepository<Contest> contestRepository;
         private readonly IDeletableEntityRepository<Essay> essayRepository;
         private readonly IDeletableEntityRepository<EssayTeacher> teacherEssayRepository;
+        private readonly IDeletableEntityRepository<ContestantContest> contestantContestRepository;
 
         public ContestService(
             IDeletableEntityRepository<Contest> contestRepository,
             IDeletableEntityRepository<Essay> essayRepository,
-            IDeletableEntityRepository<EssayTeacher> teacherEssayRepository)
+            IDeletableEntityRepository<EssayTeacher> teacherEssayRepository,
+            IDeletableEntityRepository<ContestantContest> contestantContestRepository
+            )
         {
             this.contestRepository = contestRepository;
             this.essayRepository = essayRepository;
             this.teacherEssayRepository = teacherEssayRepository;
+            this.contestantContestRepository = contestantContestRepository;
         }
 
         public async Task AddContestAsync<T>(DateTime start, DateTime end, string name, string description, int categoryId)
@@ -146,6 +150,27 @@
             return nexContext.ToQueryable().To<T>().First();
         }
 
+        public int GetLastContestId()
+        {
+            return this.contestRepository.All().OrderByDescending(x => x.EndTime.Date).First().Id;
+        }
+
+        public string GetContestName(int contestId)
+        {
+            return this.contestRepository.All().First(x => x.Id == contestId).Name;
+        }
+
+        public IEnumerable<string> GetContestParticipantsIds(int contestId)
+        {
+            return this.contestantContestRepository.All().Where(x => x.ContestId == contestId).Select(x => x.ContestantId);
+        }
+
+        public IEnumerable<string> GetContestParticipantsIdsInRange(int contestId, int currentPage, int pageSize)
+        {
+            return this.contestantContestRepository.All().Where(x => x.ContestId == contestId)
+                .Skip((currentPage - 1) * pageSize).Take(pageSize).Select(x => x.ContestantId);
+        }
+
         private async Task AddEssayTeacher(IEnumerable<string> teachersIds, int essayId)
         {
             var dic = new Dictionary<string, int>();
@@ -188,6 +213,11 @@
             }
 
             return -1;
+        }
+
+        public int GetContestParticipantsCount(int contestId)
+        {
+            return this.contestantContestRepository.All().Where(x => x.ContestId == contestId).Count();
         }
     }
 }

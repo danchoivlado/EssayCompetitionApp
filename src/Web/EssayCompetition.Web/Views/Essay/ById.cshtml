@@ -1,0 +1,20 @@
+﻿@using EssayCompetition.Web.ViewModels.Essays 
+@model EssayViewModel
+@{
+    this.ViewData["Title"] = "About Page";
+    this.ViewData["ImagePath"] = $"{Model.ImageUrl}";
+    this.Layout = "_CustomLayout";
+    this.ViewData["ImageH1Text"] = $"{Model.Title}";
+    this.ViewData["ImageSpanText"] = $"{Model.Description}";
+}
+<article>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-md-10 mx-auto">
+                <p>@Html.Raw(Model.Content)</p>
+            </div>
+        </div>
+    </div>
+</article>
+
+<hr>

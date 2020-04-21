@@ -1,0 +1,50 @@
+﻿@using EssayCompetition.Common
+@using EssayCompetition.Web.ViewModels.Essays
+@model IndexViewModel
+@{
+    this.ViewData["Title"] = "Home Page";
+    this.ViewData["ImagePath"] = "~/img/home-bg.jpg";
+    this.Layout = "_CustomLayout";
+    this.ViewData["ImageH1Text"] = "All essays";
+    this.ViewData["ImageSpanText"] = "From all contests";
+}
+
+<div class="container">
+    <div class="row">
+        <div class="col-lg-8 col-md-10 mx-auto">
+            @foreach (var essayGroup in this.Model.GroupedEssays)
+            {
+                <a asp-action="ById" asp-controller="Contest" asp-area="" asp-route-id="@essayGroup.First().ContestId" ><h4 class="text-info">@essayGroup.First().ContestName</h4></a>
+                foreach (var essay in essayGroup)
+                {
+                    <div class="post-preview">
+                        <a asp-action="ById" asp-controller="Essay" asp-area="" asp-route-id="@essay.Id">
+                            <h2 class="post-title">
+                                @essay.Title
+                            </h2>
+                            <h3 class="post-subtitle">
+                                @essay.Description
+                            </h3>
+                        </a>
+                        <p class="post-meta">
+                            Posted by
+                            <a asp-action="ById" asp-controller="Users" asp-area="" asp-route-id="@essay.UserId">@essay.UserUserName</a>
+                            on @essay.DisplayCreateDate
+                        </p>
+                    </div>
+                    <hr>
+                }
+            }
+            <ul class="pagination">
+                @for (var i = 1; i <= Model.Pager.PagesCount; i++)
+                {
+                    <li class="page-item @(i == Model.Pager.CurrentPage ? "active" : "")">
+                        <a asp-route-Pager.CurrentPage="@i" class="page-link">@i</a>
+                    </li>
+                }
+            </ul>
+        </div>
+    </div>
+</div>
+
+<hr>

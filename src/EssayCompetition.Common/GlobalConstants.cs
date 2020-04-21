@@ -17,5 +17,7 @@
         public const string DateErrorMessage = "Start date is greater than end date.";
 
         public const string DurationMessage = "Duration of contest should be greater than 30 minutes.";
+
+        public const int BestEssaysCount = 4;
     }
 }

@@ -113,7 +113,7 @@
             {
                 this.essaysRepository.Update(this.GenerateEssay(updateEssayModel));
             }
-            catch (System.Exception)
+            catch (System.Exception ex)
             {
                 return false;
             }
@@ -124,6 +124,7 @@
 
         private Essay GenerateEssay(UpdateEssayModel updateEssayModel)
         {
+            var createdOn = this.essaysRepository.AllAsNoTracking().First(x => x.Id == updateEssayModel.Id).CreatedOn;
             Essay essay = new Essay()
             {
                 Id = updateEssayModel.Id,
@@ -134,6 +135,7 @@
                 Content = updateEssayModel.Content,
                 Graded = true,
                 ContestId = updateEssayModel.ContestId,
+                CreatedOn = createdOn,
             };
             return essay;
         }
