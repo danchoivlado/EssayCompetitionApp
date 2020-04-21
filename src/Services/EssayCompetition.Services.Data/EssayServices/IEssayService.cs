@@ -7,7 +7,11 @@
     {
         IEnumerable<T> GetEssaysFromUserWithIdInRange<T>(string userId, int currentPage, int pageSize);
 
+        IEnumerable<T> GetEssaysInRange<T>(int currentPage, int pageSize);
+
         int GetUserEssaysCount(string userId);
+
+        int GetEssaysCount();
 
         T GetEssayDetails<T>(int essayId);
 
