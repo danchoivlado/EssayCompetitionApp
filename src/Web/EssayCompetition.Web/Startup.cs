@@ -21,6 +21,7 @@
     using EssayCompetition.Services.Data.SignServices;
     using EssayCompetition.Services.Data.TeacherReviewedServices;
     using EssayCompetition.Services.Data.TeacherServices;
+    using EssayCompetition.Services.Data.UserAdditionalInfoServices;
     using EssayCompetition.Services.Data.UsersServices;
     using EssayCompetition.Services.Mapping;
     using EssayCompetition.Services.Messaging;
@@ -115,6 +116,7 @@
             services.AddTransient<ISignService, SignService>();
             services.AddTransient<IEssayService, EssayService>();
             services.AddTransient<IGradeService, GradeService>();
+            services.AddTransient<IUserAdditionalInfoService, UserAdditionalInfoService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

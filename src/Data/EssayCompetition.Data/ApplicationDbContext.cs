@@ -38,6 +38,8 @@
 
         public DbSet<ContestantContest> ContestantContest { get; set; }
 
+        public DbSet<UserAdditionalInfo> UserAdditionalInfo { get; set; }
+
         public override int SaveChanges() => this.SaveChanges(true);
 
         public override int SaveChanges(bool acceptAllChangesOnSuccess)

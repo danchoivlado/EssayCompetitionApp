@@ -1,0 +1,86 @@
+﻿@page
+@model IndexModel
+@{
+    ViewData["Title"] = "Profile";
+    ViewData["ActivePage"] = ManageNavPages.Index;
+}
+
+<h4>@ViewData["Title"]</h4>
+<partial name="_StatusMessage" model="Model.StatusMessage" />
+<div class="row">
+    <div class="col-md-6">
+        <form id="profile-form" enctype="multipart/form-data" method="post">
+            <div asp-validation-summary="All" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Username"></label>
+                <input asp-for="Username" class="form-control" disabled />
+            </div>
+            <div class="form-group">
+                <label asp-for="Input.PhoneNumber"></label>
+                <input asp-for="Input.PhoneNumber" class="form-control" />
+                <span asp-validation-for="Input.PhoneNumber" class="text-danger"></span>
+            </div>
+            <h4 class="text-danger">Public info</h4>
+            <div class="form-group">
+                <label asp-for="Input.AdditionalInfo.ImageUrl" class="control-label"></label>
+                <a href="@Model.Input.AdditionalInfo.PreviewImage" target="_blank">Preview current image</a>
+                <input asp-for="Input.AdditionalInfo.ImageUrl" id="userIamgeUrl" class="form-control" />
+                <span asp-validation-for="Input.AdditionalInfo.ImageUrl" class="text-danger"></span>
+            </div>
+            <p>or</p>
+            <div class="input-group">
+                <div class="input-group-prepend">
+                    <span class="input-group-text" id="inputGroupFileAddon01">Upload</span>
+                </div>
+                <div class="custom-file">
+                    <input type="file" class="custom-file-input" asp-for="Input.ImageContent" id="inputGroupFile01"
+                           aria-describedby="inputGroupFileAddon01">
+                    <label class="custom-file-label" for="inputGroupFile01">Choose file</label>
+                </div>
+            </div>
+            <div class="form-group">
+                <label asp-for="Input.AdditionalInfo.FullName"></label>
+                <input asp-for="Input.AdditionalInfo.FullName" class="form-control" />
+                <span asp-validation-for="Input.AdditionalInfo.FullName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Input.AdditionalInfo.Country"></label>
+                <input asp-for="Input.AdditionalInfo.Country" class="form-control" />
+                <span asp-validation-for="Input.AdditionalInfo.Country" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Input.AdditionalInfo.City"></label>
+                <input asp-for="Input.AdditionalInfo.City" class="form-control" />
+                <span asp-validation-for="Input.AdditionalInfo.City" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Input.AdditionalInfo.ContactEmail"></label>
+                <input asp-for="Input.AdditionalInfo.ContactEmail" class="form-control" />
+                <span asp-validation-for="Input.AdditionalInfo.ContactEmail" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Input.AdditionalInfo.ConntactPhone"></label>
+                <input asp-for="Input.AdditionalInfo.ConntactPhone" class="form-control" />
+                <span asp-validation-for="Input.AdditionalInfo.ConntactPhone" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Input.AdditionalInfo.Social"></label>
+                <textarea asp-for="Input.AdditionalInfo.Social" placeholder="Facebook - someone @(Environment.NewLine)Instagram - someone" class="form-control" rows="4"> </textarea>
+                <span asp-validation-for="Input.AdditionalInfo.Social" class="text-danger"></span>
+            </div>
+            <button id="update-profile-button" type="submit" class="btn btn-primary">Save</button>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+
+    <script>
+        $('#inputGroupFile01').change(function () {
+            $('#userIamgeUrl').val($(this).val());
+            document.getElementById('userIamgeUrl').readOnly = true; 
+
+        });
+    </script>
+    }
