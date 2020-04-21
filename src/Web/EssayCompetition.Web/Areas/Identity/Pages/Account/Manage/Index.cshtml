@@ -68,6 +68,7 @@
                 <textarea asp-for="Input.AdditionalInfo.Social" placeholder="Facebook - someone @(Environment.NewLine)Instagram - someone" class="form-control" rows="4"> </textarea>
                 <span asp-validation-for="Input.AdditionalInfo.Social" class="text-danger"></span>
             </div>
+            <a asp-controller="Users" asp-area="" asp-action="ById" asp-route-id="@Model.Input.AdditionalInfo.UserId">View your public info</a><br />
             <button id="update-profile-button" type="submit" class="btn btn-primary">Save</button>
         </form>
     </div>
