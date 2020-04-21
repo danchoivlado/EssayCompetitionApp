@@ -16,6 +16,10 @@
 
         T GetContestDetails<T>(int id);
 
+        string GetContestName(int contestId);
+
+        IEnumerable<string> GetContestParticipantsIds(int contestId);
+
         bool HasContestWithId(int id);
 
         Task UpdateContestAsync(DateTime start, DateTime end, string name, string description, int categoryId, int id);

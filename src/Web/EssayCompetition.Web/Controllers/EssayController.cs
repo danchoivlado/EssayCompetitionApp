@@ -1,6 +1,7 @@
 ﻿namespace EssayCompetition.Web.Controllers
 {
     using System;
+    using System.Linq;
 
     using EssayCompetition.Services.Data.ContestServices;
     using EssayCompetition.Services.Data.EssayServices;
@@ -9,13 +10,12 @@
     using EssayCompetition.Web.ViewModels.Essays.Shared;
     using Microsoft.AspNetCore.Mvc;
 
-    public class EssayController : Controller
+    public class EssayController : BaseController
     {
+        private const int PageSize = 5;
         private readonly IGradeService gradeService;
         private readonly IContestService contestService;
         private readonly IEssayService essayService;
-        private const int PageSize = 5;
-
 
         public EssayController(
             IGradeService gradeService,
@@ -34,7 +34,7 @@
             viewModel.Pager.CurrentPage = viewModel.Pager.CurrentPage <= 0 ? 1 : viewModel.Pager.CurrentPage;
 
             viewModel.Essays = this.essayService.GetEssaysInRange<EssayViewModel>(viewModel.Pager.CurrentPage, PageSize);
-
+            viewModel.GroupedEssays = viewModel.Essays.GroupBy(x => x.ContestId);
             viewModel.Pager.PagesCount = (int)Math.Ceiling((double)this.essayService.GetEssaysCount() / PageSize);
 
             return this.View(viewModel);
@@ -44,7 +44,6 @@
         {
             var viewModel = this.essayService.GetEssayDetails<EssayViewModel>(id);
             return this.View(viewModel);
-
         }
     }
 }

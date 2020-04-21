@@ -23,6 +23,10 @@
 
         public string UserUserName { get; set; }
 
+        public int ContestId { get; set; }
+
+        public string ContestName { get; set; }
+
         public string DisplayCreateDate => this.CreatedOn.ToLocalTime().ToShortDateString();
     }
 }

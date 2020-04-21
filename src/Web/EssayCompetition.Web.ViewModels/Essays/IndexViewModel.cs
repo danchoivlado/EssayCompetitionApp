@@ -8,6 +8,8 @@
     {
         public IEnumerable<EssayViewModel> Essays { get; set; }
 
+        public IEnumerable<IEnumerable<EssayViewModel>> GroupedEssays { get; set; }
+
         public PagerViewModel Pager { get; set; }
     }
 }

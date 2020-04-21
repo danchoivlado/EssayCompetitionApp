@@ -48,6 +48,11 @@
             return this.userRepository.All().Count();
         }
 
+        public IEnumerable<T> GetUsersWithIds<T>(IEnumerable<string> userIds)
+        {
+            return this.userRepository.All().Where(x => userIds.Any(y => y == x.Id)).To<T>();
+        }
+
         public IEnumerable<T> GetUsersWithRoles<T>()
         {
             return this.userRepository.All().To<T>().ToList();

@@ -12,25 +12,29 @@
 <div class="container">
     <div class="row">
         <div class="col-lg-8 col-md-10 mx-auto">
-            @foreach (var essay in this.Model.Essays)
-            {
-                <div class="post-preview">
-                    <a asp-action="ById" asp-controller="Essay" asp-area="" asp-route-id="@essay.Id">
-                        <h2 class="post-title">
-                            @essay.Title
-                        </h2>
-                        <h3 class="post-subtitle">
-                            @essay.Description
-                        </h3>
-                    </a>
-                    <p class="post-meta">
-                        Posted by
-                        <a asp-action="ById" asp-controller="Users" asp-area="" asp-route-id="@essay.UserId">@essay.UserUserName</a>
-                        on @essay.DisplayCreateDate
-                    </p>
-                </div>
-                <hr>
-            }
+            @foreach (var essayGroup in this.Model.GroupedEssays)
+             {
+                <h4 class="text-info">@essayGroup.First().ContestName</h4>
+                foreach (var essay in essayGroup)
+                {
+                    <div class="post-preview">
+                        <a asp-action="ById" asp-controller="Essay" asp-area="" asp-route-id="@essay.Id">
+                            <h2 class="post-title">
+                                @essay.Title
+                            </h2>
+                            <h3 class="post-subtitle">
+                                @essay.Description
+                            </h3>
+                        </a>
+                        <p class="post-meta">
+                            Posted by
+                            <a asp-action="ById" asp-controller="Users" asp-area="" asp-route-id="@essay.UserId">@essay.UserUserName</a>
+                            on @essay.DisplayCreateDate
+                        </p>
+                    </div>
+                    <hr>
+                }
+             }
             <ul class="pagination">
                 @for (var i = 1; i <= Model.Pager.PagesCount; i++)
                 {
