@@ -20,6 +20,10 @@
 
         IEnumerable<string> GetContestParticipantsIds(int contestId);
 
+        int GetContestParticipantsCount(int contestId);
+
+        IEnumerable<string> GetContestParticipantsIdsInRange(int contestId, int currentPage, int pageSize);
+
         bool HasContestWithId(int id);
 
         Task UpdateContestAsync(DateTime start, DateTime end, string name, string description, int categoryId, int id);

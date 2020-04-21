@@ -13,8 +13,8 @@
     <div class="row">
         <div class="col-lg-8 col-md-10 mx-auto">
             @foreach (var essayGroup in this.Model.GroupedEssays)
-             {
-                <h4 class="text-info">@essayGroup.First().ContestName</h4>
+            {
+                <a asp-action="ById" asp-controller="Contest" asp-area="" asp-route-id="@essayGroup.First().ContestId" ><h4 class="text-info">@essayGroup.First().ContestName</h4></a>
                 foreach (var essay in essayGroup)
                 {
                     <div class="post-preview">
@@ -34,7 +34,7 @@
                     </div>
                     <hr>
                 }
-             }
+            }
             <ul class="pagination">
                 @for (var i = 1; i <= Model.Pager.PagesCount; i++)
                 {

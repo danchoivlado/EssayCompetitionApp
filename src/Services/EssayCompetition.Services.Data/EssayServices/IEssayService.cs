@@ -13,7 +13,11 @@
 
         int GetEssaysCount();
 
+        int GetEssaysId(string contestanId, int contestId);
+
         T GetEssayDetails<T>(int essayId);
+
+        string GetEssayName(string contestanId, int contestId);
 
         IEnumerable<T> GetBestEssaysFromLastContest<T>(int contestId, IEnumerable<int> essaysIdsOrderedByPoints);
     }

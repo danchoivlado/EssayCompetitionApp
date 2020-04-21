@@ -16,6 +16,11 @@
             this.gradeRepository = gradeRepository;
         }
 
+        public int GetEssayPoints(int essayId)
+        {
+            return this.gradeRepository.All().First(x => x.EssayId == essayId).Points;
+        }
+
         public IEnumerable<int> GetEssaysIdsOrderedByPoints()
         {
             return this.gradeRepository.All().OrderByDescending(x => x.Points).Select(x => x.EssayId);

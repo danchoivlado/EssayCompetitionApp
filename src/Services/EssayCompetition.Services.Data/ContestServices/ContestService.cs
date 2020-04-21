@@ -162,7 +162,13 @@
 
         public IEnumerable<string> GetContestParticipantsIds(int contestId)
         {
-            var allContestantsIds = this.contestantContestRepository.All().Where(x => x.ContestId == contestId).Select(x => x.ContestantId);
+            return this.contestantContestRepository.All().Where(x => x.ContestId == contestId).Select(x => x.ContestantId);
+        }
+
+        public IEnumerable<string> GetContestParticipantsIdsInRange(int contestId, int currentPage, int pageSize)
+        {
+            return this.contestantContestRepository.All().Where(x => x.ContestId == contestId)
+                .Skip((currentPage - 1) * pageSize).Take(pageSize).Select(x => x.ContestantId);
         }
 
         private async Task AddEssayTeacher(IEnumerable<string> teachersIds, int essayId)
@@ -207,6 +213,11 @@
             }
 
             return -1;
+        }
+
+        public int GetContestParticipantsCount(int contestId)
+        {
+            return this.contestantContestRepository.All().Where(x => x.ContestId == contestId).Count();
         }
     }
 }

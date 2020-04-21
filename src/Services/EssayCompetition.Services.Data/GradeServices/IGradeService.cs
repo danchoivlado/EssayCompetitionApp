@@ -7,5 +7,7 @@
         T GetGradeDetails<T>(int essayId);
 
         IEnumerable<int> GetEssaysIdsOrderedByPoints();
+
+        int GetEssayPoints(int essayId);
     }
 }

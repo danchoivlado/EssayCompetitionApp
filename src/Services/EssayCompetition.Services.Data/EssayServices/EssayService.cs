@@ -65,5 +65,15 @@
         {
             return this.essayRepository.All().Count();
         }
+
+        public string GetEssayName(string contestanId, int contestId)
+        {
+            return this.essayRepository.All().First(x => x.ContestId == contestId && x.UserId == contestanId).Title;
+        }
+
+        public int GetEssaysId(string contestanId, int contestId)
+        {
+            return this.essayRepository.All().First(x => x.ContestId == contestId && x.UserId == contestanId).Id;
+        }
     }
 }
