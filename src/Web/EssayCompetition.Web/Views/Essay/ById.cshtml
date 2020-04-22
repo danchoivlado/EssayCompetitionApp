@@ -1,4 +1,4 @@
-﻿@using EssayCompetition.Web.ViewModels.Essays 
+﻿@using EssayCompetition.Web.ViewModels.Essays
 @model EssayViewModel
 @{
     this.ViewData["Title"] = "About Page";
@@ -7,11 +7,40 @@
     this.ViewData["ImageH1Text"] = $"{Model.Title}";
     this.ViewData["ImageSpanText"] = $"{Model.Description}";
 }
+
 <article>
     <div class="container">
         <div class="row">
             <div class="col-lg-8 col-md-10 mx-auto">
                 <p>@Html.Raw(Model.Content)</p>
+
+                <div class="media">
+                    <div class="media-left">
+                        <img  class="media-object" style="width:40px">
+                    </div>
+                    <div class="media-body">
+                        <h4 class="media-heading title">Fahmi Arif</h4>
+                        <p class="komen">
+                            kalo bisa ya ndak usah gan biar cepet<br>
+                            <a href="#">reply</a>
+                        </p>
+                    </div>
+                </div>
+                <div class="geser">
+                    <div class="media">
+                        <div class="media-left">
+                            <img  class="media-object" style="width:40px">
+                        </div>
+                        <div class="media-body">
+                            <h4 class="media-heading title">Fahmi Arif</h4>
+                            <p class="komen">
+                                kalo bisa ya ndak usah gan biar cepet<br>
+                                <a href="#">reply</a>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                
             </div>
         </div>
     </div>
