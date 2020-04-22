@@ -13,37 +13,49 @@
         <div class="row">
             <div class="col-lg-8 col-md-10 mx-auto">
                 <p>@Html.Raw(Model.Content)</p>
-
-                <div class="media">
-                    <div class="media-left">
-                        <img  class="media-object" style="width:40px">
+                <form id="votesForm" method="post"></form>
+                    <div class="form-group">
+                        <label for="comment">Your Comment</label>
+                        <textarea name="comment" id="myTextarea" class="form-control" rows="3"></textarea>
                     </div>
-                    <div class="media-body">
-                        <h4 class="media-heading title">Fahmi Arif</h4>
-                        <p class="komen">
-                            kalo bisa ya ndak usah gan biar cepet<br>
-                            <a href="#">reply</a>
-                        </p>
-                    </div>
-                </div>
-                <div class="geser">
+                    <button  onclick="sendVote(@Model.Id)" class="btn btn-default">Send</button>
+                <h4>Recent comments</h4>
+                @foreach (var comment in Model.Comments)
+                {
                     <div class="media">
                         <div class="media-left">
-                            <img  class="media-object" style="width:40px">
+                            <img src="@comment.UserImage" class="media-object" style="width:40px">
                         </div>
                         <div class="media-body">
-                            <h4 class="media-heading title">Fahmi Arif</h4>
+                            <a asp-action="ById" asp-controller="Users" asp-area="" asp-route-id="@comment.UserId"><h4 class="media-heading title">@comment.UserUserName</h4></a>
                             <p class="komen">
-                                kalo bisa ya ndak usah gan biar cepet<br>
-                                <a href="#">reply</a>
+                                @comment.Content<br>
                             </p>
                         </div>
                     </div>
-                </div>
-                
+                }
             </div>
         </div>
     </div>
 </article>
 
 <hr>
+
+@section Scripts {
+    <script>
+
+        function sendVote(essayId) {
+            var token = $("#votesForm input[name=__RequestVerificationToken]").val();
+            var message = document.getElementById("myTextarea").value;
+            var json = { essayId: essayId, commentContent: message };
+            $.ajax({
+                url: "/api/comments",
+                type: "POST",
+                data: JSON.stringify(json),
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                headers: { "RequestVerificationToken": token }
+            });
+        }
+    </script>
+}

@@ -1,6 +1,7 @@
 ﻿namespace EssayCompetition.Web.ViewModels.Essays
 {
     using System;
+    using System.Collections.Generic;
 
     using EssayCompetition.Data.Models;
     using EssayCompetition.Services.Mapping;
@@ -26,6 +27,8 @@
         public int ContestId { get; set; }
 
         public string ContestName { get; set; }
+
+        public virtual IEnumerable<CommentViewModel> Comments { get; set; }
 
         public string DisplayCreateDate => this.CreatedOn.ToLocalTime().ToShortDateString();
     }

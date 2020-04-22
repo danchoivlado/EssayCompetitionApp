@@ -15,6 +15,11 @@
             this.userAdditionalInfoRepository = userAdditionalInfoRepository;
         }
 
+        public string GetUserProfilePicture(string userId)
+        {
+            return this.userAdditionalInfoRepository.All().First(x => x.UserId == userId).ImageUrl;
+        }
+
         public T GetUserWithIdAdditionalInfo<T>(string userId)
         {
             return this.userAdditionalInfoRepository.All().Where(x => x.UserId == userId).To<T>().First();
