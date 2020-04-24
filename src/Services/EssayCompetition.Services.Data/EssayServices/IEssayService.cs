@@ -19,6 +19,8 @@
 
         string GetEssayName(string contestanId, int contestId);
 
+        bool HasEssayWithId(int essayId);
+
         IEnumerable<T> GetBestEssaysFromLastContest<T>(int contestId, IEnumerable<int> essaysIdsOrderedByPoints);
     }
 }

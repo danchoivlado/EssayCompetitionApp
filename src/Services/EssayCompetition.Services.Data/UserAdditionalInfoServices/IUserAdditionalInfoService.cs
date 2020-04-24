@@ -8,6 +8,8 @@
 
         bool HasUserAdditionalInfoWithId(string userId);
 
+        string GetUserProfilePicture(string userId);
+
         Task UpdateUserAdditionalInfoAsync(
             string userId,
             string fullName,

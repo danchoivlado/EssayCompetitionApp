@@ -1,4 +1,4 @@
-﻿@using EssayCompetition.Web.ViewModels.Essays 
+﻿@using EssayCompetition.Web.ViewModels.Essays
 @model EssayViewModel
 @{
     this.ViewData["Title"] = "About Page";
@@ -7,14 +7,68 @@
     this.ViewData["ImageH1Text"] = $"{Model.Title}";
     this.ViewData["ImageSpanText"] = $"{Model.Description}";
 }
+
 <article>
     <div class="container">
         <div class="row">
             <div class="col-lg-8 col-md-10 mx-auto">
                 <p>@Html.Raw(Model.Content)</p>
+                @if (User.Identity.IsAuthenticated)
+                {
+                    <form id="votesForm" method="post"></form>
+                    <div class="form-group">
+                        <label for="comment">Your Comment</label>
+                        <textarea name="comment" id="myTextarea" class="form-control" rows="3"></textarea>
+                    </div>
+                    <button onclick="sendVote(@Model.Id)" class="btn btn-default">Send</button>
+                }
+                else
+                {
+                    <div class="badge badge-primary text-wrap" style="width: 6rem;">
+                        Login to comment
+                    </div>
+                }
+                <h4>Recent comments</h4>
+                @foreach (var comment in Model.Comments)
+                {
+                    <div class="media">
+                        <div class="media-left">
+                            <img src="@comment.UserImage" class="media-object" style="width:40px">
+                        </div>
+                        <div class="media-body">
+                            <a asp-action="ById" asp-controller="Users" asp-area="" asp-route-id="@comment.UserId"><h4 class="media-heading title">@comment.UserUserName</h4></a>
+                            <p class="komen">
+                                @comment.Content<br>
+                            </p>
+                        </div>
+                    </div>
+                }
+
             </div>
         </div>
     </div>
 </article>
 
 <hr>
+
+@section Scripts {
+    <script>
+
+        function sendVote(essayId) {
+            var token = $("#votesForm input[name=__RequestVerificationToken]").val();
+            var message = document.getElementById("myTextarea").value;
+            var json = { essayId: essayId, commentContent: message };
+            $.ajax({
+                url: "/api/comments",
+                type: "POST",
+                data: JSON.stringify(json),
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                headers: { "RequestVerificationToken": token },
+                success: function () {
+                    location.reload();
+                }
+            });
+        }
+    </script>
+}

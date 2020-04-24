@@ -1,14 +1,16 @@
 ﻿namespace EssayCompetition.Web.Controllers
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+
     using EssayCompetition.Services.Data.ContestServices;
     using EssayCompetition.Services.Data.EssayServices;
     using EssayCompetition.Services.Data.GradeServices;
     using EssayCompetition.Services.Data.UsersServices;
     using EssayCompetition.Web.ViewModels.ContestHome;
-    using Microsoft.AspNetCore.Mvc;
     using EssayCompetition.Web.ViewModels.ContestHome.Shared;
-    using System;
-    using System.Collections.Generic;
+    using Microsoft.AspNetCore.Mvc;
 
     public class ContestController : BaseController
     {
@@ -47,7 +49,7 @@
                 allContestants.Add(contestant);
             }
 
-            viewModel.Contestants = allContestants;
+            viewModel.Contestants = allContestants.OrderByDescending(x => x.EssayPoints);
 
             return this.View(viewModel);
         }
