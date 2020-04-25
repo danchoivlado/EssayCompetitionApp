@@ -30,6 +30,7 @@
                               new CategorySeeder(),
                               new UserSeeder(),
                               new AddToRoleSeeder(),
+                              new AdditionalInfoSeeding(),
                           };
 
             foreach (var seeder in seeders)

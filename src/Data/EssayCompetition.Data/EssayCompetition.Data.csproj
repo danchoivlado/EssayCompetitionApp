@@ -40,6 +40,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\EssayCompetition.Common\EssayCompetition.Common.csproj" />
+    <ProjectReference Include="..\..\Services\EssayCompetition.Services.Data\EssayCompetition.Services.Data.csproj" />
     <ProjectReference Include="..\EssayCompetition.Data.Common\EssayCompetition.Data.Common.csproj" />
     <ProjectReference Include="..\EssayCompetition.Data.Models\EssayCompetition.Data.Models.csproj" />
   </ItemGroup>

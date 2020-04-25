@@ -219,5 +219,10 @@
         {
             return this.contestantContestRepository.All().Where(x => x.ContestId == contestId).Count();
         }
+
+        public bool HasAnyContext()
+        {
+             return this.contestRepository.All().Any();
+        }
     }
 }
