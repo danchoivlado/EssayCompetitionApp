@@ -30,7 +30,7 @@
             this.contestantContestRepository = contestantContestRepository;
         }
 
-        public async Task AddContestAsync<T>(DateTime start, DateTime end, string name, string description, int categoryId)
+        public async Task AddContestAsync(DateTime start, DateTime end, string name, string description, int categoryId)
         {
             Contest contest = new Contest()
             {

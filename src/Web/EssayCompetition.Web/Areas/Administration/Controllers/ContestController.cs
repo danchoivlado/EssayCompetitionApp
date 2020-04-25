@@ -69,7 +69,7 @@
                 return this.View(viewModel);
             }
 
-            await this.contestService.AddContestAsync<CreateViewModel>(
+            await this.contestService.AddContestAsync(
                 viewModel.StartTime,
                 viewModel.EndTime,
                 viewModel.Name,

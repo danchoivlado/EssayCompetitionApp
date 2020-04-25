@@ -60,6 +60,17 @@
             return this.deletableEntityRepository.All().Count();
         }
 
+        public int GetFirstOrDefaultCategoryId()
+        {
+            var firstCategory = this.deletableEntityRepository.All().FirstOrDefault();
+            if (firstCategory == null)
+            {
+                return default(int);
+            }
+
+            return firstCategory.Id;
+        }
+
         public T GetWithId<T>(int id)
         {
             return this.deletableEntityRepository.All().Where(category => category.Id == id).AsQueryable().To<T>().First();

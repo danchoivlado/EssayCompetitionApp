@@ -24,7 +24,7 @@
                 ("Legion5", "Legion5 is for more contestants", DateTime.UtcNow.AddDays(2), DateTime.UtcNow.AddDays(2).AddHours(6)),
             };
 
-            await SeedContests(categoryService, contestService, contestList);
+            await this.SeedContests(categoryService, contestService, contestList);
         }
 
         private async Task SeedContests(ICategoryService categoryService, IContestService contestService, List<(string Name, string Description, DateTime StartTime, DateTime EndTime)> contestList)
@@ -33,16 +33,19 @@
             {
                 if (!contestService.HasContextWithName(contestInfo.Name))
                 {
-                    var categoryId
+                    int categoryId = categoryService.GetFirstOrDefaultCategoryId();
+                    if (categoryId == default(int))
+                    {
+                        throw new NullReferenceException($"There are no categories");
+                    }
 
                     await contestService.AddContestAsync(
                         contestInfo.StartTime,
                         contestInfo.EndTime,
                         contestInfo.Name,
                         contestInfo.Description,
-                        contestInfo)
+                        categoryId);
                 }
-
             }
         }
     }
