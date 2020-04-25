@@ -224,5 +224,10 @@
         {
              return this.contestRepository.All().Any();
         }
+
+        public bool HasContextWithName(string contextName)
+        {
+            return this.contestRepository.All().Any(x => x.Name == contextName);
+        }
     }
 }

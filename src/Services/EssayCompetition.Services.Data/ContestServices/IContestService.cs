@@ -39,5 +39,7 @@
         int GetLastContestId();
 
         bool HasAnyContext();
+
+        bool HasContextWithName(string contextName);
     }
 }
