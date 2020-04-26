@@ -40,9 +40,17 @@
             viewModel ??= new IndexViewModel();
             viewModel.Pager ??= new PagerViewModel();
             viewModel.Pager.CurrentPage = viewModel.Pager.CurrentPage <= 0 ? 1 : viewModel.Pager.CurrentPage;
+            if (this.essayService.HasAnyGradedEssay())
+            {
+                viewModel.Essays = this.essayService.GetEssaysInRange<EssayViewModel>(viewModel.Pager.CurrentPage, PageSize);
+                viewModel.GroupedEssays = viewModel.Essays.GroupBy(x => x.ContestId);
+            }
+            else
+            {
+                viewModel.Essays = new List<EssayViewModel>();
+                viewModel.GroupedEssays = new List<List<EssayViewModel>>();
+            }
 
-            viewModel.Essays = this.essayService.GetEssaysInRange<EssayViewModel>(viewModel.Pager.CurrentPage, PageSize);
-            viewModel.GroupedEssays = viewModel.Essays.GroupBy(x => x.ContestId);
             viewModel.Pager.PagesCount = (int)Math.Ceiling((double)this.essayService.GetEssaysCount() / PageSize);
 
             return this.View(viewModel);

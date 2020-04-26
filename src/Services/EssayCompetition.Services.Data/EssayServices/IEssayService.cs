@@ -23,6 +23,8 @@
 
         bool HasEssayWithId(int essayId);
 
+        bool HasAnyGradedEssay();
+
         IEnumerable<T> GetBestEssaysFromLastContest<T>(int contestId, IEnumerable<int> essaysIdsOrderedByPoints);
     }
 }

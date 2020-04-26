@@ -12,5 +12,7 @@
         public string EssayName { get; set; }
 
         public int EssayPoints { get; set; }
+
+        public string DisplayGrade => this.EssayPoints == -1 ? "Not gradet" : this.EssayPoints.ToString();
     }
 }
