@@ -16,10 +16,40 @@
         {
             var roleManager = serviceProvider.GetRequiredService<RoleManager<ApplicationRole>>();
 
-            await SeedRoleAsync(roleManager, GlobalConstants.AdministratorRoleName);
+            await SeedAdministrationRoleAsync(roleManager, GlobalConstants.AdministratorRoleName);
+
+            await SeedTeacherRoleAsync(roleManager, GlobalConstants.TeacherRoleName);
+
+            await SeedContestantRoleAsync(roleManager, GlobalConstants.ContestRoleName);
         }
 
-        private static async Task SeedRoleAsync(RoleManager<ApplicationRole> roleManager, string roleName)
+        private static async Task SeedContestantRoleAsync(RoleManager<ApplicationRole> roleManager, string contestantRoleName)
+        {
+            var role = await roleManager.FindByNameAsync(contestantRoleName);
+            if (role == null)
+            {
+                var result = await roleManager.CreateAsync(new ApplicationRole(contestantRoleName));
+                if (!result.Succeeded)
+                {
+                    throw new Exception(string.Join(Environment.NewLine, result.Errors.Select(e => e.Description)));
+                }
+            }
+        }
+
+        private static async Task SeedTeacherRoleAsync(RoleManager<ApplicationRole> roleManager, string techerRoleName)
+        {
+            var role = await roleManager.FindByNameAsync(techerRoleName);
+            if (role == null)
+            {
+                var result = await roleManager.CreateAsync(new ApplicationRole(techerRoleName));
+                if (!result.Succeeded)
+                {
+                    throw new Exception(string.Join(Environment.NewLine, result.Errors.Select(e => e.Description)));
+                }
+            }
+        }
+
+        private static async Task SeedAdministrationRoleAsync(RoleManager<ApplicationRole> roleManager, string roleName)
         {
             var role = await roleManager.FindByNameAsync(roleName);
             if (role == null)

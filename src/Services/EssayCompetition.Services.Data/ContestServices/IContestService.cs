@@ -1,5 +1,6 @@
 ﻿namespace EssayCompetition.Services.Data.ContestServices
 {
+    using EssayCompetition.Data.Models;
     using System;
     using System.Collections.Generic;
     using System.Threading.Tasks;
@@ -28,7 +29,7 @@
 
         Task UpdateContestAsync(DateTime start, DateTime end, string name, string description, int categoryId, int id);
 
-        Task AddContestAsync<T>(DateTime start, DateTime end, string name, string description, int categoryId);
+        Task AddContestAsync(DateTime start, DateTime end, string name, string description, int categoryId);
 
         bool HasContextNow(DateTime date);
 
@@ -36,6 +37,14 @@
 
         Task SendContestEssayAsync(string title, string description, string content, string userId, IEnumerable<string> teachersIds);
 
+        Task SeedContestEssayAsync(Essay essay, IEnumerable<string> teachersIds);
+
         int GetLastContestId();
+
+        bool HasAnyContext();
+
+        bool HasContextWithName(string contextName);
+
+        int GetContestId(string contestName);
     }
 }

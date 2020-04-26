@@ -53,7 +53,7 @@
 
         public IEnumerable<T> GetEssaysFromUserWithIdInRange<T>(string userId, int currentPage, int pageSize)
         {
-            return this.essayRepository.All().Skip((currentPage - 1) * pageSize).Take(pageSize).Where(x => x.UserId == userId).To<T>();
+            return this.essayRepository.All().Where(x => x.UserId == userId).Skip((currentPage - 1) * pageSize).Take(pageSize).To<T>();
         }
 
         public int GetUserEssaysCount(string userId)
@@ -79,6 +79,11 @@
         public bool HasEssayWithId(int essayId)
         {
             return this.essayRepository.All().Any(x => x.Id == essayId);
+        }
+
+        public bool HasUserEssay(string contestanId, int contestId)
+        {
+            return this.essayRepository.All().Any(x => x.ContestId == contestId && x.UserId == contestanId);
         }
     }
 }

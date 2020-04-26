@@ -30,7 +30,7 @@
             this.contestantContestRepository = contestantContestRepository;
         }
 
-        public async Task AddContestAsync<T>(DateTime start, DateTime end, string name, string description, int categoryId)
+        public async Task AddContestAsync(DateTime start, DateTime end, string name, string description, int categoryId)
         {
             Contest contest = new Contest()
             {
@@ -111,6 +111,13 @@
             await this.AddEssayTeacher(teachersIds, essay.Id);
         }
 
+        public async Task SeedContestEssayAsync(Essay essay, IEnumerable<string> teachersIds)
+        {
+            await this.essayRepository.AddAsync(essay);
+            await this.essayRepository.SaveChangesAsync();
+            await this.AddEssayTeacher(teachersIds, essay.Id);
+        }
+
         public async Task UpdateContestAsync(DateTime start, DateTime end, string name, string description, int categoryId, int id)
         {
             var contest = new Contest()
@@ -152,7 +159,8 @@
 
         public int GetLastContestId()
         {
-            return this.contestRepository.All().OrderByDescending(x => x.EndTime.Date).First().Id;
+            var now = DateTime.Now.ToUniversalTime();
+            return this.contestRepository.All().Where(x => x.EndTime <= now).OrderByDescending(x => x.EndTime.Date).First().Id;
         }
 
         public string GetContestName(int contestId)
@@ -169,6 +177,26 @@
         {
             return this.contestantContestRepository.All().Where(x => x.ContestId == contestId)
                 .Skip((currentPage - 1) * pageSize).Take(pageSize).Select(x => x.ContestantId);
+        }
+
+        public bool HasAnyContext()
+        {
+            return this.contestRepository.All().Any();
+        }
+
+        public bool HasContextWithName(string contextName)
+        {
+            return this.contestRepository.All().Any(x => x.Name == contextName);
+        }
+
+        public int GetContestId(string contestName)
+        {
+            return this.contestRepository.All().First(x => x.Name == contestName).Id;
+        }
+
+        public int GetContestParticipantsCount(int contestId)
+        {
+            return this.contestantContestRepository.All().Where(x => x.ContestId == contestId).Count();
         }
 
         private async Task AddEssayTeacher(IEnumerable<string> teachersIds, int essayId)
@@ -213,11 +241,6 @@
             }
 
             return -1;
-        }
-
-        public int GetContestParticipantsCount(int contestId)
-        {
-            return this.contestantContestRepository.All().Where(x => x.ContestId == contestId).Count();
         }
     }
 }

@@ -1,5 +1,6 @@
 ﻿namespace EssayCompetition.Web.Controllers
 {
+    using System.Collections.Generic;
     using System.Diagnostics;
     using System.Threading.Tasks;
 
@@ -47,9 +48,16 @@
         {
             var viewModel = new IndexViewModel();
 
-            var lastcontestId = this.contestService.GetLastContestId();
-            var essaysIdsOrderedByPoints = this.gradeService.GetEssaysIdsOrderedByPoints();
-            viewModel.Essays = this.essayService.GetBestEssaysFromLastContest<EssayViewModel>(lastcontestId, essaysIdsOrderedByPoints);
+            if (this.contestService.HasAnyContext())
+            {
+                var lastcontestId = this.contestService.GetLastContestId();
+                var essaysIdsOrderedByPoints = this.gradeService.GetEssaysIdsOrderedByPoints();
+                viewModel.Essays = this.essayService.GetBestEssaysFromLastContest<EssayViewModel>(lastcontestId, essaysIdsOrderedByPoints);
+            }
+            else
+            {
+                viewModel.Essays = new List<EssayViewModel>();
+            }
 
             return this.View(viewModel);
         }
