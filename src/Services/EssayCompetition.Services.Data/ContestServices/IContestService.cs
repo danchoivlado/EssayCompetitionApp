@@ -1,5 +1,6 @@
 ﻿namespace EssayCompetition.Services.Data.ContestServices
 {
+    using EssayCompetition.Data.Models;
     using System;
     using System.Collections.Generic;
     using System.Threading.Tasks;
@@ -35,6 +36,8 @@
         T NextContext<T>();
 
         Task SendContestEssayAsync(string title, string description, string content, string userId, IEnumerable<string> teachersIds);
+
+        Task SeedContestEssayAsync(Essay essay, IEnumerable<string> teachersIds);
 
         int GetLastContestId();
 

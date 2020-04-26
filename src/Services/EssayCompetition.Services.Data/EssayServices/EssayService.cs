@@ -80,5 +80,10 @@
         {
             return this.essayRepository.All().Any(x => x.Id == essayId);
         }
+
+        public bool HasUserEssay(string contestanId, int contestId)
+        {
+            return this.essayRepository.All().Any(x => x.ContestId == contestId && x.UserId == contestanId);
+        }
     }
 }

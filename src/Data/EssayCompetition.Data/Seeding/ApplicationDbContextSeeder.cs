@@ -33,6 +33,7 @@
                               new AdditionalInfoSeeding(),
                               new ContestSeeder(),
                               new ContestantContestSeeder(),
+                              new EssaySeeder(),
                           };
 
             foreach (var seeder in seeders)

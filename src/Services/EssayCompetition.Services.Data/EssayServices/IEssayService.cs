@@ -15,6 +15,8 @@
 
         int GetEssaysId(string contestanId, int contestId);
 
+        bool HasUserEssay(string contestanId, int contestId);
+
         T GetEssayDetails<T>(int essayId);
 
         string GetEssayName(string contestanId, int contestId);
