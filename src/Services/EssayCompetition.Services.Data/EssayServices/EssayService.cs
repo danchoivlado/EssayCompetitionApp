@@ -47,7 +47,7 @@
 
         public IEnumerable<T> GetEssaysInRange<T>(int currentPage, int pageSize)
         {
-            return this.essayRepository.All().Skip((currentPage - 1) * pageSize).Take(pageSize).
+            return this.essayRepository.All().Where(x => x.Graded == true).Skip((currentPage - 1) * pageSize).Take(pageSize).
                 OrderByDescending(x => x.Contest.StartTime).To<T>();
         }
 
@@ -63,7 +63,7 @@
 
         public int GetEssaysCount()
         {
-            return this.essayRepository.All().Count();
+            return this.essayRepository.All().Count(x => x.Graded == true);
         }
 
         public string GetEssayName(string contestanId, int contestId)
@@ -84,6 +84,11 @@
         public bool HasUserEssay(string contestanId, int contestId)
         {
             return this.essayRepository.All().Any(x => x.ContestId == contestId && x.UserId == contestanId);
+        }
+
+        public bool HasAnyGradedEssay()
+        {
+            return this.essayRepository.All().Any(x => x.Graded == true);
         }
     }
 }

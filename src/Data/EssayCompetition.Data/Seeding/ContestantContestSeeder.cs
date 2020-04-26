@@ -69,7 +69,10 @@
             {
                 foreach (var contestantId in contestarsIds)
                 {
-                    await signService.RegisterForContestAsync(contestantId, contestId);
+                    if (!signService.UserAlreadyRegisteredForCompetition(contestantId, contestId))
+                    {
+                        await signService.RegisterForContestAsync(contestantId, contestId);
+                    }
                 }
             }
         }

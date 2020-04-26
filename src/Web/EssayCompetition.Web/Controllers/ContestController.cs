@@ -45,7 +45,15 @@
             foreach (var contestant in this.usersService.GetUsersWithIds<ContestantViewModel>(contestantIds))
             {
                 contestant.EssayName = this.essayService.GetEssayName(contestant.Id, id);
-                contestant.EssayPoints = this.gradeService.GetEssayPoints(this.essayService.GetEssaysId(contestant.Id, id));
+                if (!this.gradeService.EssayGradet(this.essayService.GetEssaysId(contestant.Id, id)))
+                {
+                    contestant.EssayPoints = -1;
+                }
+                else
+                {
+                    contestant.EssayPoints = this.gradeService.GetEssayPoints(this.essayService.GetEssaysId(contestant.Id, id));
+                }
+
                 allContestants.Add(contestant);
             }
 

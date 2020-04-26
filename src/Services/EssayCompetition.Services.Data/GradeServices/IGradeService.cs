@@ -9,5 +9,7 @@
         IEnumerable<int> GetEssaysIdsOrderedByPoints();
 
         int GetEssayPoints(int essayId);
+
+        bool EssayGradet(int essayId);
     }
 }
