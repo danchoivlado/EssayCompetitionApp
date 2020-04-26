@@ -16,12 +16,10 @@
     public class CategoryService : ICategoryService
     {
         private readonly IDeletableEntityRepository<Category> deletableEntityRepository;
-        private readonly Cloudinary cloudinary;
 
-        public CategoryService(IDeletableEntityRepository<Category> deletableEntityRepository, Cloudinary cloudinary)
+        public CategoryService(IDeletableEntityRepository<Category> deletableEntityRepository)
         {
             this.deletableEntityRepository = deletableEntityRepository;
-            this.cloudinary = cloudinary;
         }
 
         public async Task CreateAsync(string title, string description, string imageUrl)
@@ -62,7 +60,7 @@
 
         public int GetFirstOrDefaultCategoryId()
         {
-            var firstCategory = this.deletableEntityRepository.All().FirstOrDefault();
+            var firstCategory = this.deletableEntityRepository.AllAsNoTracking().FirstOrDefault();
             if (firstCategory == null)
             {
                 return default(int);
@@ -84,7 +82,13 @@
 
         public async Task UpdateAsync(int id, string title, string description, string imageUrl)
         {
-            this.deletableEntityRepository.Update(new Category { Id = id, Title = title, Description = description, ImageUrl = imageUrl });
+            var currentEntity = this.deletableEntityRepository.All().First(x => x.Id == id);
+
+            currentEntity.Title = title;
+            currentEntity.Description = description;
+            currentEntity.ImageUrl = imageUrl;
+
+            this.deletableEntityRepository.Update(currentEntity);
             await this.deletableEntityRepository.SaveChangesAsync();
         }
     }
