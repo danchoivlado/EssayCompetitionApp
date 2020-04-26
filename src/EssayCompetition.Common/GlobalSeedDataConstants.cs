@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-
-namespace EssayCompetition.Common
+﻿namespace EssayCompetition.Common
 {
     public static class GlobalSeedDataConstants
     {
@@ -14,6 +12,12 @@ namespace EssayCompetition.Common
         public const string Teacher2Email = "Teacher2@abv.bg";
         public const string Teacher3Email = "Teacher3@abv.bg";
         public const string ContestantPassword = "asdasd";
+
+        public const string Contest1 = "Legion1";
+        public const string Contest2 = "Legion2";
+        public const string Contest3 = "Legion3";
+        public const string Contest4 = "Legion4";
+        public const string Contest5 = "Legion5";
 
     }
 }

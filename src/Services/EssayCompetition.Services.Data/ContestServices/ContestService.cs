@@ -171,6 +171,21 @@
                 .Skip((currentPage - 1) * pageSize).Take(pageSize).Select(x => x.ContestantId);
         }
 
+        public bool HasAnyContext()
+        {
+            return this.contestRepository.All().Any();
+        }
+
+        public bool HasContextWithName(string contextName)
+        {
+            return this.contestRepository.All().Any(x => x.Name == contextName);
+        }
+
+        public int GetContestId(string contestName)
+        {
+            return this.contestRepository.All().First(x => x.Name == contestName).Id;
+        }
+
         private async Task AddEssayTeacher(IEnumerable<string> teachersIds, int essayId)
         {
             var dic = new Dictionary<string, int>();
@@ -218,16 +233,6 @@
         public int GetContestParticipantsCount(int contestId)
         {
             return this.contestantContestRepository.All().Where(x => x.ContestId == contestId).Count();
-        }
-
-        public bool HasAnyContext()
-        {
-             return this.contestRepository.All().Any();
-        }
-
-        public bool HasContextWithName(string contextName)
-        {
-            return this.contestRepository.All().Any(x => x.Name == contextName);
         }
     }
 }

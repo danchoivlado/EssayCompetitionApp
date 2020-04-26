@@ -32,6 +32,7 @@
                               new AddToRoleSeeder(),
                               new AdditionalInfoSeeding(),
                               new ContestSeeder(),
+                              new ContestantContestSeeder(),
                           };
 
             foreach (var seeder in seeders)

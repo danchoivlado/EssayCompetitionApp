@@ -41,5 +41,7 @@
         bool HasAnyContext();
 
         bool HasContextWithName(string contextName);
+
+        int GetContestId(string contestName);
     }
 }
