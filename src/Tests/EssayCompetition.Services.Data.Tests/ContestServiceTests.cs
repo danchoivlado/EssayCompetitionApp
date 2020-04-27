@@ -1,21 +1,20 @@
-﻿using EssayCompetition.Data;
-using EssayCompetition.Data.Models;
-using EssayCompetition.Data.Repositories;
-using EssayCompetition.Services.Data.ContestServices;
-using EssayCompetition.Services.Data.Tests.Common;
-using EssayCompetition.Services.Mapping;
-using EssayCompetition.Web.ViewModels.Administration.Category;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
-using Xunit;
-using EssayCompetition.Web.ViewModels.Administration.Contest;
-
-namespace EssayCompetition.Services.Data.Tests
+﻿namespace EssayCompetition.Services.Data.Tests
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Reflection;
+    using System.Threading.Tasks;
+
+    using EssayCompetition.Data;
+    using EssayCompetition.Data.Models;
+    using EssayCompetition.Data.Repositories;
+    using EssayCompetition.Services.Data.ContestServices;
+    using EssayCompetition.Services.Data.Tests.Common;
+    using EssayCompetition.Services.Mapping;
+    using EssayCompetition.Web.ViewModels.Administration.Contest;
+    using Xunit;
+
     public class ContestServiceTests
     {
         public ContestServiceTests()
