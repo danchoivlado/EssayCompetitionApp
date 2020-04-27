@@ -76,7 +76,9 @@
             var contest = this.contestRepository.All().FirstOrDefault(x => x.StartTime.Date == date.Date);
             if (contest != null)
             {
-                if (date.TimeOfDay >= contest.StartTime.TimeOfDay && date.TimeOfDay <= contest.EndTime.TimeOfDay)
+                if (date.TimeOfDay >= contest.StartTime.TimeOfDay && date.TimeOfDay <= contest.EndTime.TimeOfDay 
+                    ||
+                    date.TimeOfDay >= contest.StartTime.TimeOfDay && date.Date < contest.EndTime.Date)
                 {
                     return true;
                 }
@@ -229,7 +231,9 @@
             var contest = this.contestRepository.All().FirstOrDefault(x => x.StartTime.Date == date.Date);
             if (contest != null)
             {
-                if (date.TimeOfDay >= contest.StartTime.TimeOfDay && date.TimeOfDay <= contest.EndTime.TimeOfDay)
+                if (date.TimeOfDay >= contest.StartTime.TimeOfDay && date.TimeOfDay <= contest.EndTime.TimeOfDay
+                    ||
+                    date.TimeOfDay >= contest.StartTime.TimeOfDay && date.Date < contest.EndTime.Date)
                 {
                     return contest.Id;
                 }
