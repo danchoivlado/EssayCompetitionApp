@@ -262,5 +262,19 @@
             await context.SaveChangesAsync();
             return category;
         }
+
+        public async Task<UserAdditionalInfo> SeedUserAdditionalInfo(ApplicationDbContext context, string userId, string imageUrl)
+        {
+            UserAdditionalInfo userAdditionalInfo = new UserAdditionalInfo()
+            {
+                ImageUrl = imageUrl,
+                UserId = userId,
+            };
+
+            context.UserAdditionalInfo.Add(userAdditionalInfo);
+            await context.SaveChangesAsync();
+
+            return userAdditionalInfo;
+        }
     }
 }
