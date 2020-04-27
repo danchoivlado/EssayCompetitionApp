@@ -38,23 +38,6 @@
             return this.essaysRepository.All().Where(x => x.Id == essayId).AsQueryable().To<T>().First();
         }
 
-        public IEnumerable<T> GetTeacherNotReviewedEssays<T>(string userId)
-        {
-            var allEssaysIds = this.essayTeacherRepository.All().Where(x => x.TeacherId == userId).Select(x => x.EssayId);
-            var allEssays = this.essaysRepository.All().Where(x => x.Graded != true);
-            var filtredEssays = new List<Essay>();
-
-            foreach (var essayId in allEssaysIds)
-            {
-                foreach (var essay in allEssays.Where(x => x.Id == essayId))
-                {
-                    filtredEssays.Add(essay);
-                }
-            }
-
-            return filtredEssays.AsQueryable().To<T>();
-        }
-
         public int GetTeacherNotReviewedEssaysCount(string userId)
         {
             var allEssaysIds = this.essayTeacherRepository.All().Where(x => x.TeacherId == userId).Select(x => x.EssayId);

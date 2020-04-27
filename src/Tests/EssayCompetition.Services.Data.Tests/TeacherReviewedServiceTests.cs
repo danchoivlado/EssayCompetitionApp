@@ -1,19 +1,17 @@
-﻿using EssayCompetition.Data.Models;
-using EssayCompetition.Data.Repositories;
-using EssayCompetition.Services.Data.TeacherReviewedServices;
-using EssayCompetition.Services.Data.Tests.Common;
-using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Threading.Tasks;
-using Xunit;
-using EssayCompetition.Web.ViewModels.Teacher.Reviewed;
-using EssayCompetition.Services.Mapping;
-using System.Reflection;
-using System.Linq;
-
-namespace EssayCompetition.Services.Data.Tests
+﻿namespace EssayCompetition.Services.Data.Tests
 {
+    using System.Linq;
+    using System.Reflection;
+    using System.Threading.Tasks;
+
+    using EssayCompetition.Data.Models;
+    using EssayCompetition.Data.Repositories;
+    using EssayCompetition.Services.Data.TeacherReviewedServices;
+    using EssayCompetition.Services.Data.Tests.Common;
+    using EssayCompetition.Services.Mapping;
+    using EssayCompetition.Web.ViewModels.Teacher.Reviewed;
+    using Xunit;
+
     public class TeacherReviewedServiceTests
     {
         private Seeder seeder;

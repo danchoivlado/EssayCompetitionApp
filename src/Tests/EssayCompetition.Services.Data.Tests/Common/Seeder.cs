@@ -241,5 +241,17 @@
 
             return essayTeacher;
         }
+
+        public async Task<Category> SeedCategoryAsync(ApplicationDbContext context, string categoryName)
+        {
+            var category = new Category()
+            {
+                Title = categoryName,
+            };
+
+            context.Categories.Add(category);
+            await context.SaveChangesAsync();
+            return category;
+        }
     }
 }
