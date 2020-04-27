@@ -6,6 +6,7 @@
 
     using EssayCompetition.Data;
     using EssayCompetition.Data.Models;
+    using EssayCompetition.Web.ViewModels.Administration.Roles;
 
     public class Seeder
     {
@@ -196,6 +197,18 @@
             context.Grades.Add(grade);
             await context.SaveChangesAsync();
             return grade;
+        }
+
+        public async Task<ApplicationRole> SeedRoleAsync(ApplicationDbContext context, string roleName)
+        {
+            var role = new ApplicationRole()
+            {
+                Name = roleName,
+            };
+            context.Roles.Add(role);
+            await context.SaveChangesAsync();
+
+            return role;
         }
     }
 }

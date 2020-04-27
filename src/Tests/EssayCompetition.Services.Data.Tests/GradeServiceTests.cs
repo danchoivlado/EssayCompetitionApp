@@ -1,19 +1,18 @@
-﻿using EssayCompetition.Data.Models;
-using EssayCompetition.Data.Repositories;
-using EssayCompetition.Services.Data.GradeServices;
-using EssayCompetition.Services.Data.Tests.Common;
-using EssayCompetition.Services.Mapping;
-using EssayCompetition.Web.ViewModels.Contest.MyEssay;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
-using Xunit;
-
-namespace EssayCompetition.Services.Data.Tests
+﻿namespace EssayCompetition.Services.Data.Tests
 {
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Reflection;
+    using System.Threading.Tasks;
+
+    using EssayCompetition.Data.Models;
+    using EssayCompetition.Data.Repositories;
+    using EssayCompetition.Services.Data.GradeServices;
+    using EssayCompetition.Services.Data.Tests.Common;
+    using EssayCompetition.Services.Mapping;
+    using EssayCompetition.Web.ViewModels.Contest.MyEssay;
+    using Xunit;
+
     public class GradeServiceTests
     {
         private Seeder seeder;
