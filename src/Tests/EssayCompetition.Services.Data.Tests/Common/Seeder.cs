@@ -60,7 +60,7 @@
 
         public async Task<ApplicationUser> SeedUserAsync(ApplicationDbContext context, string userEmail)
         {
-            var user = new ApplicationUser() { Email = userEmail, UserName = userEmail};
+            var user = new ApplicationUser() { Email = userEmail, UserName = userEmail };
 
             context.Users.Add(user);
             await context.SaveChangesAsync();
@@ -168,6 +168,34 @@
             context.Comments.Add(comment);
             await context.SaveChangesAsync();
             return comment;
+        }
+
+        public async Task<Grade> AddGradeAsync(ApplicationDbContext context, int essayId)
+        {
+            var grade = new Grade()
+            {
+                EssayId = essayId,
+                Points = 100,
+                PrivateComments = "Test",
+            };
+
+            context.Grades.Add(grade);
+            await context.SaveChangesAsync();
+            return grade;
+        }
+
+        public async Task<Grade> AddGradeAsync(ApplicationDbContext context, int essayId, int essayPoints)
+        {
+            var grade = new Grade()
+            {
+                EssayId = essayId,
+                Points = essayPoints,
+                PrivateComments = "Test",
+            };
+
+            context.Grades.Add(grade);
+            await context.SaveChangesAsync();
+            return grade;
         }
     }
 }
