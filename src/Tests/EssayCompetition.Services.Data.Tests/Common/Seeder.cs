@@ -68,6 +68,15 @@
             return user;
         }
 
+        public async Task<ApplicationUser> SeedDeletedUserAsync(ApplicationDbContext context, string userEmail)
+        {
+            var user = new ApplicationUser() { Email = userEmail, UserName = userEmail, IsDeleted = true};
+
+            context.Users.Add(user);
+            await context.SaveChangesAsync();
+            return user;
+        }
+
         public async Task<IEnumerable<string>> SeedManyUserAsync(ApplicationDbContext context, int usersCount)
         {
             var userIds = new List<string>();
