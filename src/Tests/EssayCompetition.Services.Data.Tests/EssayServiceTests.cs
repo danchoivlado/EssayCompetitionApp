@@ -1,16 +1,17 @@
-﻿using EssayCompetition.Data.Models;
-using EssayCompetition.Data.Repositories;
-using EssayCompetition.Services.Data.EssayServices;
-using EssayCompetition.Services.Data.Tests.Common;
-using System.Linq;
-using System.Threading.Tasks;
-using Xunit;
-using EssayCompetition.Web.ViewModels.Essays;
-using EssayCompetition.Services.Mapping;
-using System.Reflection;
-
-namespace EssayCompetition.Services.Data.Tests
+﻿namespace EssayCompetition.Services.Data.Tests
 {
+    using System.Linq;
+    using System.Reflection;
+    using System.Threading.Tasks;
+
+    using EssayCompetition.Data.Models;
+    using EssayCompetition.Data.Repositories;
+    using EssayCompetition.Services.Data.EssayServices;
+    using EssayCompetition.Services.Data.Tests.Common;
+    using EssayCompetition.Services.Mapping;
+    using EssayCompetition.Web.ViewModels.Essays;
+    using Xunit;
+
     public class EssayServiceTests
     {
         private const int CurrentPage = 1;

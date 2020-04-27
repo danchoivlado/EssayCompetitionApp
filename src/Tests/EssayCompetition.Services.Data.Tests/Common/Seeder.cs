@@ -153,5 +153,21 @@
             await context.SaveChangesAsync();
             return user.Id;
         }
+
+        public async Task<Comment> AddCommentToEssay(ApplicationDbContext context, string commentContent, int essayId)
+        {
+            var user = await this.SeedUserAsync(context, TestEmail);
+
+            var comment = new Comment()
+            {
+                EssayId = essayId,
+                Content = commentContent,
+                UserId = user.Id,
+            };
+
+            context.Comments.Add(comment);
+            await context.SaveChangesAsync();
+            return comment;
+        }
     }
 }
