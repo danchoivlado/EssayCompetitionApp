@@ -1,20 +1,18 @@
-﻿using EssayCompetition.Data.Models;
-using EssayCompetition.Data.Repositories;
-using EssayCompetition.Services.Data.RolesServices;
-using EssayCompetition.Services.Data.Tests.Common;
-using EssayCompetition.Services.Mapping;
-using EssayCompetition.Web.ViewModels.Administration.Roles;
-using System;
-using System.Collections.Generic;
-using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
-using Xunit;
-using EssayCompetition.Common;
-using System.Linq;
-
-namespace EssayCompetition.Services.Data.Tests
+﻿namespace EssayCompetition.Services.Data.Tests
 {
+    using System.Linq;
+    using System.Reflection;
+    using System.Threading.Tasks;
+
+    using EssayCompetition.Common;
+    using EssayCompetition.Data.Models;
+    using EssayCompetition.Data.Repositories;
+    using EssayCompetition.Services.Data.RolesServices;
+    using EssayCompetition.Services.Data.Tests.Common;
+    using EssayCompetition.Services.Mapping;
+    using EssayCompetition.Web.ViewModels.Administration.Roles;
+    using Xunit;
+
     public class RoleServiceTests
     {
         private Seeder seeder;

@@ -114,6 +114,23 @@
             return essay;
         }
 
+        public async Task<Essay> SeedGradedEssayAsync(ApplicationDbContext context)
+        {
+            var user = await this.SeedUserAsync(context, TestEmail);
+            var contest = await this.SeedFutureContestAsync(context);
+
+            Essay essay = new Essay()
+            {
+                ContestId = contest.Id,
+                UserId = user.Id,
+                Graded = true,
+            };
+
+            context.Essays.Add(essay);
+            await context.SaveChangesAsync();
+            return essay;
+        }
+
         public async Task<Essay> SeedEssayAsync(ApplicationDbContext context, string userId, int contestId)
         {
             Essay essay = new Essay()
@@ -209,6 +226,20 @@
             await context.SaveChangesAsync();
 
             return role;
+        }
+
+        public async Task<EssayTeacher> SeedEssayTeacher(ApplicationDbContext context, string teacherId, int essayId)
+        {
+            EssayTeacher essayTeacher = new EssayTeacher()
+            {
+                TeacherId = teacherId,
+                EssayId = essayId,
+            };
+
+            context.EssayTeacher.Add(essayTeacher);
+            await context.SaveChangesAsync();
+
+            return essayTeacher;
         }
     }
 }
