@@ -53,17 +53,6 @@
             return this.userRepository.All().Where(x => userIds.Any(y => y == x.Id)).To<T>();
         }
 
-        public IEnumerable<T> GetUsersWithRoles<T>()
-        {
-            return this.userRepository.All().To<T>().ToList();
-        }
-
-        public IEnumerable<T> GetUsersWithRoles<T>(int currentPage, int pageSize)
-        {
-            return this.userRepository.All().Skip((currentPage - 1) * pageSize).Take(pageSize)
-                .To<T>().ToList();
-        }
-
         public IEnumerable<T> GetUsersWithRoles<T>(int currentPage, int pageSize, string searchString, string sortOrder, bool searchOnlyDeleted)
         {
             var results = this.userRepository.All();

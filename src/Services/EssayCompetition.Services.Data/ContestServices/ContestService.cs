@@ -76,7 +76,9 @@
             var contest = this.contestRepository.All().FirstOrDefault(x => x.StartTime.Date == date.Date);
             if (contest != null)
             {
-                if (date.TimeOfDay >= contest.StartTime.TimeOfDay && date.TimeOfDay <= contest.EndTime.TimeOfDay)
+                if (date.TimeOfDay >= contest.StartTime.TimeOfDay && date.TimeOfDay <= contest.EndTime.TimeOfDay 
+                    ||
+                    date.TimeOfDay >= contest.StartTime.TimeOfDay && date.Date < contest.EndTime.Date)
                 {
                     return true;
                 }
@@ -120,15 +122,12 @@
 
         public async Task UpdateContestAsync(DateTime start, DateTime end, string name, string description, int categoryId, int id)
         {
-            var contest = new Contest()
-            {
-                Id = id,
-                StartTime = start.ToUniversalTime(),
-                EndTime = end.ToUniversalTime(),
-                Name = name,
-                Description = description,
-                CategoryId = categoryId,
-            };
+            var contest = this.contestRepository.All().First(x => x.Id == id);
+            contest.StartTime = start.ToUniversalTime();
+            contest.EndTime = end.ToUniversalTime();
+            contest.Name = name;
+            contest.Description = description;
+            contest.CategoryId = categoryId;
 
             this.contestRepository.Update(contest);
             await this.contestRepository.SaveChangesAsync();
@@ -232,7 +231,9 @@
             var contest = this.contestRepository.All().FirstOrDefault(x => x.StartTime.Date == date.Date);
             if (contest != null)
             {
-                if (date.TimeOfDay >= contest.StartTime.TimeOfDay && date.TimeOfDay <= contest.EndTime.TimeOfDay)
+                if (date.TimeOfDay >= contest.StartTime.TimeOfDay && date.TimeOfDay <= contest.EndTime.TimeOfDay
+                    ||
+                    date.TimeOfDay >= contest.StartTime.TimeOfDay && date.Date < contest.EndTime.Date)
                 {
                     return contest.Id;
                 }

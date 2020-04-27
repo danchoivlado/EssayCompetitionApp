@@ -29,23 +29,6 @@
             this.essayTeacherRepository = essayTeacherRepository;
         }
 
-        public IEnumerable<T> GetAllReviewedEssayFromTecher<T>(string teacherId)
-        {
-            var allEssaysIds = this.essayTeacherRepository.All().Where(x => x.TeacherId == teacherId).Select(x => x.EssayId);
-            var allEssays = this.essaysRepository.All().Where(x => x.Graded == true);
-            var filtredEssays = new List<Essay>();
-
-            foreach (var essayId in allEssaysIds)
-            {
-                foreach (var essay in allEssays.Where(x => x.Id == essayId))
-                {
-                    filtredEssays.Add(essay);
-                }
-            }
-
-            return filtredEssays.AsQueryable().To<T>();
-        }
-
         public T GetEssayInfo<T>(int essayId)
         {
             return this.essaysRepository.All().Where(x => x.Id == essayId).AsQueryable().To<T>().First();
@@ -54,11 +37,6 @@
         public bool HasEssayWithId(int id)
         {
             return this.essaysRepository.All().Any(x => x.Id == id);
-        }
-
-        public IEnumerable<T> GetAllAvilableCategories<T>()
-        {
-            return this.categoryRepository.All().To<T>();
         }
 
         public T GetGradeViewModel<T>(int essayId)
