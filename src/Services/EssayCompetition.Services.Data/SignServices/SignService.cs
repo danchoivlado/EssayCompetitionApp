@@ -29,13 +29,13 @@
         {
             var time = DateTime.Now.ToUniversalTime();
 
-            var nextContest = this.contestRepository.All().FirstOrDefault(x => x.EndTime >= time);
+            var nextContest = this.contestRepository.All().Where(x => x.EndTime >= time);
             if (nextContest == null)
             {
                 return -1;
             }
 
-            return nextContest.Id;
+            return nextContest.OrderBy(x => x.StartTime).First().Id;
         }
 
         public async Task RegisterForContestAsync(string userId, int contestId)

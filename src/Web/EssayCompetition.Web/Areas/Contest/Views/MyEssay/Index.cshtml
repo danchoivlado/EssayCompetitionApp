@@ -41,7 +41,10 @@
                                 @Html.DisplayFor(modelItem => item.GradedNormalized)
                             </td>
                             <td>
-                                <a asp-action="Details" asp-route-id="@item.Id">Details</a>
+                                @if (item.GradedNormalized != "No")
+                                {
+                                    <a asp-action="Details" asp-route-id="@item.Id">Details</a>
+                                }
                             </td>
                         </tr>
                     }

@@ -33,6 +33,11 @@
                 yield return new ValidationResult(GlobalConstants.DateErrorMessage);
             }
 
+            if (this.StartTime.TimeOfDay > this.EndTime.TimeOfDay)
+            {
+                yield return new ValidationResult(GlobalConstants.DateErrorMessage);
+            }
+
             if ((this.EndTime - this.StartTime).Duration().TotalMinutes < 30)
             {
                 yield return new ValidationResult(GlobalConstants.DurationMessage);

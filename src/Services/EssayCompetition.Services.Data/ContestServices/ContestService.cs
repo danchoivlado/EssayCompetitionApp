@@ -147,13 +147,13 @@
         public T NextContext<T>()
         {
             var time = DateTime.Now.ToUniversalTime();
-            var nexContext = this.contestRepository.All().FirstOrDefault(x => x.EndTime >= time);
+            var nexContext = this.contestRepository.All().Where(x => x.EndTime >= time);
             if (nexContext == null)
             {
                 return default(T);
             }
 
-            return nexContext.ToQueryable().To<T>().First();
+            return nexContext.OrderBy(x => x.StartTime).First().ToQueryable().To<T>().First();
         }
 
         public int GetLastContestId()
